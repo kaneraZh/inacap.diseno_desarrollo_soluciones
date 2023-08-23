@@ -1,0 +1,31 @@
+Asocia el tipo de requerimiento con al perfil del cliente.
+15pts	Asocia cuatro o más requerimientos de la aplicación acorde al perfil del cliente.
+
+Utiliza distintos instrumentos para el levantamiento de los requerimientos de usuarios.
+10pts	Utiliza cuatro o más de los instrumentos para el levantamiento de los requerimientos.
+
+Genera las historias de usuario en base a los requerimientos del cliente que conformarán los primeros sprint.
+10pts	Todas las historias de usuario contienen la estructura y cantidad requerida de acuerdo a los requerimientos del cliente.
+
+Estima las tareas de las historias de usuario que conformarán los primeros sprint.
+15pts	Estima la totalidad (100%) de las tareas de las historias de usuario que conformarán los primeros sprint.
+
+Para el primer sprint representa las funcionalidades diseñando.
+A) la vista lógica
+B) la vista de implementación
+C) la vista de despliegue
+D) la vista de procesos.
+15pts	Representa las funcionalidades por medio de todas las vistas utilizando diagramas UML
+	A) lógica: de clases y de secuencia
+	B) implementación: de componentes
+	C) Despliegue: de despliegue
+	D) Procesos: de actividades.
+
+Diseña los casos de uso de los primeros sprint.
+10pts	Diseña sin errores todos los casos de uso de las funcionalidades de los primeros sprint.
+
+Diseña interfaces gráficas de acuerdo con las necesidades del cliente correspondientes a los primeros sprint.
+13pts	Diseña sin errores todas las interfaces gráficas que responden a las necesidades del cliente y que corresponden a los primeros sprint.
+
+Las interfaces gráficas son de carácter moderno (intuitiva, minimalista, simple).
+12pts	Diseña correctamente todas las interfaces gráficas con carácter moderno.
