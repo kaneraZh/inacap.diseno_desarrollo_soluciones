@@ -35,7 +35,7 @@ Las interfaces gráficas son de carácter moderno (intuitiva, minimalista, simpl
  █  █   █ █ ██
  █  ███ ██  █ █ █
 
-perfil del cliente:
+requerimientos del perfil del cliente:
 -
 -
 -
