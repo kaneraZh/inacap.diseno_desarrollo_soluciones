@@ -29,3 +29,35 @@ Diseña interfaces gráficas de acuerdo con las necesidades del cliente correspo
 
 Las interfaces gráficas son de carácter moderno (intuitiva, minimalista, simple).
 12pts	Diseña correctamente todas las interfaces gráficas con carácter moderno.
+
+███ █   ██  ██
+ █  █   █ █ █ █ █
+ █  █   █ █ ██
+ █  ███ ██  █ █ █
+
+perfil del cliente:
+-
+-
+-
+-
+
+instrumentos para el levantamiento de requerimientos
+-
+-
+-
+-
+
+historias de usuario (de acuerdo a requerimientos del cliente)
+
+Para el primer sprint representa las funcionalidades diseñando.
+vista...
+A) lógica		: de clases y de secuencia
+B) de implementación	: de componentes
+C) de despliegue	: de despliegue
+D) de procesos		: de actividades
+
+casos de uso de primeros sprint
+(idealmente planificar los sprints en terminos generales)
+
+diseñar interfaces graficas (de acuerdo a requerimientos cliente y primeros sprint)
+-interfaces graficas deben ser de 'caracter
