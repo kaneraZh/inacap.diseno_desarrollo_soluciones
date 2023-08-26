@@ -30,22 +30,72 @@ Diseña interfaces gráficas de acuerdo con las necesidades del cliente correspo
 Las interfaces gráficas son de carácter moderno (intuitiva, minimalista, simple).
 12pts	Diseña correctamente todas las interfaces gráficas con carácter moderno.
 
-███ █   ██  ██
- █  █   █ █ █ █ █
- █  █   █ █ ██
- █  ███ ██  █ █ █
+ █ ███ █   ██  ██  █
+█   █  █   █ █ █ █  █
+█   █  █   █ █ ██   █
+ █  █  ███ ██  █ █ █
 
-requerimientos del perfil del cliente:
--
--
--
--
+requerimientos del perfil del cliente:				LISTOOOOOOOOO
+(* significa quizas)
+LOCAL
+-manejar inventario
+	-ventas
+	-restock
+-manejar servicios
+	-agendar
+	-pago de servicios
+-guardar cuentas de clientes
+	-boletas asociadas
 
-instrumentos para el levantamiento de requerimientos
--
--
--
--
+-cliente:
+FUNCIONALES
+	-pagar por articulos
+	-pagar por servicios
+	-agendar servicios
+	-pagos realizados (boletas)
+NO FUNCIONALES
+	-interfaz intuitiva
+	-interfaz rapida
+	-interfaz minimalista
+-local:
+	-stock de inventario
+	-servicios ofrecidos
+	-ventas (boletas)
+-empleado:
+	-servicios ofrecibles
+	-dias/horas de trabajo
+	-ventas realizadas (boletas)
+-administrador/jefe?:
+	-empleados (control de empleados???)
+	-control de productos CRUD
+	-control de servicios CRUD
+	*control de proveedores CRUD
+
+-pagina web (¿INTERFAZ?)
+	-sesion cliente
+		-ver productos
+			-ver stock
+		-ver servicios
+			-ver horas
+	-sesion empleado
+		-ver citas agendadas
+		-ver boletas
+	-sesion administrador
+		-ver empleados
+		-ver citas
+		-ver boletas
+		-CRUD productos
+		-CRUD servicios
+		*CRUD proveedores
+
+instrumentos para el levantamiento de requerimientos		LISTOOOOOOOOO
+-Observación
+-Entrevistas/Encuestas o cuestionarios
+-Mesas de trabajo (Workshops)
+-Tormenta de ideas (Brainstorming)
+-Historia del usuario
+-AHP (PROCESO DE ANÁLISIS JERÁRQUICO)
+	https://monivela.wordpress.com/requerimientos/tecnicas-de-levantamiento-de-requerimientos/
 
 historias de usuario (de acuerdo a requerimientos del cliente)
 
