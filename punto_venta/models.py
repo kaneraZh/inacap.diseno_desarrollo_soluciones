@@ -3,23 +3,23 @@ from django.db import models
 
 class Persona(User):
     #usuario = models.OneToOneField(User, on_delete=models.CASCADE)
-    primer_nombre = models.CharField(max_length=20)
-    segundo_nombre = models.CharField(max_length=20)
-    primer_apellido = models.CharField(max_length=20)
-    segundo_apellido = models.CharField(max_length=20)
+    #primer_nombre = models.CharField(max_length=20, null=True)
+    #segundo_nombre = models.CharField(max_length=20, null=True)
+    #primer_apellido = models.CharField(max_length=20, null=True)
+    #segundo_apellido = models.CharField(max_length=20, null=True)
     fecha_nacimiento = models.DateField()
-    correo_electronico = models.EmailField(max_length=30)
-    contrasena = models.CharField(max_length=20)
-    direccion = models.CharField(max_length=20)    
+    #correo_electronico = models.EmailField(max_length=30, null=True)
+    #contrasena = models.CharField(max_length=20, null=True)
+    direccion = models.CharField(max_length=20, null=True)
 class Empleado(Persona):
     documento_identificador = models.CharField(max_length=30)
     fecha_contratacion = models.DateField()
     afp = models.CharField(max_length=15)
     class Meta:
-        default_manager_name = 'Empleado'
+        verbose_name = 'Empleado'
 class Cliente(Persona):
     class Meta:
-        default_manager_name = 'Cliente'
+        verbose_name = 'Cliente'
     pass
 
 class Proveedor(models.Model):
@@ -47,7 +47,6 @@ class Cita(models.Model):
     hora = models.TimeField()
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True)
-    empleado = models.ForeignKey(Empleado, on_delete=models.SET_NULL, null=True)
 
 #import datetime
 class Documento(models.Model):
@@ -64,7 +63,9 @@ class Boleta(Documento):
     )
 
     tipo_de_pago = models.CharField(max_length=25, choices=TIPO_DE_PAGO_CHOICES)
-    precio_total = models.DecimalField(max_digits=10, decimal_places=2)
+    monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
+    monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
+    monto_total = models.DecimalField(max_digits=10, decimal_places=2)
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True)
     empleado = models.ForeignKey(Empleado, on_delete=models.SET_NULL, null=True)
     class Meta:
@@ -92,7 +93,6 @@ class Boleta_servicio(Documento):
     monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
     monto_total = models.DecimalField(max_digits=10, decimal_places=2)
 
-
 class Factura(Documento):
     TIPO_DE_PAGO_CHOICES = (
         ('Efectivo', 'Efectivo'),
@@ -101,8 +101,10 @@ class Factura(Documento):
     )
     numero_factura = models.PositiveIntegerField()
     tipo_de_pago = models.CharField(max_length=25, choices=TIPO_DE_PAGO_CHOICES)
-    productos = models.ManyToManyField(Producto)
-    precio_total = models.DecimalField(max_digits=10, decimal_places=2)
+    #productos = models.ManyToManyField(Producto)
+    monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
+    monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
+    monto_total = models.DecimalField(max_digits=10, decimal_places=2)
     #fecha_y_hora = models.DateTimeField(auto_now_add=True)
     empleado = models.ForeignKey(User, on_delete=models.CASCADE, related_name='facturas_jefe')
     proveedor = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True)
