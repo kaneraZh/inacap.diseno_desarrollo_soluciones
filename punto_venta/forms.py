@@ -2,30 +2,24 @@ from django import forms
 
 from .models import Cliente
 class ClienteCrearForm(forms.ModelForm):
-    def save(self):
-        Cliente.objects.create(
-            is_superuser = False,
-            groups = 'cliente',
-            password = self.password,
-            last_login = self.last_login,
-            username = self.username,
-            email = self.email,
-            first_name = self.first_name,
-            is_staff = False,
-            fecha_nacimiento = self.fecha_nacimiento,
-            direccion = self.direccion,
-        )
+    password_confirm = forms.CharField(required=True)
     class Meta:
         model = Cliente
         fields = [
             'username',
             'password',
+            'password_confirm',
             'first_name',
             'last_name',
             'email',
             'fecha_nacimiento',
             'direccion',
         ]
+    def _clean_fields(self):
+        # chequea que las contraseñas sean iguales
+        if(self.__getitem__('password').data != self.__getitem__('password_confirm').data):
+            self.add_error('password_confirm', 'Passwords dont match.')
+        super()._clean_fields()
 
 from .models import Cita
 class CitaClienteForm(forms.ModelForm):

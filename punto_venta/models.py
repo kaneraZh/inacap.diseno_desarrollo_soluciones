@@ -11,6 +11,9 @@ class Persona(User):
     #correo_electronico = models.EmailField(max_length=30, null=True)
     #contrasena = models.CharField(max_length=20, null=True)
     direccion = models.CharField(max_length=20, null=True)
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.set_password(self.password)
+        super().save(force_insert,force_update,using,update_fields)
 class Empleado(Persona):
     documento_identificador = models.CharField(max_length=30)
     fecha_contratacion = models.DateField()
