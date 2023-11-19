@@ -22,10 +22,20 @@ class ClienteCrearForm(forms.ModelForm):
         super()._clean_fields()
 
 from .models import Cita
+from datetime import datetime, date
 class CitaClienteForm(forms.ModelForm):
     class Meta:
         model = Cita
         fields = ["fecha", "hora", "servicio"]
+    def _clean_fields(self):
+        super()._clean_fields()
+        _now:date = datetime.now().date()
+        _fecha:date = self.cleaned_data['fecha']
+        
+        if(_now>_fecha):self.add_error('fecha', 'Date is in the past.')
+
+        month_distance = ((_fecha.year-_now.year)*12)+_fecha.month-_now.month
+        if( month_distance>=3 ):self.add_error('fecha', 'Date is too ahead. (3mo max)')
 class CitaEmpleadoForm(forms.ModelForm):
     class Meta:
         model = Cita
