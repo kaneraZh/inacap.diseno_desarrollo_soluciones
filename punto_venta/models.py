@@ -44,6 +44,9 @@ class Servicio(models.Model):
     tiempo = models.DurationField()
     empleados = models.ManyToManyField(Empleado)
 
+    def __str__(self) -> str:
+        return f'{self.nombre}'
+
 class Cita(models.Model):
     fecha = models.DateField()
     hora = models.TimeField(auto_now=False, auto_now_add=False)
