@@ -23,7 +23,6 @@ class Empleado(Persona):
 class Cliente(Persona):
     class Meta:
         verbose_name = 'Cliente'
-    pass
 
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=40)
@@ -42,14 +41,17 @@ class Servicio(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=50)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
-    tiempo = models.TimeField()
+    tiempo = models.DurationField()
     empleados = models.ManyToManyField(Empleado)
 
 class Cita(models.Model):
     fecha = models.DateField()
-    hora = models.TimeField()
+    hora = models.TimeField(auto_now=False, auto_now_add=False)
+    #fecha_hora = models.DateTimeField(auto_now=False, auto_now_add=False)
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True)
+#    def fecha_hora():
+#        
 
 #import datetime
 class Documento(models.Model):
