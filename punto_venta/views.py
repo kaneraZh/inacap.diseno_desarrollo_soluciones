@@ -11,4 +11,4 @@ def ClienteSignin(request):
     else:
         form = ClienteCrearForm()
     context = {'form':form}
-    return render(request, 'cliente/crear_cliente.html', context)
+    return render(request, 'cliente/signin.html', context)
