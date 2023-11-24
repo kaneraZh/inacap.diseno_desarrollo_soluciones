@@ -1,22 +1,64 @@
 {% extends 'base.html' %}
+{% block title %}Registrarse{% endblock title %}
 {% block content %}
-    <div class="container mt-4">
-        <div class="jumbotron bg-secondary text-light text-center">
-            <h1 class="display-4">Ashe's Salon</h1>
-            <p class="lead">Regístrese aquí</p>
-        </div>
+{% load static %}
+<link rel="stylesheet" href="{% static 'punto_venta/signin.css' %}">
 
-        <form action="" method="post" class="needs-validation">
-            {% csrf_token %}
-            <div class="form-group">
-                {{ form.as_p }}
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-6">
+            <div class="card shadow rounded">
+                <div class="card-body text-center">
+                    <h2 class="mb-4">Registrarse</h2>
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3 row">
+                            <div class="col-md-6">
+                                {{ form.first_name.label_tag }}
+                                {{ form.first_name }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.last_name.label_tag }}
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-6">
+                                {{ form.fecha_nacimiento.label_tag }}
+                                {{ form.fecha_nacimiento }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.email.label_tag }}
+                                {{ form.email }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                {{ form.direccion.label_tag }}
+                                {{ form.direccion }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                {{ form.password.label_tag }}
+                                {{ form.password }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                {{ form.password2.label_tag }}
+                                {{ form.password2 }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Crear cuenta</button>
-        </form>
+        </div>
     </div>
-
-    <!-- Agrega el script de Bootstrap al final del cuerpo del HTML para asegurar la carga adecuada -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</div>
 {% endblock content %}
