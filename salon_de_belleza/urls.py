@@ -24,5 +24,9 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('', TemplateView.as_view(template_name='cliente/home.html'), name='home'),
     path('signin/', punto_venta.ClienteSignin, name='cliente_signin'),
-    path('cita/agendar', punto_venta.ClienteCitaAgendar, name='cliente_cita_agendar')
+    path('cita/agendar', punto_venta.ClienteCitaAgendar, name='cliente_cita_agendar'),
+    path('servicios/<int:pagina>', punto_venta.ServicioVerPaginadoCartas, name='servicios_tarjeta'),
+    path('productos/<int:pagina>', punto_venta.ProductoVerPaginadoCartas, name='productos_tarjeta'),
+    path('servicio/<str:item>', punto_venta.ServicioVerDetalle, name='servicio_detalle'),
+    path('producto/<str:item>', punto_venta.ProductoVerDetalle, name='producto_detalle'),
 ]

@@ -32,6 +32,7 @@ class Proveedor(models.Model):
     email = models.EmailField(max_length=40)
 class Producto(models.Model):
     nombre = models.CharField(max_length=30)
+    descripcion = models.CharField(max_length=50)
     categoria = models.CharField(max_length=20)
     precio_compra = models.DecimalField(max_digits=10, decimal_places=2)
     precio_venta = models.DecimalField(max_digits=10, decimal_places=2)

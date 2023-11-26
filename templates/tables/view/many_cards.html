@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+<div class="table">
+    {% for i in items %}
+    <div class="col-xl-3 col-md-6 d-flex align-items-stretch aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+        <div class="icon-box">
+            <div class="icon"><i class="bx bxl-dribbble"></i></div>
+            <h4><a href="">{{i.nombre}}</a></h4>
+            <p>{{i.descripcion}}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% with pagina|add:-1 as prev %}
+    {% if prev >= 0 %}
+    <a href={% url url pagina=prev %}>Anterior</a>
+    {% endif %}
+{% endwith %}
+{{pagina|add:1}}
+{% with pagina|add:1 as next %}
+    {% if next >= 0 %}
+    {% endif %}
+    <a href={% url url pagina=next %}>Siguiente</a>
+{% endwith %}
+{% endblock content %}
