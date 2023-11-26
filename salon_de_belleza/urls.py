@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView
 import punto_venta.views as punto_venta
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,3 +28,5 @@ urlpatterns = [
     path('signin/', punto_venta.ClienteSignin, name='cliente_signin'),
     path('cita/agendar', punto_venta.ClienteCitaAgendar, name='cliente_cita_agendar')
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
