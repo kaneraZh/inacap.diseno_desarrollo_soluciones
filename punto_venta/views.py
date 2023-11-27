@@ -1,6 +1,8 @@
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from punto_venta import forms
+from .models import Cita, Empleado
+from datetime import date
 #from django.views.generic.detail import DetailView
 
 def ClienteSignin(request):
@@ -33,3 +35,13 @@ def ClienteCitaAgendar(request:HttpRequest):
         form = forms.CitaClienteForm()
     context = {'form':form}
     return render(request, 'cliente/cita/agendar.html', context)
+
+def calendario(request):
+    # Obtener las citas futuras
+    citas = Cita.objects.filter(fecha__gte=date.today()).order_by('fecha', 'hora')
+
+    context = {
+        'citas': citas,
+    }
+
+    return render(request, 'cliente/cita/calendario.html', context)
