@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}{{title}}{% endblock title %}
+{% block content %}
+<table>
+    <tr>
+      <th>nombre : {{object.nombre}}</th>
+    </tr>
+    <tr>
+        <th>descripcion : {{object.descripcion}}</th>
+    </tr>
+    <tr>
+        <th>precio : {{object.precio}}</th>
+    </tr>
+    <tr>
+        <th>tiempo : {{object.stock}}</th>
+    </tr>
+</table>
+{% endblock content %}

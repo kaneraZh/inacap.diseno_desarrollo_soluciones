@@ -1,5 +1,4 @@
 from django import forms
-
 from .models import Cliente
 class ClienteCrearForm(forms.ModelForm):
     password_confirm = forms.CharField(required=True)
@@ -15,6 +14,8 @@ class ClienteCrearForm(forms.ModelForm):
             'fecha_nacimiento',
             'direccion',
         ]
+
+
     def _clean_fields(self):
         # chequea que las contraseñas sean iguales
         if(self.__getitem__('password').data != self.__getitem__('password_confirm').data):
@@ -46,3 +47,5 @@ class LogInForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(), required=True)
     class Meta:
         fields = ['email', 'password']
+
+
