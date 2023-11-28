@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="table">
+    {% for objeto in object_list %}
+    <div class="col-xl-3 col-md-6 d-flex align-items-stretch aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+        <div class="icon-box">
+            <div class="icon"><i class="bx bxl-dribbble"></i></div>
+            <h4><a href={% url detalle pk=objeto.id %}>{{objeto.fecha}} a las {{objeto.hora}}</a></h4>
+            <p>{{objeto.servicio}}</p>
+        </div>
+    </div>
+    {% empty %}
+    <div>No se encontraron datos</div>
+    {% endfor %}
+</div>
+
+{% endblock content %}

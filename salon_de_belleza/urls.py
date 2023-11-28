@@ -20,6 +20,7 @@ from django.views.generic.base import TemplateView
 import punto_venta.views as punto_venta
 from django.conf import settings
 from django.conf.urls.static import static
+#from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,6 +32,10 @@ urlpatterns = [
     path('productos/', punto_venta.ProductoCardView.as_view(), name='productos_tarjeta'),
     path('servicio/<int:pk>/', punto_venta.ServicioDetailView.as_view(), name='servicio_detalle'),
     path('producto/<int:pk>/', punto_venta.ProductoDetailView.as_view(), name='producto_detalle'),
+    path('citas/', punto_venta.CitaListView.as_view(), name='citas'),
+    path('cita/<int:pk>/', punto_venta.CitaDetailView.as_view(), name='cita_detalle'),
+    #path('citas/', login_required(punto_venta.CitaListView.as_view()), name='citas'),
+    #path('cita/<int:pk>/', login_required(punto_venta.CitaDetailView.as_view()), name='cita_detalle'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

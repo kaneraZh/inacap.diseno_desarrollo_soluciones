@@ -14,12 +14,16 @@ class Persona(User):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.set_password(self.password)
         super().save(force_insert,force_update,using,update_fields)
+    def __str__(self):
+        return f'{self.username}, {self.email}, nacimiento: {self.fecha_nacimiento}'
 class Empleado(Persona):
     documento_identificador = models.CharField(max_length=30)
     fecha_contratacion = models.DateField()
     afp = models.CharField(max_length=15)
     class Meta:
         verbose_name = 'Empleado'
+    def __str__(self):
+        return f'{super().__str__()}, contrato desde:{self.fecha_contratacion}'
 class Cliente(Persona):
     class Meta:
         verbose_name = 'Cliente'
@@ -30,6 +34,8 @@ class Proveedor(models.Model):
     rut_empresa = models.CharField(max_length=30)
     telefono_celular = models.CharField(max_length=30)
     email = models.EmailField(max_length=40)
+    def __str__(self):
+        return f'{self.nombre}, {self.email}, {self.direccion}, {self.telefono_celular}'
 class Producto(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=50)
@@ -38,6 +44,9 @@ class Producto(models.Model):
     precio_venta = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField()
     proveedor = models.ForeignKey(Proveedor, on_delete=models.RESTRICT)
+    def __str__(self):
+        return f'{nombre}'
+    
 class Servicio(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=50)
@@ -51,11 +60,8 @@ class Servicio(models.Model):
 class Cita(models.Model):
     fecha = models.DateField()
     hora = models.TimeField(auto_now=False, auto_now_add=False)
-    #fecha_hora = models.DateTimeField(auto_now=False, auto_now_add=False)
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True)
-#    def fecha_hora():
-#        
 
 #import datetime
 class Documento(models.Model):
