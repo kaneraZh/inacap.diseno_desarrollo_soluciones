@@ -21,12 +21,14 @@ import punto_venta.views as punto_venta
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', TemplateView.as_view(template_name='cliente/home.html'), name='home'),
     path('signin/', punto_venta.ClienteSignin, name='signin'),
     path('cita/agendar', punto_venta.ClienteCitaAgendar, name='cliente_cita_agendar'),
+    path('cita/calendario', punto_venta.calendario, name='calendario'),
     path('servicios/', punto_venta.ServicioCardView.as_view(), name='servicios_tarjeta'),
     path('productos/', punto_venta.ProductoCardView.as_view(), name='productos_tarjeta'),
     path('servicio/<int:pk>/', punto_venta.ServicioDetailView.as_view(), name='servicio_detalle'),
