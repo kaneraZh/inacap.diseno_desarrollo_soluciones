@@ -40,16 +40,18 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=50)
     categoria = models.CharField(max_length=20)
-    precio_compra = models.DecimalField(max_digits=10, decimal_places=2)
-    precio_venta = models.DecimalField(max_digits=10, decimal_places=2)
+    precio_compra = models.PositiveIntegerField()
+    precio_venta = models.PositiveIntegerField()
     stock = models.PositiveIntegerField()
     proveedor = models.ForeignKey(Proveedor, on_delete=models.RESTRICT)
+    imagen = models.ImageField(upload_to='productos/', default='productos/default.jpg')
+
     def __str__(self):
         return f'{self.nombre}, {self.precio_venta}, {self.stock}'
 class Servicio(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=50)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    precio = models.PositiveIntegerField()
     tiempo = models.DurationField()
     empleados = models.ManyToManyField(Empleado)
     def __str__(self) -> str:
@@ -75,9 +77,9 @@ class Boleta(Documento):
         ('Transferencia bancaria', 'Transferencia bancaria'),
     )
     tipo_de_pago = models.CharField(max_length=25, choices=TIPO_DE_PAGO_CHOICES)
-    monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_total = models.DecimalField(max_digits=10, decimal_places=2)
+    monto_neto = models.PositiveIntegerField()
+    monto_iva = models.PositiveIntegerField()
+    monto_total = models.PositiveIntegerField()
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True)
     empleado = models.ForeignKey(Empleado, on_delete=models.SET_NULL, null=True)
     class Meta:
@@ -96,10 +98,10 @@ class Boleta_producto(Documento):
     boleta = models.ForeignKey(Boleta, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.SET_NULL, null=True)
     cantidad = models.PositiveIntegerField()
-    precio_venta = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_total = models.DecimalField(max_digits=10, decimal_places=2)
+    precio_venta = models.PositiveIntegerField()
+    monto_neto = models.PositiveIntegerField()
+    monto_iva = models.PositiveIntegerField()
+    monto_total = models.PositiveIntegerField()
     def __str__(self):
         return f'{self.producto}x{self.cantidad}'
 class Boleta_servicio(Documento):
@@ -107,10 +109,10 @@ class Boleta_servicio(Documento):
     boleta = models.ForeignKey(Boleta, on_delete=models.CASCADE)
     servicio = models.ForeignKey(Servicio, on_delete=models.SET_NULL, null=True)
     cantidad = models.PositiveIntegerField()
-    precio_venta = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_total = models.DecimalField(max_digits=10, decimal_places=2)
+    precio_venta = models.PositiveIntegerField()
+    monto_neto = models.PositiveIntegerField()
+    monto_iva = models.PositiveIntegerField()
+    monto_total = models.PositiveIntegerField()
     def __str__(self):
         return f'{self.producto}x{self.cantidad}'
 
@@ -123,9 +125,9 @@ class Factura(Documento):
     numero_factura = models.PositiveIntegerField()
     tipo_de_pago = models.CharField(max_length=25, choices=TIPO_DE_PAGO_CHOICES)
     #productos = models.ManyToManyField(Producto)
-    monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_total = models.DecimalField(max_digits=10, decimal_places=2)
+    monto_neto = models.PositiveIntegerField()
+    monto_iva = models.PositiveIntegerField()
+    monto_total = models.PositiveIntegerField()
     #fecha_y_hora = models.DateTimeField(auto_now_add=True)
     empleado = models.ForeignKey(User, on_delete=models.CASCADE, related_name='facturas_jefe')
     proveedor = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True)
@@ -144,9 +146,9 @@ class Factura_detalle(Documento):
     factura = models.ForeignKey(Factura, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.SET_NULL, null=True)
     cantidad = models.PositiveIntegerField()
-    precio_venta = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
-    monto_total = models.DecimalField(max_digits=10, decimal_places=2)
+    precio_venta = models.PositiveIntegerField()
+    monto_neto = models.PositiveIntegerField()
+    monto_iva = models.PositiveIntegerField()
+    monto_total = models.PositiveIntegerField()
     def __str__(self):
         return f'{self.producto}x{self.cantidad}'

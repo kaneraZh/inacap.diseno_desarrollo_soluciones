@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from punto_venta import forms, models
 from .models import Cita, Empleado
 from datetime import date
+from .models import Producto
+from .forms import ProductoForm
 #from django.views.generic.detail import DetailView
 
 # URLs genericas para redirigir al usuario
@@ -160,3 +162,14 @@ class CitaDetailView(DetailView):
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next=/citas/')
         if(not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+
+def agregar_producto(request):
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            producto = form.save()
+            # Puedes hacer algo con la imagen aquí, como renombrarla según la ID del producto
+            return redirect('detalle_producto', pk=producto.pk)
+    else:
+        form = ProductoForm()
+    return render(request, 'agregar_producto.html', {'form': form})
