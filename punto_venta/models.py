@@ -38,7 +38,7 @@ class Proveedor(models.Model):
         return f'{self.nombre}, {self.email}, {self.direccion}, {self.telefono_celular}'
 class Producto(models.Model):
     nombre = models.CharField(max_length=30)
-    descripcion = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=300)
     categoria = models.CharField(max_length=20)
     precio_compra = models.PositiveIntegerField()
     precio_venta = models.PositiveIntegerField()

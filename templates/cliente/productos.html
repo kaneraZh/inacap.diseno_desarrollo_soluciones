@@ -1,4 +1,48 @@
-{% with detalle='producto_detalle' %}
-{% block title %}productos{% endblock title %}
-{% include 'tables/view/many_cards.html' %}
-{% endwith %}
+{% extends 'base.html' %}
+
+{% block title %}Productos{% endblock title %}
+
+{% block content %}
+{% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'punto_venta/productos.css' %}">
+
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Nuestros Productos</h2>
+
+  <div class="row">
+    {% for producto in object_list %}
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <img src="{{ producto.imagen.url }}" class="card-img-top" alt="{{ producto.nombre }}" style="max-width: 100%; max-height: 300px;">
+          <div class="details">
+            <div class="min-details">
+              <h5 class="card-title">{{ producto.nombre }}</h5>
+              <p class="price">$ {{ producto.precio_venta }}</p>
+            </div>
+            <a href="{% url 'producto_detalle' pk=producto.pk %}" class="btn btn-primary btn-block">Ver Detalle</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="pagination justify-content-center">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; primera</a>
+        <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+      {% endif %}
+
+      <span class="current">
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
+      {% endif %}
+    </span>
+  </div>
+</div>
+{% endblock content %}
