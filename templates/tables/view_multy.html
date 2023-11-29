@@ -7,10 +7,10 @@
 -->
 {% block content %}
 <table>
-    {% for object in object_list %}
+    {% for objeto in object_list %}
     <tr>
         <td>
-            {{object}}
+            <a href={% url detalle pk=objeto.id %}">{{objeto}}</a>
         </td>
     </tr>
     {% endfor %}
