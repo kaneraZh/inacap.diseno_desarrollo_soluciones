@@ -104,7 +104,7 @@ class ServicioCardView(ListView):
 class CitaListView(ListView):
     model = models.Cita
     paginate_by = 6
-    template_name = "tables/view_multy.html"
+    template_name = "cliente/cita/calendario.html"
     # filtra los datos devueltos 
     # en este caso, para que solo quien hizo la cita
     # pueda verla (y no cualquier otro cliente)
@@ -141,7 +141,6 @@ class ProductoDetailView(DetailView):
 class CitaDetailView(DetailView):
     model = models.Cita
     template_name = "tables/view_single.html"
-    permission_required = 'punto_venta.cita.can_view_cita'
     # filtra los datos devueltos 
     # en este caso, para que solo quien hizo la cita
     # pueda verla (y no cualquier otro cliente)
@@ -191,3 +190,149 @@ def detalle_producto(request, pk):
     }
 
     return render(request, 'ruta_a_tu_template/detalle_producto.html', context)
+
+from django.views.generic.edit import CreateView, FormView
+# CRUDS CLIENTES
+class ClienteCreateView(CreateView):
+    from django.forms import CharField
+    model = models.Cliente
+    template_name = "tables/create.html"
+    password_confirm = CharField(required=True)
+    fields = [
+        'username',
+        'password',
+        'password_confirm',
+        'first_name',
+        'last_name',
+        'email',
+        'fecha_nacimiento',
+        'direccion',
+    ]
+    
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+
+        # verifica si el usuario esta identificado (si no lo esta, redirije a URL_LOGIN)
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+
+        # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
+        if(not user.has_perm('punto_venta.create_cliente')): return redirect(URL_HOME)
+
+        return super().dispatch(request, *args, **kwargs)
+class ClienteListView(ListView):
+    model = models.Cliente
+    template_name = "tables/view_multy.html"
+    paginate_by = 10
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'clientes'
+        context["detalle"] = 'cliente_detalle'
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        # verifica si el usuario esta identificado (si no lo esta, redirije a URL_LOGIN)
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
+        if(not user.has_perm('punto_venta.view_cliente')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class ClienteDetailView(DetailView):
+    model = models.Cliente
+    template_name = "tables/view_single.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'cliente'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cliente')
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        # verifica si el usuario esta identificado (si no lo esta, redirije a URL_LOGIN)
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
+        if(not user.has_perm('punto_venta.view_cliente')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+
+# cita
+class CitaListView(ListView):
+    model = models.Cita
+    template_name = "tables/view_multy.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "citas"
+        context['detalle'] = 'detalle_cita'
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class CitaDetailView(DetailView):
+    model = models.Cita
+    template_name = "tables/view_single.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'cita'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cita')
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+
+
+# servicio
+class ServicioListView(ListView):
+    model = models.Servicio
+    template_name = "tables/view_multy.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "servicios"
+        context['detalle'] = 'detalle_servicio'
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_servicio')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class ServicioDetailView(DetailView):
+    model = models.Servicio
+    template_name = "tables/view_single.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'servicio'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_servicio')
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_servicio')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+
+
+# producto
+class ProductoListView(ListView):
+    model = models.Producto
+    template_name = "tables/view_multy.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "productos"
+        context['detalle'] = 'detalle_producto'
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_producto')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class ProductoDetailView(DetailView):
+    model = models.Producto
+    template_name = "tables/view_single.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'producto'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_producto')
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_producto')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
