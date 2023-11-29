@@ -12,6 +12,20 @@
         <td>
             <a href={% url detalle pk=objeto.id %}>{{objeto}}</a>
         </td>
+        {% if puede_actualizar %}
+        <td>
+            <form action={% url borrar pk=objeto.id %}>
+                <input type="submit" value="Borrar" />
+            </form>
+        </td>
+        {% endif %}
+        {% if puede_borrar %}
+        <td>
+            <form action={% url actualizar pk=objeto.id %}>
+                <input type="submit" value="Actualizar" />
+            </form>
+        </td>
+        {% endif %}
     </tr>
     {% endfor %}
 </table>

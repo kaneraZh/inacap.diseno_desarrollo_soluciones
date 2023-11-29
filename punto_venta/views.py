@@ -191,14 +191,13 @@ def detalle_producto(request, pk):
 
     return render(request, 'ruta_a_tu_template/detalle_producto.html', context)
 
-from django.views.generic.edit import CreateView, FormView
+from django.views.generic.edit import CreateView, FormView, UpdateView, DeleteView
 # CRUDS CLIENTES
 class ClienteCreateView(CreateView):
     model = models.Cliente
     template_name = "tables/create.html"
     fields = [
         'username',
-        'password',
         'first_name',
         'last_name',
         'email',
@@ -208,13 +207,38 @@ class ClienteCreateView(CreateView):
     
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
-
-        # verifica si el usuario esta identificado (si no lo esta, redirije a URL_LOGIN)
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-
-        # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
         if(not user.has_perm('punto_venta.create_cliente')): return redirect(URL_HOME)
-
+        return super().dispatch(request, *args, **kwargs)
+class ClienteUpdateView(UpdateView):
+    model = models.Cliente
+    template_name = "tables/update.html"
+    fields = [
+        'username',
+        'password',
+        'first_name',
+        'last_name',
+        'email',
+        'fecha_nacimiento',
+        'direccion',
+    ]
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'actualizar cliente'
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.update_cliente')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class ClienteDeleteView(DeleteView):
+    model = models.Cliente
+    template_name = "tables/delete.html"
+    success_url = "/clientes/"
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.delete_cliente')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ClienteListView(ListView):
     model = models.Cliente
@@ -224,6 +248,10 @@ class ClienteListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'clientes'
         context["detalle"] = 'cliente_detalle'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cliente')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cliente')
+        context["borrar"] = "cliente_borrar"
+        context["actualizar"] = "cliente_actualizar"
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -237,9 +265,12 @@ class ClienteDetailView(DetailView):
     template_name = "admin/cliente_detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = 'cliente'
+        context["title"] = 'detalle cliente'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cliente')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cliente')
+        context["borrar"] = "cliente_borrar"
+        context["actualizar"] = "cliente_actualizar"
+        context["lista"] = "clientes"
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
