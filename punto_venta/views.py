@@ -228,6 +228,7 @@ class CitaListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "citas"
         context['detalle'] = 'detalle_cita'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cita')
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -257,6 +258,7 @@ class ServicioListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "servicios"
         context['detalle'] = 'detalle_servicio'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_servicio')
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -286,6 +288,7 @@ class ProductoListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "productos"
         context['detalle'] = 'detalle_producto'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_producto')
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
