@@ -21,6 +21,7 @@
                                 {{ form.contrasena.label_tag }}
                                 {{ form.contrasena }}
                             </div>
+                            {{ form.last_name }}
                         </div>
                         <div class="mb-3 row">
                             <div class="col-md-6">
@@ -31,29 +32,31 @@
                                 {{ form.primer_nombre.label_tag }}
                                 {{ form.primer_nombre }}
                             </div>
+                            {{ form.email }}
                         </div>
                         <div class="mb-3 row">
                             <div class="col-md-12">
                                 {{ form.primer_apellido.label_tag }}
                                 {{ form.primer_apellido }}
                             </div>
+                            {{ form.direccion }}
                         </div>
                         <div class="mb-3 row">
                             <div class="col-md-12">
                                 {{ form.fecha_nacimiento.label_tag }}
                                 {{ form.fecha_nacimiento }}
                             </div>
+                            {{ form.password }}
                         </div>
                         <div class="mb-3 row">
                             <div class="col-md-12">
                                 {{ form.direccion.label_tag }}
                                 {{ form.direccion }}
                             </div>
+                            {{ form.password_confirm }}
                         </div>
-                        <div class="mb-3 row">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
-                            </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
                         </div>
                     </form>
                 </div>
