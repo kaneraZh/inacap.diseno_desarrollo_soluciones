@@ -190,7 +190,7 @@ class ClienteCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 class ClienteListView(ListView):
     model = models.Cliente
-    template_name = "tables/view_multy.html"
+    template_name = "admin/clientes.html"
     paginate_by = 10
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -209,7 +209,7 @@ class ClienteListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class ClienteDetailView(DetailView):
     model = models.Cliente
-    template_name = "tables/view_single.html"
+    template_name = "admin/cliente_detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'cliente'
