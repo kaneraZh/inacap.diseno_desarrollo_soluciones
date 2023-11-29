@@ -198,6 +198,7 @@ class ClienteCreateView(CreateView):
     template_name = "tables/create.html"
     fields = [
         'username',
+        'password',
         'first_name',
         'last_name',
         'email',
@@ -215,7 +216,6 @@ class ClienteUpdateView(UpdateView):
     template_name = "tables/update.html"
     fields = [
         'username',
-        'password',
         'first_name',
         'last_name',
         'email',
