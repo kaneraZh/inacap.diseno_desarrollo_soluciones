@@ -1,5 +1,6 @@
 from django import forms
 from .models import Cliente
+from .models import Producto
 class ClienteCrearForm(forms.ModelForm):
     password_confirm = forms.CharField(required=True)
     class Meta:
@@ -43,5 +44,11 @@ class LogInForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput(), required=True)
     class Meta:
         fields = ['email', 'password']
+
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = ['nombre', 'descripcion', 'categoria', 'precio_compra', 'precio_venta', 'stock', 'proveedor', 'imagen']
+
 
 

@@ -1,8 +1,11 @@
 from django.http import HttpRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from punto_venta import forms, models
-from .models import Cita, Empleado
+from .models import Cita, Empleado, Producto
 from datetime import date
+from .models import Producto
+from .forms import ProductoForm
+
 #from django.views.generic.detail import DetailView
 
 # URLs genericas para redirigir al usuario
@@ -82,8 +85,8 @@ def calendario(request):
 from django.views.generic.list import ListView
 class ProductoCardView(ListView):
     model = models.Producto
-    paginate_by = 8
-    template_name = "tables/view/many_cards.html"
+    paginate_by = 6
+    template_name = "cliente/productos.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["detalle"] = 'producto_detalle'
@@ -159,6 +162,34 @@ class CitaDetailView(DetailView):
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next=/citas/')
         if(not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+
+def agregar_producto(request):
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, request.FILES)
+        if form.is_valid():
+            producto = form.save()
+            # Puedes hacer algo con la imagen aquí, como renombrarla según la ID del producto
+            return redirect('detalle_producto', pk=producto.pk)
+    else:
+        form = ProductoForm()
+    return render(request, 'agregar_producto.html', {'form': form})
+
+def detalle_producto(request, pk):
+    # Obtiene el producto actual
+    producto = get_object_or_404(Producto, pk=pk)
+
+    # Obtiene la categoría del producto actual
+    categoria_actual = producto.categoria
+
+    # Obtiene productos relacionados (excluyendo el producto actual)
+    productos_relacionados = Producto.objects.filter(categoria=categoria_actual).exclude(pk=pk)
+
+    context = {
+        'producto': producto,
+        'productos_relacionados': productos_relacionados,
+    }
+
+    return render(request, 'ruta_a_tu_template/detalle_producto.html', context)
 
 from django.views.generic.edit import CreateView, FormView
 # CRUDS CLIENTES
@@ -305,4 +336,3 @@ class ProductoDetailView(DetailView):
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if(not user.has_perm('punto_venta.view_producto')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
-

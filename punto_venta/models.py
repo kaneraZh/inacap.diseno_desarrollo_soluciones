@@ -38,12 +38,14 @@ class Proveedor(models.Model):
         return f'{self.nombre}, {self.email}, {self.direccion}, {self.telefono_celular}'
 class Producto(models.Model):
     nombre = models.CharField(max_length=30)
-    descripcion = models.CharField(max_length=50)
+    descripcion = models.CharField(max_length=300)
     categoria = models.CharField(max_length=20)
     precio_compra = models.PositiveIntegerField()
     precio_venta = models.PositiveIntegerField()
     stock = models.PositiveIntegerField()
     proveedor = models.ForeignKey(Proveedor, on_delete=models.RESTRICT)
+    imagen = models.ImageField(upload_to='productos/', default='productos/default.jpg')
+
     def __str__(self):
         return f'{self.nombre}, {self.precio_venta}, {self.stock}'
 class Servicio(models.Model):
