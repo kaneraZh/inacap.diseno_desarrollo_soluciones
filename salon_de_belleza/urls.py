@@ -38,6 +38,9 @@ urlpatterns = [
     path('cita/<int:pk>/', punto_venta.CitaDetailView.as_view(), name='cita_detalle'),
     #path('citas/', login_required(punto_venta.CitaListView.as_view()), name='citas'),
     #path('cita/<int:pk>/', login_required(punto_venta.CitaDetailView.as_view()), name='cita_detalle'),
+    path('clientes/', punto_venta.ClienteListView.as_view(), name='clientes'),
+    path('cliente/<int:pk>/', punto_venta.ClienteDetailView.as_view(), name='cliente_detalle'),
+    path('cliente/crear/', punto_venta.ClienteCreateView.as_view(), name='cliente_crear'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
