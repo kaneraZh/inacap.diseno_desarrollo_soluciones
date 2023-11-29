@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+<!--
+    template basico que renderiza todos los objetos enviados por 
+    la clase de view (ListView en este caso)
+    Este renderizado sirve porque al renderizar los objetos de tabla
+    los transofrma automaticamente a str.
+-->
 {% block content %}
 <table>
     {% for object in object_list %}

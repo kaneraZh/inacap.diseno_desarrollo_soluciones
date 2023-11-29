@@ -15,15 +15,26 @@ URL_HOME = '/'
 # PERMISOS DE USUARIO (plural) : https://docs.djangoproject.com/en/4.2/ref/contrib/auth/#django.contrib.auth.models.User.has_perms
 # IDENTIFICACION DE USUARIO :  https://docs.djangoproject.com/en/4.2/ref/contrib/auth/#django.contrib.auth.models.User.is_authenticated
 # 
-# A continuación ofrezco un ejemplo de como deverían ser implementados estos 
+# f'{URL_LOGIN}?next={request.path}') es un ejemplo para que, al redirigir al
+# login, la siguiente pagina que se visitara será le de request path, que suele
+# mostrar la pagina desde donde se redirige, por ejemplo:
+# si en citas, reenvío al login, luego del login, me llevaría a "request.path"
+# que en el caso de "citas" request path sería /citas/
 #
-#    # verifica si el usuario esta identificado (si no lo esta, redirije a URL_LOGIN)
-#    # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
+# A continuación ofrezco un ejemplo de como deverían ser implementados estos 
+################################################################################################### 
+#
 #    def dispatch(self, request:HttpRequest, *args, **kwargs):
 #        user = request.user
-#        if(not user.is_authenticated): return redirect(URL_LOGIN)
+#
+#        # verifica si el usuario esta identificado (si no lo esta, redirije a URL_LOGIN)
+#        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+#
+#        # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
 #        if(not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
 #        return super().dispatch(request, *args, **kwargs)
+#
+###################################################################################################
 
 
 def ClienteSignin(request:HttpRequest):
@@ -77,7 +88,7 @@ class ServicioCardView(ListView):
 class CitaListView(ListView):
     model = models.Cita
     paginate_by = 6
-    template_name = "tables/view/many_list.html"
+    template_name = "tables/view_multy.html"
     # filtra los datos devueltos 
     # en este caso, para que solo quien hizo la cita
     # pueda verla (y no cualquier otro cliente)
@@ -100,10 +111,9 @@ class CitaListView(ListView):
     # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated): return redirect(URL_LOGIN)
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if(not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
-
 
 from django.views.generic.detail import DetailView
 class ServicioDetailView(DetailView):
@@ -114,7 +124,7 @@ class ProductoDetailView(DetailView):
     template_name = "cliente/producto.html"
 class CitaDetailView(DetailView):
     model = models.Cita
-    template_name = "cliente/cita.html"
+    template_name = "tables/view_single.html"
     permission_required = 'punto_venta.cita.can_view_cita'
 
     # filtra los datos devueltos 
@@ -135,6 +145,6 @@ class CitaDetailView(DetailView):
     # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated): return redirect(URL_LOGIN)
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next=/citas/')
         if(not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
