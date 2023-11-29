@@ -15,8 +15,8 @@ class Persona(User):
         self.first_name = self.primer_nombre
         self.last_name = self.primer_apellido
         self.email = self.correo_electronico
-        self.password = self.contrasena
         self.set_password(self.contrasena)
+        self.contrasena = self.password
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
         return f'{self.username}, {self.email}, nacimiento: {self.fecha_nacimiento}'
@@ -44,6 +44,8 @@ class Proveedor(models.Model):
     email = models.EmailField(max_length=40)
     def __str__(self):
         return f'{self.nombre}, {self.email}, {self.direccion}, {self.telefono_celular}'
+    def get_absolute_url(self):
+        return reverse("proveedor_detalle", kwargs={"pk": self.id})
 class Producto(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=300)
@@ -56,6 +58,8 @@ class Producto(models.Model):
 
     def __str__(self):
         return f'{self.nombre}, {self.precio_venta}, {self.stock}'
+    def get_absolute_url(self):
+        return reverse("producto_detalle", kwargs={"pk": self.id})
 class Servicio(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=50)
@@ -64,7 +68,9 @@ class Servicio(models.Model):
     empleados = models.ManyToManyField(Empleado)
     def __str__(self) -> str:
         return f'{self.nombre}, {self.precio}, {self.tiempo}'
-
+    def get_absolute_url(self):
+        return reverse("servicio_detalle", kwargs={"pk": self.id})
+    
 class Cita(models.Model):
     fecha = models.DateField()
     hora = models.TimeField(auto_now=False, auto_now_add=False)
@@ -72,6 +78,8 @@ class Cita(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True)
     def __str__(self):
         return f'{self.fecha}, {self.hora}, {self.servicio}, {self.cliente}'
+    def get_absolute_url(self):
+        return reverse("cita_detalle", kwargs={"pk": self.id})
 
 class Documento(models.Model):
     class Meta:
@@ -101,6 +109,8 @@ class Boleta(Documento):
         contenidos.append(Boleta_producto.objects.all().filter(boleta=self))
         contenidos.append(Boleta_servicio.objects.all().filter(boleta=self))
         return f'{self.fecha_creacion}, {self.tipo_de_pago}, {self.monto_neto}, {self.cliente}, {", ".join(contenidos)}'
+    def get_absolute_url(self):
+        return reverse("boleta_detalle", kwargs={"pk": self.id})
 class Boleta_producto(Documento):
     def __str__(self): return f"{self.boleta.nombre}x{self.cantidad}: {monto_total}"
     boleta = models.ForeignKey(Boleta, on_delete=models.CASCADE)
@@ -149,6 +159,8 @@ class Factura(Documento):
         contenidos:list = []
         contenidos.append(Factura_detalle.objects.all().filter(factura=self))
         return f'{self.fecha_creacion}, {self.tipo_de_pago}, {self.monto_neto}, {self.proveedor}, {", ".join(contenidos)}'
+    def get_absolute_url(self):
+        return reverse("factura_detalle", kwargs={"pk": self.id})
 class Factura_detalle(Documento):
     numero_factura = models.IntegerField()
     factura = models.ForeignKey(Factura, on_delete=models.CASCADE)

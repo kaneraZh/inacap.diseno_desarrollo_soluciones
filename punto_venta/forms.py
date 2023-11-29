@@ -2,7 +2,8 @@ from django import forms
 from .models import Cliente
 from .models import Producto
 class ClienteCrearForm(forms.ModelForm):
-    contrasena_confirmar = forms.CharField(required=True, label="confirmar contraseña")
+    contrasena_confirmar = forms.CharField(required=True, label="Confirmar Contraseña", widget=forms.PasswordInput())
+    contrasena = forms.CharField(required=True, label="Contraseña", widget=forms.PasswordInput())
     class Meta:
         model = Cliente
         fields = [
@@ -47,6 +48,3 @@ class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
         fields = ['nombre', 'descripcion', 'categoria', 'precio_compra', 'precio_venta', 'stock', 'proveedor', 'imagen']
-
-
-
