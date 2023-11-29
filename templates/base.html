@@ -39,21 +39,39 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Ashe's Salon de Belleza</a>
+                <a class="navbar-brand" href={% url 'home' %}>Ashe's Salon de Belleza</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'productos_tarjeta' %}">Catálogo</a>
+                            <a class="nav-link" href="{% url 'productos_tarjeta' %}">Productos</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'servicios_tarjeta' %}">Servicios</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href={% url 'cliente_cita_agendar' %}>Agendar Cita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href={% url 'cita_calendario' %}>Citas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href='/accounts/logout/?next=/'>Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">Bienvenid@ {{user.first_name}}</a>
+                        </li>
+                        {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'signin' %}">Registrarse</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

@@ -12,51 +12,46 @@
                     <h2 class="mb-4">Registrarse</h2>
                     <form method="post" class="needs-validation" novalidate>
                         {% csrf_token %}
-                        <div class="mb-3">
-                            <div class="form-label-top">
-                                {{ form.username.label_tag }}
+                        <div class="mb-3 row">
+                            <div class="col-md-6">
+                                {{ form.correo_electronico.label_tag }}
+                                {{ form.correo_electronico }}
                             </div>
-                            {{ form.username }}
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-label-top">
-                                {{ form.first_name.label_tag }}
-                            </div>
-                            {{ form.first_name }}
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-label-top">
-                                {{ form.last_name.label_tag }}
+                            <div class="col-md-6">
+                                {{ form.contrasena.label_tag }}
+                                {{ form.contrasena }}
                             </div>
                             {{ form.last_name }}
                         </div>
-                        <div class="mb-3">
-                            <div class="form-label-top">
-                                {{ form.fecha_nacimiento.label_tag }}
+                        <div class="mb-3 row">
+                            <div class="col-md-6">
+                                {{ form.contrasena_confirmar.label_tag }}
+                                {{ form.contrasena_confirmar }}
                             </div>
-                            {{ form.fecha_nacimiento }}
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-label-top">
-                                {{ form.email.label_tag }}
+                            <div class="col-md-6">
+                                {{ form.primer_nombre.label_tag }}
+                                {{ form.primer_nombre }}
                             </div>
                             {{ form.email }}
                         </div>
-                        <div class="mb-3">
-                            <div class="form-label-top">
-                                {{ form.direccion.label_tag }}
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                {{ form.primer_apellido.label_tag }}
+                                {{ form.primer_apellido }}
                             </div>
                             {{ form.direccion }}
                         </div>
-                        <div class="mb-3">
-                            <div class="form-label-top">
-                                {{ form.password.label_tag }}
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                {{ form.fecha_nacimiento.label_tag }}
+                                {{ form.fecha_nacimiento }}
                             </div>
                             {{ form.password }}
                         </div>
-                         <div class="mb-3">
-                            <div class="form-label-top">
-                                {{ form.password_confirm.label_tag }}
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                {{ form.direccion.label_tag }}
+                                {{ form.direccion }}
                             </div>
                             {{ form.password_confirm }}
                         </div>

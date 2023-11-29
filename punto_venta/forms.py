@@ -1,8 +1,8 @@
 from django import forms
-from .models import Cliente
-from .models import Producto
+from .models import Cliente, Producto, Cita, Boleta, Boleta_producto, Boleta_servicio
 class ClienteCrearForm(forms.ModelForm):
-    contrasena_confirmar = forms.CharField(required=True, label="confirmar contraseña")
+    contrasena_confirmar = forms.CharField(required=True, label="Confirmar Contraseña", widget=forms.PasswordInput())
+    contrasena = forms.CharField(required=True, label="Contraseña", widget=forms.PasswordInput())
     class Meta:
         model = Cliente
         fields = [
@@ -19,7 +19,6 @@ class ClienteCrearForm(forms.ModelForm):
             self.add_error('contrasena_confirmar', 'Contraseñas no son iguales.')
         super()._clean_fields()
 
-from .models import Cita
 from datetime import datetime, date
 class CitaClienteForm(forms.ModelForm):
     class Meta:
@@ -49,4 +48,27 @@ class ProductoForm(forms.ModelForm):
         fields = ['nombre', 'descripcion', 'categoria', 'precio_compra', 'precio_venta', 'stock', 'proveedor', 'imagen']
 
 
+#class BoletaProductoForm(forms.ModelForm):
+#    nombre = forms.CharField(label='Producto', max_length=30, required=True)
+#    class Meta:
+#        model = Boleta_producto
+#        fields = ["cantidad"]
+#ProductoFormSet:forms.formset_factory = forms.formset_factory(BoletaProductoForm, extra=1)
+#class BoletaServicioForm(forms.ModelForm):
+#    nombre = forms.CharField(label='Servicio', max_length=30, required=True)
+#    class Meta:
+#        model = Boleta_servicio
+#        fields = ["cantidad"]
+#ServicioFormSet:forms.formset_factory = forms.formset_factory(BoletaServicioForm, extra=1)
+#class BoletaForm(forms.ModelForm):
+#    cliente_correo = forms.CharField(label='Correo Electronico', max_length=30)
+#    productos = ProductoFormSet
+#    servicios = ServicioFormSet
+#    class Meta:
+#        model = Boleta
+#        fields = ["cliente", "tipo_de_pago"]
 
+#from django.forms import inlineformset_factory, BaseInlineFormSet
+#BoletaProductoFormSet = inlineformset_factory(Boleta, BoletaProducto, fields=["producto"])
+#BoletaServicioFormSet = inlineformset_factory(Boleta, BoletaServicio, fields=["servicio"])
+#class BoletaInlineFormset(BaseInlineFormSet):
