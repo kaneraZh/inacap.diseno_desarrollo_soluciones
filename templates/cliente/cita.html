@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}cita{% endblock title %}
+{% block content %}
+<table>
+    <tr>
+      <th>fecha : {{object.fecha}}</th>
+    </tr>
+    <tr>
+        <th>hora : {{object.hora}}</th>
+    </tr>
+    <tr>
+        <th>servicio : {{object.servicio}}</th>
+    </tr>
+</table>
+{% endblock content %}

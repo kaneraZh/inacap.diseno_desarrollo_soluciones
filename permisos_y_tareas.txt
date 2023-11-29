@@ -1,0 +1,229 @@
++-----------------+----------+----------+----------+------+
+| permisos -->    | invitado | *cliente | empleado | jefe |
++-----------------+----------+----------+----------+------+
+| persona         |          |          |          | CRUD |
++-----------------+----------+----------+----------+------+
+| +empleado       |          |          |          | CRUD |
++-----------------+----------+----------+----------+------+
+| +cliente        | C        |          | CRUD     | CRUD |
++-----------------+----------+----------+----------+------+
+| cita            |          | CR       | CRUD     | CRUD |
++-----------------+----------+----------+----------+------+
+| servicio        | R        | R        | CRUD     | CRUD |
++-----------------+----------+----------+----------+------+
+| producto        | R        | R        | CRUD     | CRUD |
++-----------------+----------+----------+----------+------+
+| proveedor       |          |          |          | CRUD |
++-----------------+----------+----------+----------+------+
+| factura         |          |          |          | CRUD |
++-----------------+----------+----------+----------+------+
+| factura_detalle |          |          |          | CRUD |
++-----------------+----------+----------+----------+------+
+| boleta          |          |          | CRU      | CRUD |
++-----------------+----------+----------+----------+------+
+| boleta_servicio |          |          | CRU      | CRUD |
++-----------------+----------+----------+----------+------+
+| boleta_producto |          |          | CRU      | CRUD |
++-----------------+----------+----------+----------+------+
+*cliente tiene solo acceso a las tablas que involucran a su usuario, descontando boletas
+
+Objetivos:
+	INVITADO:
+	- cliente: Registrarse como cliente e ingresar a una cuenta
+	- servicio: Ver servicios disponibles, y detalles del que desee
+	- producto: Ver productos disponibles, y detalles del que desee
+	
+	CLIENTE: 
+	- cita: Poder agendar y ver citas por venir, puede agendar un maximo de 5 citas por cuenta, con un maximo de 3(<) meses a futuro
+	- servicio: Ver servicios disponibles, y detalles del que desee
+	- producto: Ver productos disponibles, y detalles del que desee
+	
+	EMPLEADO:
+	- cliente: Puede registrar a clientes que lo deseen
+	- cita: administracion completa de citas, solo puede cambiar citas a futuro
+	- servicio: administracion completa de servicios
+	- producto: administracion completa de productos
+	- boleta: capacidad de crear y modificar boletas, pero no de borrarlas
+		- boleta_servicio: privilegio necesario para registrar servicios en boletas
+		- boleta_producto: privilegio necesario para registrar productos en boletas
+	
+	JEFE: (un empleado con privilegios administrativos)
+	- persona: administracion completa de personas
+	- empleado: administracion completa de empleados
+	- cliente: administracion completa de clientes
+	- servicio: administracion completa de servicios
+	- cita: administracion completa de citas
+	- producto: administracion completa de productos
+	- proveedor: administracion completa de proveedores
+	- factura: administracion completa de facturas
+		- factura_detalle: privilegio necesario para administracion de factura
+			*forma parte de la interfaz de factura
+	- boleta: administracion completa de boletas
+		- boleta_servicio: privilegio necesario para administracion de boleta
+			*forma parte de la interfaz de boleta
+		- boleta_producto: privilegio necesario para administracion de boleta
+			*forma parte de la interfaz de boleta
+
+
+EMPLEADO
+funcion - Tabla ver paginado (con boton de Borrar)
+- [ ] Cliente
+- [ ] Cita
+- [ ] Servicio
+- [ ] Producto
+funcion - Tabla Ver detalle (con boton de Borrar)
+- [ ] Cliente
+- [ ] Cita
+- [ ] Servicio
+- [ ] Producto
+funcion - Tabla Crear
+- [ ] Cliente
+- [ ] Cita
+- [ ] Servicio
+- [ ] Producto
+funcion - Tabla Actualizar (con boton de Borrar)
+- [ ] Cliente
+- [ ] Cita
+- [ ] Servicio
+- [ ] Producto
+funcion - Boleta ver detalle (boleta y sus boleta_servicio/s y boleta_producto/s)
+funcion - Boleta Crear boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+funcion - Boleta Actualizar boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+view - Tabla ver paginado (con boton de Borrar)
+- [ ] Cliente
+- [ ] Cita
+- [ ] Servicio
+- [ ] Producto
+view - Tabla Ver detalle (con boton de Borrar)
+- [ ] Cliente
+- [ ] Cita
+- [ ] Servicio
+- [ ] Producto
+view - Tabla Crear
+- [ ] Cliente
+- [ ] Cita
+- [ ] Servicio
+- [ ] Producto
+view - Tabla Actualizar (con boton de Borrar)
+- [ ] Cliente
+- [ ] Cita
+- [ ] Servicio
+- [ ] Producto
+view - Boleta ver detalle (boleta y sus boleta_servicio/s y boleta_producto/s)
+view - Boleta Crear boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+view - Boleta Actualizar boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+form - Tabla Crear
+- [ ] Cliente
+- [ ] Cita
+- [ ] Servicio
+- [ ] Producto
+form - Tabla Actualizar
+- [ ] Cliente
+- [ ] Cita
+- [ ] Servicio
+- [ ] Producto
+form - Boleta Crear boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+form - Boleta Actualizar boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+
+
+JEFE
+funcion - Tabla ver paginado (con boton de Borrar)
+- [ ] Persona
+- [ ] Empleado
+- [ ] Cliente
+- [ ] Servicio
+- [ ] Cita
+- [ ] Producto
+- [ ] Proveedor
+- [ ] Factura
+- [ ] Boleta
+funcion - Tabla Ver detalle (con boton de Borrar)
+- [ ] Persona
+- [ ] Empleado
+- [ ] Cliente
+- [ ] Servicio
+- [ ] Cita
+- [ ] Producto
+- [ ] Proveedor
+funcion - Tabla Crear
+- [ ] Persona
+- [ ] Empleado
+- [ ] Cliente
+- [ ] Servicio
+- [ ] Cita
+- [ ] Producto
+- [ ] Proveedor
+funcion - Tabla Actualizar (con boton de Borrar)
+- [ ] Persona
+- [ ] Empleado
+- [ ] Cliente
+- [ ] Servicio
+- [ ] Cita
+- [ ] Producto
+- [ ] Proveedor
+funcion - Factura ver detalle (factura y sus factura_detalle/s) (con boton de Borrar)
+funcion - Factura Crear factura y sus factura_detalle/s (misma pagina)
+funcion - Factura Actualizar factura y sus factura_detalle/s (misma pagina)
+funcion - Boleta ver detalle (boleta y sus boleta_servicio/s y boleta_producto/s) (con boton de Borrar)
+funcion - Boleta Crear boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+funcion - Boleta Actualizar boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+view - Tabla ver paginado (con boton de Borrar)
+- [ ] Persona
+- [ ] Empleado
+- [ ] Cliente
+- [ ] Servicio
+- [ ] Cita
+- [ ] Producto
+- [ ] Proveedor
+- [ ] Factura
+- [ ] Boleta
+view - Tabla Ver detalle (con boton de Borrar)
+- [ ] Persona
+- [ ] Empleado
+- [ ] Cliente
+- [ ] Servicio
+- [ ] Cita
+- [ ] Producto
+- [ ] Proveedor
+view - Tabla Crear
+- [ ] Persona
+- [ ] Empleado
+- [ ] Cliente
+- [ ] Servicio
+- [ ] Cita
+- [ ] Producto
+- [ ] Proveedor
+view - Tabla Actualizar (con boton de Borrar)
+- [ ] Persona
+- [ ] Empleado
+- [ ] Cliente
+- [ ] Servicio
+- [ ] Cita
+- [ ] Producto
+- [ ] Proveedor
+view - Factura ver detalle (factura y sus factura_detalle/s) (con boton de Borrar)
+view - Factura Crear factura y sus factura_detalle/s (misma pagina)
+view - Factura Actualizar factura y sus factura_detalle/s (misma pagina)
+view - Boleta ver detalle (boleta y sus boleta_servicio/s y boleta_producto/s) (con boton de Borrar)
+view - Boleta Crear boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+view - Boleta Actualizar boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+form - Tabla Crear
+- [ ] Persona
+- [ ] Empleado
+- [ ] Cliente
+- [ ] Servicio
+- [ ] Cita
+- [ ] Producto
+- [ ] Proveedor
+form - Tabla Actualizar
+- [ ] Persona
+- [ ] Empleado
+- [ ] Cliente
+- [ ] Servicio
+- [ ] Cita
+- [ ] Producto
+- [ ] Proveedor
+form - Factura Crear factura y sus factura_detalle/s (misma pagina)
+form - Factura Actualizar factura y sus factura_detalle/s (misma pagina)
+form - Boleta Crear boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)
+form - Boleta Actualizar boleta, junto con boleta_servicio/s y boleta_producto/s (misma pagina)

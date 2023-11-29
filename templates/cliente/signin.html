@@ -1,10 +1,64 @@
 {% extends 'base.html' %}
+{% block title %}Registrarse{% endblock title %}
 {% block content %}
-    <form action="" method="post">
-        {% csrf_token %}
-        <div>
-            {{ form.as_p }}
+{% load static %}
+<link rel="stylesheet" href="{% static 'punto_venta/signin.css' %}">
+
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center min-vh-100">
+        <div class="col-md-6">
+            <div class="card shadow rounded">
+                <div class="card-body text-center">
+                    <h2 class="mb-4">Registrarse</h2>
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3 row">
+                            <div class="col-md-6">
+                                {{ form.first_name.label_tag }}
+                                {{ form.first_name }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.last_name.label_tag }}
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-6">
+                                {{ form.fecha_nacimiento.label_tag }}
+                                {{ form.fecha_nacimiento }}
+                            </div>
+                            <div class="col-md-6">
+                                {{ form.email.label_tag }}
+                                {{ form.email }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                {{ form.direccion.label_tag }}
+                                {{ form.direccion }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                {{ form.password.label_tag }}
+                                {{ form.password }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                {{ form.password2.label_tag }}
+                                {{ form.password2 }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <input type="submit" value="crear cuenta">
-    </form>
+    </div>
+</div>
 {% endblock content %}
