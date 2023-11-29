@@ -77,7 +77,7 @@ def calendario(request):
         'citas': citas,
     }
 
-    return render(request, 'cliente/cita/calendario.html', context
+    return render(request, 'cliente/cita/calendario.html', context)
 
 from django.views.generic.list import ListView
 class ProductoCardView(ListView):
