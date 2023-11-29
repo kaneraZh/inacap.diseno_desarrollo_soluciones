@@ -95,7 +95,7 @@ class ProductoCardView(ListView):
 class ServicioCardView(ListView):
     model = models.Servicio
     paginate_by = 8
-    template_name = "tables/view/many_cards.html"
+    template_name = "cliente/servicios.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["detalle"] = 'servicio_detalle'
@@ -194,14 +194,11 @@ def detalle_producto(request, pk):
 from django.views.generic.edit import CreateView, FormView
 # CRUDS CLIENTES
 class ClienteCreateView(CreateView):
-    from django.forms import CharField
     model = models.Cliente
     template_name = "tables/create.html"
-    password_confirm = CharField(required=True)
     fields = [
         'username',
         'password',
-        'password_confirm',
         'first_name',
         'last_name',
         'email',
@@ -242,6 +239,7 @@ class ClienteDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'cliente'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cliente')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cliente')
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -259,6 +257,8 @@ class CitaListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "citas"
         context['detalle'] = 'detalle_cita'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cita')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cita')
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -272,6 +272,7 @@ class CitaDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'cita'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cita')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cita')
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -288,6 +289,8 @@ class ServicioListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "servicios"
         context['detalle'] = 'detalle_servicio'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_servicio')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_servicio')
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -296,11 +299,12 @@ class ServicioListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class ServicioDetailView(DetailView):
     model = models.Servicio
-    template_name = "tables/view_single.html"
+    template_name = "cliente/servicio.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'servicio'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_servicio')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_servicio')
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -317,6 +321,8 @@ class ProductoListView(ListView):
         context = super().get_context_data(**kwargs)
         context["title"] = "productos"
         context['detalle'] = 'detalle_producto'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_producto')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_producto')
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -325,11 +331,12 @@ class ProductoListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class ProductoDetailView(DetailView):
     model = models.Producto
-    template_name = "tables/view_single.html"
+    template_name = "cliente/producto.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'producto'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_producto')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_producto')
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
