@@ -26,10 +26,12 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/profile/', TemplateView.as_view(template_name='cliente/home.html'), name='home2'),
     path('', TemplateView.as_view(template_name='cliente/home.html'), name='home'),
     path('signin/', punto_venta.ClienteSignin, name='signin'),
     path('cita/agendar', punto_venta.ClienteCitaAgendar, name='cliente_cita_agendar'),
-    path('cita/calendario', punto_venta.calendario, name='calendario'),
+#    path('cita/calendario', punto_venta.calendario, name='calendario'),
+    path('cita/calendario', punto_venta.CitaListViewCliente.as_view(), name='cita_calendario'),
     path('servicios/lista', punto_venta.ServicioListView.as_view(), name='servicios'),
     path('servicios/', punto_venta.ServicioCardView.as_view(), name='servicios_tarjeta'),
     path('servicio/<int:pk>/', punto_venta.ServicioDetailView.as_view(), name='servicio_detalle'),
@@ -54,7 +56,19 @@ urlpatterns = [
     path('cliente/borrar/<int:pk>/', punto_venta.ClienteDeleteView.as_view(), name='cliente_borrar'),
     path('boletas/', punto_venta.BoletaListView.as_view(), name='boletas'),
     path('boleta/<int:pk>/', punto_venta.BoletaDetailView.as_view(), name='boleta_detalle'),
+    #path('boleta/crear/', punto_venta.BoletaCrear, name='boleta_crear'),
+    #path('boleta/actualizar/<int:pk>/', punto_venta.BoletaActualizar, name='factura_actualizar'),
     path('boleta/borrar/<int:pk>/', punto_venta.BoletaDeleteView.as_view(), name='boleta_borrar'),
+    path('proveedores/', punto_venta.ProveedorListView.as_view(), name='proveedores'),
+    path('proveedor/<int:pk>/', punto_venta.ProveedorDetailView.as_view(), name='proveedor_detalle'),
+    path('proveedor/crear/', punto_venta.ProveedorCreateView.as_view(), name='proveedor_crear'),
+    path('proveedor/actualizar/<int:pk>/', punto_venta.ProveedorUpdateView.as_view(), name='proveedor_actualizar'),
+    path('proveedor/borrar/<int:pk>/', punto_venta.ProveedorDeleteView.as_view(), name='proveedor_borrar'),
+    path('facturas/', punto_venta.FacturaListView.as_view(), name='facturas'),
+    path('factura/<int:pk>/', punto_venta.FacturaDetailView.as_view(), name='factura_detalle'),
+    path('factura/crear/<int:pk>', punto_venta.FacturaCrear, name='factura_crear'),
+    #path('factura/actualizar/<int:pk>/', punto_venta.FacturaActualizar, name='factura_actualizar'),
+    path('factura/borrar/<int:pk>/', punto_venta.FacturaDeleteView.as_view(), name='factura_borrar'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
