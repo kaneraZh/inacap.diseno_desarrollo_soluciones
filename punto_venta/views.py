@@ -1,6 +1,9 @@
 from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from punto_venta import forms, models
+from .models import Cita, Empleado
+from datetime import date
+#from django.views.generic.detail import DetailView
 
 # URLs genericas para redirigir al usuario
 URL_LOGIN = '/accounts/login/'
@@ -66,6 +69,16 @@ def ClienteCitaAgendar(request:HttpRequest):
     context = {'form':form}
     return render(request, 'cliente/cita/agendar.html', context)
 
+def calendario(request):
+    # Obtener las citas futuras
+    citas = Cita.objects.filter(fecha__gte=date.today()).order_by('fecha', 'hora')
+
+    context = {
+        'citas': citas,
+    }
+
+    return render(request, 'cliente/cita/calendario.html', context
+
 from django.views.generic.list import ListView
 class ProductoCardView(ListView):
     model = models.Producto
@@ -126,7 +139,6 @@ class CitaDetailView(DetailView):
     model = models.Cita
     template_name = "tables/view_single.html"
     permission_required = 'punto_venta.cita.can_view_cita'
-
     # filtra los datos devueltos 
     # en este caso, para que solo quien hizo la cita
     # pueda verla (y no cualquier otro cliente)
