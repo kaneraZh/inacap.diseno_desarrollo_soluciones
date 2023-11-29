@@ -204,7 +204,6 @@ class ClienteCreateView(CreateView):
         'fecha_nacimiento',
         'direccion',
     ]
-    
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
