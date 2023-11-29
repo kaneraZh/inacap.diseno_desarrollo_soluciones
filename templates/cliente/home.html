@@ -4,6 +4,6 @@
     {% if user.is_authenticated %}
     Hi {{ user.username }}
     {% else %}
-    <a href="{% url 'login' %}">Log In</a>
+
     {% endif %}
 {% endblock content %}
