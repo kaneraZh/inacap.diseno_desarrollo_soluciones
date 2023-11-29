@@ -2,23 +2,21 @@ from django import forms
 from .models import Cliente
 from .models import Producto
 class ClienteCrearForm(forms.ModelForm):
-    password_confirm = forms.CharField(required=True)
+    contrasena_confirmar = forms.CharField(required=True, label="confirmar contraseña")
     class Meta:
         model = Cliente
         fields = [
-            'username',
-            'password',
-            'password_confirm',
-            'first_name',
-            'last_name',
-            'email',
+            'correo_electronico',
+            'contrasena',
+            'primer_nombre',
+            'primer_apellido',
             'fecha_nacimiento',
             'direccion',
         ]
     def _clean_fields(self):
         # chequea que las contraseñas sean iguales
-        if(self.__getitem__('password').data != self.__getitem__('password_confirm').data):
-            self.add_error('password_confirm', 'Contraseñas no son iguales.')
+        if(self.__getitem__('contrasena').data != self.__getitem__('contrasena_confirmar').data):
+            self.add_error('contrasena_confirmar', 'Contraseñas no son iguales.')
         super()._clean_fields()
 
 from .models import Cita
