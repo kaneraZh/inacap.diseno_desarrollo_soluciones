@@ -1,14 +1,14 @@
 body {
-    background-color: #ffffff;
+    background-color: #f8f9fa;
 }
 
 .card {
-    width: 400px;
+    max-width: 400px;
     background-color: #fff;
     border: none;
     border-radius: 12px;
-    margin: 20px auto; /* Centra el formulario en la página */
-    padding: 20px; /* Añade un espacio interno al contenedor del formulario */
+    margin: 20px auto;
+    padding: 20px;
 }
 
 label.radio {
@@ -35,13 +35,11 @@ label.radio span {
     line-height: 27px;
 }
 
-label.radio input:checked+span {
+label.radio input:checked + span {
     border-color: #039BE5;
     background-color: #81D4FA;
     color: #fff;
     border-radius: 9px;
-    height: 48px;
-    line-height: 27px;
 }
 
 .form-control {
@@ -49,6 +47,7 @@ label.radio input:checked+span {
     height: 48px;
     border: 2px solid #eee;
     border-radius: 10px;
+    padding: 0 10px;
 }
 
 .form-control:focus {
@@ -76,4 +75,12 @@ label.radio input:checked+span {
 
 .confirm-button:hover {
     background-color: #0277BD;
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.card-body {
+    padding: 20px;
 }
