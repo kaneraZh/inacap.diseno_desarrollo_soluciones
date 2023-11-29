@@ -197,10 +197,10 @@ class ClienteCreateView(CreateView):
     model = models.Cliente
     template_name = "tables/create.html"
     fields = [
-        'username',
-        'first_name',
-        'last_name',
-        'email',
+        'primer_nombre',
+        'primer_apellido',
+        'correo_electronico',
+        'contrasena',
         'fecha_nacimiento',
         'direccion',
     ]
@@ -214,11 +214,9 @@ class ClienteUpdateView(UpdateView):
     model = models.Cliente
     template_name = "tables/update.html"
     fields = [
-        'username',
-        'password',
-        'first_name',
-        'last_name',
-        'email',
+        'primer_nombre',
+        'primer_apellido',
+        'correo_electronico',
         'fecha_nacimiento',
         'direccion',
     ]
@@ -250,8 +248,10 @@ class ClienteListView(ListView):
         context["detalle"] = 'cliente_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cliente')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cliente')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_cliente')
         context["borrar"] = "cliente_borrar"
         context["actualizar"] = "cliente_actualizar"
+        context["crear"] = "cliente_crear"
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
