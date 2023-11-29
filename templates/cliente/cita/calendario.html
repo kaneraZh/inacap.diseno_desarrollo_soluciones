@@ -27,7 +27,7 @@
             </thead>
             <tbody>
                 <!-- Itera sobre las citas y muestra los datos en cada fila -->
-                {% for cita in citas %}
+                {% for cita in object_list %}
                     <tr>
                         <td>{{ cita.fecha }}</td>
                         <td>{{ cita.hora }}</td>
