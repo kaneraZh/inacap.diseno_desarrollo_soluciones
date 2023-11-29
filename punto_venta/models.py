@@ -4,16 +4,19 @@ from django.urls import reverse
 
 class Persona(User):
     #usuario = models.OneToOneField(User, on_delete=models.CASCADE)
-    #primer_nombre = models.CharField(max_length=20, null=True)
-    #segundo_nombre = models.CharField(max_length=20, null=True)
-    #primer_apellido = models.CharField(max_length=20, null=True)
-    #segundo_apellido = models.CharField(max_length=20, null=True)
+    primer_nombre = models.CharField(max_length=20, null=True)
+    primer_apellido = models.CharField(max_length=20, null=True)
+    correo_electronico = models.EmailField(max_length=30, null=True)
+    contrasena = models.CharField(max_length=20, null=True, verbose_name='contraseña')
     fecha_nacimiento = models.DateField()
-    #correo_electronico = models.EmailField(max_length=30, null=True)
-    #contrasena = models.CharField(max_length=20, null=True)
     direccion = models.CharField(max_length=20, null=True)
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        self.set_password(self.password)
+        self.username = self.email
+        self.first_name = self.primer_nombre
+        self.last_name = self.primer_apellido
+        self.email = self.correo_electronico
+        self.password = self.contrasena
+        self.set_password(self.contrasena)
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
         return f'{self.username}, {self.email}, nacimiento: {self.fecha_nacimiento}'

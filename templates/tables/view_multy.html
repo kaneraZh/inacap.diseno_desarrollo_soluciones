@@ -6,6 +6,11 @@
     los transofrma automaticamente a str.
 -->
 {% block content %}
+{% if puede_crear %}
+<form action={% url crear %}>
+    <input type="submit" value="crear" />
+</form>
+{% endif %}
 <table>
     {% for objeto in object_list %}
     <tr>
