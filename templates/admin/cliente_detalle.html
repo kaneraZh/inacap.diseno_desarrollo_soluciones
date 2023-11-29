@@ -13,7 +13,16 @@
             <p class="card-text">Dirección: {{ cliente.direccion }}</p>
         </div>
     </div>
-
+    {% if puede_actualizar %}
+    <form action={% url borrar pk=cliente.id %}>
+        <input type="submit" value="Borrar" />
+    </form>
+    {% endif %}
+    {% if puede_borrar %}
+    <form action={% url actualizar pk=cliente.id %}>
+        <input type="submit" value="Actualizar" />
+    </form>
+    {% endif %}
     <a href="{% url 'clientes' %}" class="btn btn-primary mt-3">Volver a la Lista de Clientes</a>
 
 </div>

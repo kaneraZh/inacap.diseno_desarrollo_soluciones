@@ -1,0 +1,2973 @@
+<?xml version="1.0" encoding="System"?>
+<database>
+    <name>db1</name>
+    <table>
+        <database></database>
+        <name>auth_group</name>
+        <ddl><![CDATA[CREATE TABLE "auth_group" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(150) NOT NULL UNIQUE)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>name</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>UNIQUE</type>
+                        <definition>UNIQUE</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>auth_group_permissions</name>
+        <ddl><![CDATA[CREATE TABLE "auth_group_permissions" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "group_id" integer NOT NULL REFERENCES "auth_group" ("id") DEFERRABLE INITIALLY DEFERRED, "permission_id" integer NOT NULL REFERENCES "auth_permission" ("id") DEFERRABLE INITIALLY DEFERRED)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>group_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "auth_group" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>permission_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "auth_permission" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>auth_permission</name>
+        <ddl><![CDATA[CREATE TABLE "auth_permission" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "content_type_id" integer NOT NULL REFERENCES "django_content_type" ("id") DEFERRABLE INITIALLY DEFERRED, "codename" varchar(100) NOT NULL, "name" varchar(255) NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>content_type_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "django_content_type" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>codename</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>name</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">1</value>
+                <value column="2">add_logentry</value>
+                <value column="3">Can add log entry</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">1</value>
+                <value column="2">change_logentry</value>
+                <value column="3">Can change log entry</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">1</value>
+                <value column="2">delete_logentry</value>
+                <value column="3">Can delete log entry</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">1</value>
+                <value column="2">view_logentry</value>
+                <value column="3">Can view log entry</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">2</value>
+                <value column="2">add_permission</value>
+                <value column="3">Can add permission</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">2</value>
+                <value column="2">change_permission</value>
+                <value column="3">Can change permission</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">2</value>
+                <value column="2">delete_permission</value>
+                <value column="3">Can delete permission</value>
+            </row>
+            <row>
+                <value column="0">8</value>
+                <value column="1">2</value>
+                <value column="2">view_permission</value>
+                <value column="3">Can view permission</value>
+            </row>
+            <row>
+                <value column="0">9</value>
+                <value column="1">3</value>
+                <value column="2">add_group</value>
+                <value column="3">Can add group</value>
+            </row>
+            <row>
+                <value column="0">10</value>
+                <value column="1">3</value>
+                <value column="2">change_group</value>
+                <value column="3">Can change group</value>
+            </row>
+            <row>
+                <value column="0">11</value>
+                <value column="1">3</value>
+                <value column="2">delete_group</value>
+                <value column="3">Can delete group</value>
+            </row>
+            <row>
+                <value column="0">12</value>
+                <value column="1">3</value>
+                <value column="2">view_group</value>
+                <value column="3">Can view group</value>
+            </row>
+            <row>
+                <value column="0">13</value>
+                <value column="1">4</value>
+                <value column="2">add_user</value>
+                <value column="3">Can add user</value>
+            </row>
+            <row>
+                <value column="0">14</value>
+                <value column="1">4</value>
+                <value column="2">change_user</value>
+                <value column="3">Can change user</value>
+            </row>
+            <row>
+                <value column="0">15</value>
+                <value column="1">4</value>
+                <value column="2">delete_user</value>
+                <value column="3">Can delete user</value>
+            </row>
+            <row>
+                <value column="0">16</value>
+                <value column="1">4</value>
+                <value column="2">view_user</value>
+                <value column="3">Can view user</value>
+            </row>
+            <row>
+                <value column="0">17</value>
+                <value column="1">5</value>
+                <value column="2">add_contenttype</value>
+                <value column="3">Can add content type</value>
+            </row>
+            <row>
+                <value column="0">18</value>
+                <value column="1">5</value>
+                <value column="2">change_contenttype</value>
+                <value column="3">Can change content type</value>
+            </row>
+            <row>
+                <value column="0">19</value>
+                <value column="1">5</value>
+                <value column="2">delete_contenttype</value>
+                <value column="3">Can delete content type</value>
+            </row>
+            <row>
+                <value column="0">20</value>
+                <value column="1">5</value>
+                <value column="2">view_contenttype</value>
+                <value column="3">Can view content type</value>
+            </row>
+            <row>
+                <value column="0">21</value>
+                <value column="1">6</value>
+                <value column="2">add_session</value>
+                <value column="3">Can add session</value>
+            </row>
+            <row>
+                <value column="0">22</value>
+                <value column="1">6</value>
+                <value column="2">change_session</value>
+                <value column="3">Can change session</value>
+            </row>
+            <row>
+                <value column="0">23</value>
+                <value column="1">6</value>
+                <value column="2">delete_session</value>
+                <value column="3">Can delete session</value>
+            </row>
+            <row>
+                <value column="0">24</value>
+                <value column="1">6</value>
+                <value column="2">view_session</value>
+                <value column="3">Can view session</value>
+            </row>
+            <row>
+                <value column="0">25</value>
+                <value column="1">7</value>
+                <value column="2">add_boleta</value>
+                <value column="3">Can add boleta</value>
+            </row>
+            <row>
+                <value column="0">26</value>
+                <value column="1">7</value>
+                <value column="2">change_boleta</value>
+                <value column="3">Can change boleta</value>
+            </row>
+            <row>
+                <value column="0">27</value>
+                <value column="1">7</value>
+                <value column="2">delete_boleta</value>
+                <value column="3">Can delete boleta</value>
+            </row>
+            <row>
+                <value column="0">28</value>
+                <value column="1">7</value>
+                <value column="2">view_boleta</value>
+                <value column="3">Can view boleta</value>
+            </row>
+            <row>
+                <value column="0">29</value>
+                <value column="1">7</value>
+                <value column="2">can_add_boleta</value>
+                <value column="3">Puede agregar boletas</value>
+            </row>
+            <row>
+                <value column="0">30</value>
+                <value column="1">7</value>
+                <value column="2">can_delete_boleta</value>
+                <value column="3">Puede eliminar boletas</value>
+            </row>
+            <row>
+                <value column="0">31</value>
+                <value column="1">7</value>
+                <value column="2">can_update_boleta</value>
+                <value column="3">Puede actualizar boletas</value>
+            </row>
+            <row>
+                <value column="0">32</value>
+                <value column="1">8</value>
+                <value column="2">add_factura</value>
+                <value column="3">Can add factura</value>
+            </row>
+            <row>
+                <value column="0">33</value>
+                <value column="1">8</value>
+                <value column="2">change_factura</value>
+                <value column="3">Can change factura</value>
+            </row>
+            <row>
+                <value column="0">34</value>
+                <value column="1">8</value>
+                <value column="2">delete_factura</value>
+                <value column="3">Can delete factura</value>
+            </row>
+            <row>
+                <value column="0">35</value>
+                <value column="1">8</value>
+                <value column="2">view_factura</value>
+                <value column="3">Can view factura</value>
+            </row>
+            <row>
+                <value column="0">36</value>
+                <value column="1">8</value>
+                <value column="2">can_add_factura</value>
+                <value column="3">Puede agregar facturas</value>
+            </row>
+            <row>
+                <value column="0">37</value>
+                <value column="1">8</value>
+                <value column="2">can_delete_factura</value>
+                <value column="3">Puede eliminar facturas</value>
+            </row>
+            <row>
+                <value column="0">38</value>
+                <value column="1">8</value>
+                <value column="2">can_update_factura</value>
+                <value column="3">Puede actualizar facturas</value>
+            </row>
+            <row>
+                <value column="0">39</value>
+                <value column="1">9</value>
+                <value column="2">add_persona</value>
+                <value column="3">Can add user</value>
+            </row>
+            <row>
+                <value column="0">40</value>
+                <value column="1">9</value>
+                <value column="2">change_persona</value>
+                <value column="3">Can change user</value>
+            </row>
+            <row>
+                <value column="0">41</value>
+                <value column="1">9</value>
+                <value column="2">delete_persona</value>
+                <value column="3">Can delete user</value>
+            </row>
+            <row>
+                <value column="0">42</value>
+                <value column="1">9</value>
+                <value column="2">view_persona</value>
+                <value column="3">Can view user</value>
+            </row>
+            <row>
+                <value column="0">43</value>
+                <value column="1">10</value>
+                <value column="2">add_proveedor</value>
+                <value column="3">Can add proveedor</value>
+            </row>
+            <row>
+                <value column="0">44</value>
+                <value column="1">10</value>
+                <value column="2">change_proveedor</value>
+                <value column="3">Can change proveedor</value>
+            </row>
+            <row>
+                <value column="0">45</value>
+                <value column="1">10</value>
+                <value column="2">delete_proveedor</value>
+                <value column="3">Can delete proveedor</value>
+            </row>
+            <row>
+                <value column="0">46</value>
+                <value column="1">10</value>
+                <value column="2">view_proveedor</value>
+                <value column="3">Can view proveedor</value>
+            </row>
+            <row>
+                <value column="0">47</value>
+                <value column="1">11</value>
+                <value column="2">add_servicio</value>
+                <value column="3">Can add servicio</value>
+            </row>
+            <row>
+                <value column="0">48</value>
+                <value column="1">11</value>
+                <value column="2">change_servicio</value>
+                <value column="3">Can change servicio</value>
+            </row>
+            <row>
+                <value column="0">49</value>
+                <value column="1">11</value>
+                <value column="2">delete_servicio</value>
+                <value column="3">Can delete servicio</value>
+            </row>
+            <row>
+                <value column="0">50</value>
+                <value column="1">11</value>
+                <value column="2">view_servicio</value>
+                <value column="3">Can view servicio</value>
+            </row>
+            <row>
+                <value column="0">51</value>
+                <value column="1">12</value>
+                <value column="2">add_cliente</value>
+                <value column="3">Can add Cliente</value>
+            </row>
+            <row>
+                <value column="0">52</value>
+                <value column="1">12</value>
+                <value column="2">change_cliente</value>
+                <value column="3">Can change Cliente</value>
+            </row>
+            <row>
+                <value column="0">53</value>
+                <value column="1">12</value>
+                <value column="2">delete_cliente</value>
+                <value column="3">Can delete Cliente</value>
+            </row>
+            <row>
+                <value column="0">54</value>
+                <value column="1">12</value>
+                <value column="2">view_cliente</value>
+                <value column="3">Can view Cliente</value>
+            </row>
+            <row>
+                <value column="0">55</value>
+                <value column="1">13</value>
+                <value column="2">add_empleado</value>
+                <value column="3">Can add Empleado</value>
+            </row>
+            <row>
+                <value column="0">56</value>
+                <value column="1">13</value>
+                <value column="2">change_empleado</value>
+                <value column="3">Can change Empleado</value>
+            </row>
+            <row>
+                <value column="0">57</value>
+                <value column="1">13</value>
+                <value column="2">delete_empleado</value>
+                <value column="3">Can delete Empleado</value>
+            </row>
+            <row>
+                <value column="0">58</value>
+                <value column="1">13</value>
+                <value column="2">view_empleado</value>
+                <value column="3">Can view Empleado</value>
+            </row>
+            <row>
+                <value column="0">59</value>
+                <value column="1">14</value>
+                <value column="2">add_producto</value>
+                <value column="3">Can add producto</value>
+            </row>
+            <row>
+                <value column="0">60</value>
+                <value column="1">14</value>
+                <value column="2">change_producto</value>
+                <value column="3">Can change producto</value>
+            </row>
+            <row>
+                <value column="0">61</value>
+                <value column="1">14</value>
+                <value column="2">delete_producto</value>
+                <value column="3">Can delete producto</value>
+            </row>
+            <row>
+                <value column="0">62</value>
+                <value column="1">14</value>
+                <value column="2">view_producto</value>
+                <value column="3">Can view producto</value>
+            </row>
+            <row>
+                <value column="0">63</value>
+                <value column="1">15</value>
+                <value column="2">add_factura_detalle</value>
+                <value column="3">Can add factura_detalle</value>
+            </row>
+            <row>
+                <value column="0">64</value>
+                <value column="1">15</value>
+                <value column="2">change_factura_detalle</value>
+                <value column="3">Can change factura_detalle</value>
+            </row>
+            <row>
+                <value column="0">65</value>
+                <value column="1">15</value>
+                <value column="2">delete_factura_detalle</value>
+                <value column="3">Can delete factura_detalle</value>
+            </row>
+            <row>
+                <value column="0">66</value>
+                <value column="1">15</value>
+                <value column="2">view_factura_detalle</value>
+                <value column="3">Can view factura_detalle</value>
+            </row>
+            <row>
+                <value column="0">67</value>
+                <value column="1">16</value>
+                <value column="2">add_boleta_servicio</value>
+                <value column="3">Can add boleta_servicio</value>
+            </row>
+            <row>
+                <value column="0">68</value>
+                <value column="1">16</value>
+                <value column="2">change_boleta_servicio</value>
+                <value column="3">Can change boleta_servicio</value>
+            </row>
+            <row>
+                <value column="0">69</value>
+                <value column="1">16</value>
+                <value column="2">delete_boleta_servicio</value>
+                <value column="3">Can delete boleta_servicio</value>
+            </row>
+            <row>
+                <value column="0">70</value>
+                <value column="1">16</value>
+                <value column="2">view_boleta_servicio</value>
+                <value column="3">Can view boleta_servicio</value>
+            </row>
+            <row>
+                <value column="0">71</value>
+                <value column="1">17</value>
+                <value column="2">add_boleta_producto</value>
+                <value column="3">Can add boleta_producto</value>
+            </row>
+            <row>
+                <value column="0">72</value>
+                <value column="1">17</value>
+                <value column="2">change_boleta_producto</value>
+                <value column="3">Can change boleta_producto</value>
+            </row>
+            <row>
+                <value column="0">73</value>
+                <value column="1">17</value>
+                <value column="2">delete_boleta_producto</value>
+                <value column="3">Can delete boleta_producto</value>
+            </row>
+            <row>
+                <value column="0">74</value>
+                <value column="1">17</value>
+                <value column="2">view_boleta_producto</value>
+                <value column="3">Can view boleta_producto</value>
+            </row>
+            <row>
+                <value column="0">75</value>
+                <value column="1">18</value>
+                <value column="2">add_cita</value>
+                <value column="3">Can add cita</value>
+            </row>
+            <row>
+                <value column="0">76</value>
+                <value column="1">18</value>
+                <value column="2">change_cita</value>
+                <value column="3">Can change cita</value>
+            </row>
+            <row>
+                <value column="0">77</value>
+                <value column="1">18</value>
+                <value column="2">delete_cita</value>
+                <value column="3">Can delete cita</value>
+            </row>
+            <row>
+                <value column="0">78</value>
+                <value column="1">18</value>
+                <value column="2">view_cita</value>
+                <value column="3">Can view cita</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>auth_user</name>
+        <ddl><![CDATA[CREATE TABLE "auth_user" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "password" varchar(128) NOT NULL, "last_login" datetime NULL, "is_superuser" bool NOT NULL, "username" varchar(150) NOT NULL UNIQUE, "last_name" varchar(150) NOT NULL, "email" varchar(254) NOT NULL, "is_staff" bool NOT NULL, "is_active" bool NOT NULL, "date_joined" datetime NOT NULL, "first_name" varchar(150) NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>password</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>last_login</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>is_superuser</name>
+                <type>bool</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>username</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>UNIQUE</type>
+                        <definition>UNIQUE</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>last_name</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>email</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>is_staff</name>
+                <type>bool</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>is_active</name>
+                <type>bool</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>date_joined</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>first_name</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">pbkdf2_sha256$600000$hbw4gRIg2TDntuJTSHZo7S$jNUyIHdFoertWJljOpO2JurTMr/pm/4lZ3xIZo05so0=</value>
+                <value column="2">2023-11-29 06:26:39.091053</value>
+                <value column="3">1</value>
+                <value column="4">admin</value>
+                <value column="5"></value>
+                <value column="6"></value>
+                <value column="7">1</value>
+                <value column="8">1</value>
+                <value column="9">2023-11-29 01:20:40.061977</value>
+                <value column="10"></value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">pbkdf2_sha256$600000$Ybs1RbEicEqxDRWPkzDYox$GfQWfQRQCA6hGiujdbznDzq4+moaXDJcJFn0QSxvBII=</value>
+                <value column="2">2023-11-29 06:26:22.940388</value>
+                <value column="3">0</value>
+                <value column="4">pipe</value>
+                <value column="5">villarroel</value>
+                <value column="6">fvillarroel@gmail.com</value>
+                <value column="7">0</value>
+                <value column="8">1</value>
+                <value column="9">2023-11-29 04:22:51.279571</value>
+                <value column="10">felipe</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">pbkdf2_sha256$600000$jLHhSLUIvjPyXsB59d1GRa$a4Qio9RTQPF+ldKoPS86VlJCpyei7LdJcxUJO6Sq4os=</value>
+                <value column="2">2023-11-29 06:25:55.593547</value>
+                <value column="3">1</value>
+                <value column="4">hola</value>
+                <value column="5"></value>
+                <value column="6"></value>
+                <value column="7">1</value>
+                <value column="8">1</value>
+                <value column="9">2023-11-29 06:25:39.162035</value>
+                <value column="10"></value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>auth_user_groups</name>
+        <ddl><![CDATA[CREATE TABLE "auth_user_groups" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "user_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "group_id" integer NOT NULL REFERENCES "auth_group" ("id") DEFERRABLE INITIALLY DEFERRED)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>user_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "auth_user" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>group_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "auth_group" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>auth_user_user_permissions</name>
+        <ddl><![CDATA[CREATE TABLE "auth_user_user_permissions" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "user_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "permission_id" integer NOT NULL REFERENCES "auth_permission" ("id") DEFERRABLE INITIALLY DEFERRED)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>user_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "auth_user" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>permission_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "auth_permission" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>django_admin_log</name>
+        <ddl><![CDATA[CREATE TABLE "django_admin_log" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "object_id" text NULL, "object_repr" varchar(200) NOT NULL, "action_flag" smallint unsigned NOT NULL CHECK ("action_flag" >= 0), "change_message" text NOT NULL, "content_type_id" integer NULL REFERENCES "django_content_type" ("id") DEFERRABLE INITIALLY DEFERRED, "user_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "action_time" datetime NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>object_id</name>
+                <type>text</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>object_repr</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>action_flag</name>
+                <type>smallint unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("action_flag" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>change_message</name>
+                <type>text</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>content_type_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "django_content_type" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>user_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "auth_user" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>action_time</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">1</value>
+                <value column="2">Tio Nacho, tionacho@gmail.com, pedro 120, 34254324</value>
+                <value column="3">1</value>
+                <value column="4">[{&quot;added&quot;: {}}]</value>
+                <value column="5">10</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 01:22:24.969442</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">1</value>
+                <value column="2">shampoo, 3000, 20</value>
+                <value column="3">1</value>
+                <value column="4">[{&quot;added&quot;: {}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 01:22:29.692545</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">2</value>
+                <value column="2">aa, 12321, 132</value>
+                <value column="3">1</value>
+                <value column="4">[{&quot;added&quot;: {}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 01:57:20.628859</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">1</value>
+                <value column="2">shampoo, 3000, 20</value>
+                <value column="3">2</value>
+                <value column="4">[{&quot;changed&quot;: {&quot;fields&quot;: [&quot;Imagen&quot;]}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 02:28:36.638099</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">1</value>
+                <value column="2">shampoo, 3000, 20</value>
+                <value column="3">2</value>
+                <value column="4">[]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 02:31:40.502144</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">2</value>
+                <value column="2">aa, 12321, 132</value>
+                <value column="3">2</value>
+                <value column="4">[{&quot;changed&quot;: {&quot;fields&quot;: [&quot;Imagen&quot;]}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 02:31:46.012186</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">2</value>
+                <value column="2">shampoo tio nacho, 12321, 132</value>
+                <value column="3">2</value>
+                <value column="4">[{&quot;changed&quot;: {&quot;fields&quot;: [&quot;Nombre&quot;]}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 02:32:01.314524</value>
+            </row>
+            <row>
+                <value column="0">8</value>
+                <value column="1">2</value>
+                <value column="2">solopelo, sfjklsjflk@gmail.com, washington 234, 3425432423</value>
+                <value column="3">1</value>
+                <value column="4">[{&quot;added&quot;: {}}]</value>
+                <value column="5">10</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 03:14:36.824508</value>
+            </row>
+            <row>
+                <value column="0">9</value>
+                <value column="1">3</value>
+                <value column="2">Nishman Cera Pasta Mate M1 100, 10, 10</value>
+                <value column="3">1</value>
+                <value column="4">[{&quot;added&quot;: {}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 03:15:10.311477</value>
+            </row>
+            <row>
+                <value column="0">10</value>
+                <value column="1">3</value>
+                <value column="2">Nishman Cera Pasta Mate M1 100, 10000, 10</value>
+                <value column="3">2</value>
+                <value column="4">[{&quot;changed&quot;: {&quot;fields&quot;: [&quot;Precio venta&quot;]}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 03:15:30.459562</value>
+            </row>
+            <row>
+                <value column="0">11</value>
+                <value column="1">4</value>
+                <value column="2">Nish-man Cera Spider Wax 150ml, 10000, 20</value>
+                <value column="3">1</value>
+                <value column="4">[{&quot;added&quot;: {}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 03:17:17.146957</value>
+            </row>
+            <row>
+                <value column="0">12</value>
+                <value column="1">5</value>
+                <value column="2">Polvo Texturizador Capilar, 8990, 7</value>
+                <value column="3">1</value>
+                <value column="4">[{&quot;added&quot;: {}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 03:19:11.575490</value>
+            </row>
+            <row>
+                <value column="0">13</value>
+                <value column="1">6</value>
+                <value column="2">Polvo Texturizador, 7990, 1</value>
+                <value column="3">1</value>
+                <value column="4">[{&quot;added&quot;: {}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 03:20:51.969150</value>
+            </row>
+            <row>
+                <value column="0">14</value>
+                <value column="1">7</value>
+                <value column="2">Cera Buffalo Fiber 150 Ml Cera, 5700, 4</value>
+                <value column="3">1</value>
+                <value column="4">[{&quot;added&quot;: {}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 03:21:32.018390</value>
+            </row>
+            <row>
+                <value column="0">15</value>
+                <value column="1">7</value>
+                <value column="2">Cera Buffalo Fiber 150 Ml Cera, 5700, 4</value>
+                <value column="3">2</value>
+                <value column="4">[{&quot;changed&quot;: {&quot;fields&quot;: [&quot;Descripcion&quot;]}}]</value>
+                <value column="5">14</value>
+                <value column="6">1</value>
+                <value column="7">2023-11-29 03:23:34.989058</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>django_content_type</name>
+        <ddl><![CDATA[CREATE TABLE "django_content_type" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "app_label" varchar(100) NOT NULL, "model" varchar(100) NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>app_label</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>model</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">admin</value>
+                <value column="2">logentry</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">auth</value>
+                <value column="2">permission</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">auth</value>
+                <value column="2">group</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">auth</value>
+                <value column="2">user</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">contenttypes</value>
+                <value column="2">contenttype</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">sessions</value>
+                <value column="2">session</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">punto_venta</value>
+                <value column="2">boleta</value>
+            </row>
+            <row>
+                <value column="0">8</value>
+                <value column="1">punto_venta</value>
+                <value column="2">factura</value>
+            </row>
+            <row>
+                <value column="0">9</value>
+                <value column="1">punto_venta</value>
+                <value column="2">persona</value>
+            </row>
+            <row>
+                <value column="0">10</value>
+                <value column="1">punto_venta</value>
+                <value column="2">proveedor</value>
+            </row>
+            <row>
+                <value column="0">11</value>
+                <value column="1">punto_venta</value>
+                <value column="2">servicio</value>
+            </row>
+            <row>
+                <value column="0">12</value>
+                <value column="1">punto_venta</value>
+                <value column="2">cliente</value>
+            </row>
+            <row>
+                <value column="0">13</value>
+                <value column="1">punto_venta</value>
+                <value column="2">empleado</value>
+            </row>
+            <row>
+                <value column="0">14</value>
+                <value column="1">punto_venta</value>
+                <value column="2">producto</value>
+            </row>
+            <row>
+                <value column="0">15</value>
+                <value column="1">punto_venta</value>
+                <value column="2">factura_detalle</value>
+            </row>
+            <row>
+                <value column="0">16</value>
+                <value column="1">punto_venta</value>
+                <value column="2">boleta_servicio</value>
+            </row>
+            <row>
+                <value column="0">17</value>
+                <value column="1">punto_venta</value>
+                <value column="2">boleta_producto</value>
+            </row>
+            <row>
+                <value column="0">18</value>
+                <value column="1">punto_venta</value>
+                <value column="2">cita</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>django_migrations</name>
+        <ddl><![CDATA[CREATE TABLE "django_migrations" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "app" varchar(255) NOT NULL, "name" varchar(255) NOT NULL, "applied" datetime NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>app</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>name</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>applied</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">contenttypes</value>
+                <value column="2">0001_initial</value>
+                <value column="3">2023-11-29 01:20:23.064661</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">auth</value>
+                <value column="2">0001_initial</value>
+                <value column="3">2023-11-29 01:20:23.101501</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">admin</value>
+                <value column="2">0001_initial</value>
+                <value column="3">2023-11-29 01:20:23.120035</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">admin</value>
+                <value column="2">0002_logentry_remove_auto_add</value>
+                <value column="3">2023-11-29 01:20:23.137107</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">admin</value>
+                <value column="2">0003_logentry_add_action_flag_choices</value>
+                <value column="3">2023-11-29 01:20:23.149180</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">contenttypes</value>
+                <value column="2">0002_remove_content_type_name</value>
+                <value column="3">2023-11-29 01:20:23.169703</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">auth</value>
+                <value column="2">0002_alter_permission_name_max_length</value>
+                <value column="3">2023-11-29 01:20:23.188891</value>
+            </row>
+            <row>
+                <value column="0">8</value>
+                <value column="1">auth</value>
+                <value column="2">0003_alter_user_email_max_length</value>
+                <value column="3">2023-11-29 01:20:23.207423</value>
+            </row>
+            <row>
+                <value column="0">9</value>
+                <value column="1">auth</value>
+                <value column="2">0004_alter_user_username_opts</value>
+                <value column="3">2023-11-29 01:20:23.224532</value>
+            </row>
+            <row>
+                <value column="0">10</value>
+                <value column="1">auth</value>
+                <value column="2">0005_alter_user_last_login_null</value>
+                <value column="3">2023-11-29 01:20:23.237550</value>
+            </row>
+            <row>
+                <value column="0">11</value>
+                <value column="1">auth</value>
+                <value column="2">0006_require_contenttypes_0002</value>
+                <value column="3">2023-11-29 01:20:23.248637</value>
+            </row>
+            <row>
+                <value column="0">12</value>
+                <value column="1">auth</value>
+                <value column="2">0007_alter_validators_add_error_messages</value>
+                <value column="3">2023-11-29 01:20:23.259164</value>
+            </row>
+            <row>
+                <value column="0">13</value>
+                <value column="1">auth</value>
+                <value column="2">0008_alter_user_username_max_length</value>
+                <value column="3">2023-11-29 01:20:23.274235</value>
+            </row>
+            <row>
+                <value column="0">14</value>
+                <value column="1">auth</value>
+                <value column="2">0009_alter_user_last_name_max_length</value>
+                <value column="3">2023-11-29 01:20:23.292926</value>
+            </row>
+            <row>
+                <value column="0">15</value>
+                <value column="1">auth</value>
+                <value column="2">0010_alter_group_name_max_length</value>
+                <value column="3">2023-11-29 01:20:23.310015</value>
+            </row>
+            <row>
+                <value column="0">16</value>
+                <value column="1">auth</value>
+                <value column="2">0011_update_proxy_permissions</value>
+                <value column="3">2023-11-29 01:20:23.323054</value>
+            </row>
+            <row>
+                <value column="0">17</value>
+                <value column="1">auth</value>
+                <value column="2">0012_alter_user_first_name_max_length</value>
+                <value column="3">2023-11-29 01:20:23.337602</value>
+            </row>
+            <row>
+                <value column="0">18</value>
+                <value column="1">punto_venta</value>
+                <value column="2">0001_initial</value>
+                <value column="3">2023-11-29 01:20:23.450180</value>
+            </row>
+            <row>
+                <value column="0">19</value>
+                <value column="1">punto_venta</value>
+                <value column="2">0002_alter_servicio_tiempo</value>
+                <value column="3">2023-11-29 01:20:23.485343</value>
+            </row>
+            <row>
+                <value column="0">20</value>
+                <value column="1">punto_venta</value>
+                <value column="2">0003_producto_descripcion</value>
+                <value column="3">2023-11-29 01:20:23.506607</value>
+            </row>
+            <row>
+                <value column="0">21</value>
+                <value column="1">sessions</value>
+                <value column="2">0001_initial</value>
+                <value column="3">2023-11-29 01:20:23.530582</value>
+            </row>
+            <row>
+                <value column="0">22</value>
+                <value column="1">punto_venta</value>
+                <value column="2">0004_producto_imagen_alter_boleta_monto_iva_and_more</value>
+                <value column="3">2023-11-29 02:14:42.438715</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>django_session</name>
+        <ddl><![CDATA[CREATE TABLE "django_session" ("session_key" varchar(40) NOT NULL PRIMARY KEY, "session_data" text NOT NULL, "expire_date" datetime NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>session_key</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>session_data</name>
+                <type>text</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>expire_date</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">05406qoikncytwnhn2ro9mbl90seqynd</value>
+                <value column="1">.eJxVjEEOwiAQRe_C2pDCTAVcuvcMZAamUjU0Ke3KeHfbpAvd_vfef6tI61Li2mSOY1YXZdTpd2NKT6k7yA-q90mnqS7zyHpX9EGbvk1ZXtfD_Tso1MpWB-lRfLIA1vmMxIzZsQwQoE-4IQxmsInZMFDHIZ2FrLcISB47Z9TnC-u_N8w:1r8E1v:o20AnrO5W_P58UiTksAhkQKE-bIB13ajeJ9wNPVlOu8</value>
+                <value column="2">2023-12-13 06:26:39.099002</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_boleta</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_boleta" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "fecha_modificacion" datetime NOT NULL, "fecha_creacion" datetime NOT NULL, "tipo_de_pago" varchar(25) NOT NULL, "monto_neto" integer unsigned NOT NULL CHECK ("monto_neto" >= 0), "monto_iva" integer unsigned NOT NULL CHECK ("monto_iva" >= 0), "cliente_id" integer NULL REFERENCES "punto_venta_cliente" ("persona_ptr_id") DEFERRABLE INITIALLY DEFERRED, "empleado_id" integer NULL REFERENCES "punto_venta_empleado" ("persona_ptr_id") DEFERRABLE INITIALLY DEFERRED, "monto_total" integer unsigned NOT NULL CHECK ("monto_total" >= 0))]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_modificacion</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_creacion</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>tipo_de_pago</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_neto</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_neto" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_iva</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_iva" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>cliente_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_cliente" ("persona_ptr_id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>empleado_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_empleado" ("persona_ptr_id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_total</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_total" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_boleta_producto</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_boleta_producto" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "fecha_modificacion" datetime NOT NULL, "fecha_creacion" datetime NOT NULL, "cantidad" integer unsigned NOT NULL CHECK ("cantidad" >= 0), "monto_neto" integer unsigned NOT NULL CHECK ("monto_neto" >= 0), "monto_iva" integer unsigned NOT NULL CHECK ("monto_iva" >= 0), "monto_total" integer unsigned NOT NULL CHECK ("monto_total" >= 0), "boleta_id" bigint NOT NULL REFERENCES "punto_venta_boleta" ("id") DEFERRABLE INITIALLY DEFERRED, "producto_id" bigint NULL REFERENCES "punto_venta_producto" ("id") DEFERRABLE INITIALLY DEFERRED, "precio_venta" integer unsigned NOT NULL CHECK ("precio_venta" >= 0))]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_modificacion</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_creacion</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>cantidad</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("cantidad" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_neto</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_neto" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_iva</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_iva" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_total</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_total" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>boleta_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_boleta" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>producto_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_producto" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>precio_venta</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("precio_venta" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_boleta_servicio</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_boleta_servicio" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "fecha_modificacion" datetime NOT NULL, "fecha_creacion" datetime NOT NULL, "cantidad" integer unsigned NOT NULL CHECK ("cantidad" >= 0), "monto_neto" integer unsigned NOT NULL CHECK ("monto_neto" >= 0), "monto_iva" integer unsigned NOT NULL CHECK ("monto_iva" >= 0), "monto_total" integer unsigned NOT NULL CHECK ("monto_total" >= 0), "boleta_id" bigint NOT NULL REFERENCES "punto_venta_boleta" ("id") DEFERRABLE INITIALLY DEFERRED, "servicio_id" bigint NULL REFERENCES "punto_venta_servicio" ("id") DEFERRABLE INITIALLY DEFERRED, "precio_venta" integer unsigned NOT NULL CHECK ("precio_venta" >= 0))]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_modificacion</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_creacion</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>cantidad</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("cantidad" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_neto</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_neto" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_iva</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_iva" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_total</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_total" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>boleta_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_boleta" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>servicio_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_servicio" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>precio_venta</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("precio_venta" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_cita</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_cita" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "fecha" date NOT NULL, "hora" time NOT NULL, "servicio_id" bigint NOT NULL REFERENCES "punto_venta_servicio" ("id") DEFERRABLE INITIALLY DEFERRED, "cliente_id" integer NULL REFERENCES "punto_venta_cliente" ("persona_ptr_id") DEFERRABLE INITIALLY DEFERRED)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha</name>
+                <type>date</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>hora</name>
+                <type>time</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>servicio_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_servicio" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>cliente_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_cliente" ("persona_ptr_id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_cliente</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_cliente" ("persona_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "punto_venta_persona" ("user_ptr_id") DEFERRABLE INITIALLY DEFERRED)]]></ddl>
+        <columns>
+            <column>
+                <name>persona_ptr_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_persona" ("user_ptr_id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">2</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_empleado</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_empleado" ("persona_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "punto_venta_persona" ("user_ptr_id") DEFERRABLE INITIALLY DEFERRED, "documento_identificador" varchar(30) NOT NULL, "fecha_contratacion" date NOT NULL, "afp" varchar(15) NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>persona_ptr_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_persona" ("user_ptr_id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>documento_identificador</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_contratacion</name>
+                <type>date</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>afp</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_factura</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_factura" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "fecha_modificacion" datetime NOT NULL, "fecha_creacion" datetime NOT NULL, "numero_factura" integer unsigned NOT NULL CHECK ("numero_factura" >= 0), "tipo_de_pago" varchar(25) NOT NULL, "monto_neto" integer unsigned NOT NULL CHECK ("monto_neto" >= 0), "monto_iva" integer unsigned NOT NULL CHECK ("monto_iva" >= 0), "empleado_id" integer NOT NULL REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "proveedor_id" bigint NULL REFERENCES "punto_venta_proveedor" ("id") DEFERRABLE INITIALLY DEFERRED, "monto_total" integer unsigned NOT NULL CHECK ("monto_total" >= 0))]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_modificacion</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_creacion</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>numero_factura</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("numero_factura" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>tipo_de_pago</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_neto</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_neto" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_iva</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_iva" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>empleado_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "auth_user" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>proveedor_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_proveedor" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_total</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_total" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_factura_detalle</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_factura_detalle" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "fecha_modificacion" datetime NOT NULL, "fecha_creacion" datetime NOT NULL, "numero_factura" integer NOT NULL, "cantidad" integer unsigned NOT NULL CHECK ("cantidad" >= 0), "monto_neto" integer unsigned NOT NULL CHECK ("monto_neto" >= 0), "monto_iva" integer unsigned NOT NULL CHECK ("monto_iva" >= 0), "monto_total" integer unsigned NOT NULL CHECK ("monto_total" >= 0), "factura_id" bigint NOT NULL REFERENCES "punto_venta_factura" ("id") DEFERRABLE INITIALLY DEFERRED, "producto_id" bigint NULL REFERENCES "punto_venta_producto" ("id") DEFERRABLE INITIALLY DEFERRED, "precio_venta" integer unsigned NOT NULL CHECK ("precio_venta" >= 0))]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_modificacion</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_creacion</name>
+                <type>datetime</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>numero_factura</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>cantidad</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("cantidad" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_neto</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_neto" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_iva</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_iva" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>monto_total</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("monto_total" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>factura_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_factura" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>producto_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_producto" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>precio_venta</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("precio_venta" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_persona</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_persona" ("user_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "fecha_nacimiento" date NOT NULL, "direccion" varchar(20) NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>user_ptr_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "auth_user" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_nacimiento</name>
+                <type>date</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>direccion</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">2</value>
+                <value column="1">2003-11-29</value>
+                <value column="2">pedro 120</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_producto</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_producto" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "nombre" varchar(30) NOT NULL, "categoria" varchar(20) NOT NULL, "precio_compra" integer unsigned NOT NULL CHECK ("precio_compra" >= 0), "stock" integer unsigned NOT NULL CHECK ("stock" >= 0), "proveedor_id" bigint NOT NULL REFERENCES "punto_venta_proveedor" ("id") DEFERRABLE INITIALLY DEFERRED, "descripcion" varchar(50) NOT NULL, "imagen" varchar(100) NOT NULL, "precio_venta" integer unsigned NOT NULL CHECK ("precio_venta" >= 0))]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>nombre</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>categoria</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>precio_compra</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("precio_compra" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>stock</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("stock" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>proveedor_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_proveedor" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>descripcion</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>imagen</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>precio_venta</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("precio_venta" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">shampoo</value>
+                <value column="2">pelo</value>
+                <value column="3">1000</value>
+                <value column="4">20</value>
+                <value column="5">1</value>
+                <value column="6">shampoo sin sal</value>
+                <value column="7">productos/shampootionacho.webp</value>
+                <value column="8">3000</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">shampoo tio nacho</value>
+                <value column="2">aa</value>
+                <value column="3">1231123</value>
+                <value column="4">132</value>
+                <value column="5">1</value>
+                <value column="6">aa</value>
+                <value column="7">productos/tionacho_Qcq8Sag.jpg</value>
+                <value column="8">12321</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">Nishman Cera Pasta Mate M1 100</value>
+                <value column="2">pelo</value>
+                <value column="3">5</value>
+                <value column="4">10</value>
+                <value column="5">2</value>
+                <value column="6">Viene en frasco. Es vegano. Funciones: fijadora. E</value>
+                <value column="7">productos/D_NQ_NP_636462-MLC53103942838_122022-O.webp</value>
+                <value column="8">10000</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">Nish-man Cera Spider Wax 150ml</value>
+                <value column="2">pelo</value>
+                <value column="3">5000</value>
+                <value column="4">20</value>
+                <value column="5">2</value>
+                <value column="6">Viene en frasco. Es vegano. Funciones: fijador. Es</value>
+                <value column="7">productos/D_NQ_NP_755494-MLU72565649032_112023-O.webp</value>
+                <value column="8">10000</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">Polvo Texturizador Capilar</value>
+                <value column="2">pelo</value>
+                <value column="3">5000</value>
+                <value column="4">7</value>
+                <value column="5">2</value>
+                <value column="6">Viene en frasco. Es vegano. Funciones: fijador. Es</value>
+                <value column="7">productos/D_NQ_NP_742534-MLC49334821055_032022-O.webp</value>
+                <value column="8">8990</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">Polvo Texturizador</value>
+                <value column="2">pelo</value>
+                <value column="3">5000</value>
+                <value column="4">1</value>
+                <value column="5">2</value>
+                <value column="6">Viene en frasco. Es vegano. Funciones: fijador. Es</value>
+                <value column="7">productos/D_NQ_NP_646611-MLU72635546487_112023-O.webp</value>
+                <value column="8">7990</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">Cera Buffalo Fiber 150 Ml Cera</value>
+                <value column="2">pelo</value>
+                <value column="3">1000</value>
+                <value column="4">4</value>
+                <value column="5">2</value>
+                <value column="6">Viene en frasco. Es vegano. Funciones: fijador. Está dermatológicamente testeado. Sus ingredientes destacados son: aqua. Es libre de gluten.</value>
+                <value column="7">productos/D_NQ_NP_700904-MLU70661221349_072023-O.webp</value>
+                <value column="8">5700</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_proveedor</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_proveedor" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "nombre" varchar(40) NOT NULL, "direccion" varchar(40) NOT NULL, "rut_empresa" varchar(30) NOT NULL, "telefono_celular" varchar(30) NOT NULL, "email" varchar(40) NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>nombre</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>direccion</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>rut_empresa</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>telefono_celular</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>email</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">Tio Nacho</value>
+                <value column="2">pedro 120</value>
+                <value column="3">312432434</value>
+                <value column="4">34254324</value>
+                <value column="5">tionacho@gmail.com</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">solopelo</value>
+                <value column="2">washington 234</value>
+                <value column="3">1311441</value>
+                <value column="4">3425432423</value>
+                <value column="5">sfjklsjflk@gmail.com</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_servicio</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_servicio" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "nombre" varchar(30) NOT NULL, "descripcion" varchar(50) NOT NULL, "tiempo" bigint NOT NULL, "precio" integer unsigned NOT NULL CHECK ("precio" >= 0))]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>nombre</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>descripcion</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>tiempo</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>precio</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("precio" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_servicio_empleados</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_servicio_empleados" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "servicio_id" bigint NOT NULL REFERENCES "punto_venta_servicio" ("id") DEFERRABLE INITIALLY DEFERRED, "empleado_id" integer NOT NULL REFERENCES "punto_venta_empleado" ("persona_ptr_id") DEFERRABLE INITIALLY DEFERRED)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>servicio_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_servicio" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>empleado_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_empleado" ("persona_ptr_id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <index>
+        <database></database>
+        <name>auth_group_permissions_group_id_b120cbf9</name>
+        <ddl>CREATE INDEX &quot;auth_group_permissions_group_id_b120cbf9&quot; ON &quot;auth_group_permissions&quot; (&quot;group_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_group_permissions_group_id_permission_id_0cd325b0_uniq</name>
+        <unique>true</unique>
+        <ddl><![CDATA[CREATE UNIQUE INDEX "auth_group_permissions_group_id_permission_id_0cd325b0_uniq" ON "auth_group_permissions" ("group_id", "permission_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_group_permissions_permission_id_84c5c92e</name>
+        <ddl><![CDATA[CREATE INDEX "auth_group_permissions_permission_id_84c5c92e" ON "auth_group_permissions" ("permission_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_permission_content_type_id_2f476e4b</name>
+        <ddl>CREATE INDEX &quot;auth_permission_content_type_id_2f476e4b&quot; ON &quot;auth_permission&quot; (&quot;content_type_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_permission_content_type_id_codename_01ab375a_uniq</name>
+        <unique>true</unique>
+        <ddl><![CDATA[CREATE UNIQUE INDEX "auth_permission_content_type_id_codename_01ab375a_uniq" ON "auth_permission" ("content_type_id", "codename")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_user_groups_group_id_97559544</name>
+        <ddl>CREATE INDEX &quot;auth_user_groups_group_id_97559544&quot; ON &quot;auth_user_groups&quot; (&quot;group_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_user_groups_user_id_6a12ed8b</name>
+        <ddl>CREATE INDEX &quot;auth_user_groups_user_id_6a12ed8b&quot; ON &quot;auth_user_groups&quot; (&quot;user_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_user_groups_user_id_group_id_94350c0c_uniq</name>
+        <unique>true</unique>
+        <ddl><![CDATA[CREATE UNIQUE INDEX "auth_user_groups_user_id_group_id_94350c0c_uniq" ON "auth_user_groups" ("user_id", "group_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_user_user_permissions_permission_id_1fbb5f2c</name>
+        <ddl><![CDATA[CREATE INDEX "auth_user_user_permissions_permission_id_1fbb5f2c" ON "auth_user_user_permissions" ("permission_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_user_user_permissions_user_id_a95ead1b</name>
+        <ddl><![CDATA[CREATE INDEX "auth_user_user_permissions_user_id_a95ead1b" ON "auth_user_user_permissions" ("user_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_user_user_permissions_user_id_permission_id_14a6b632_uniq</name>
+        <unique>true</unique>
+        <ddl><![CDATA[CREATE UNIQUE INDEX "auth_user_user_permissions_user_id_permission_id_14a6b632_uniq" ON "auth_user_user_permissions" ("user_id", "permission_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>django_admin_log_content_type_id_c4bce8eb</name>
+        <ddl>CREATE INDEX &quot;django_admin_log_content_type_id_c4bce8eb&quot; ON &quot;django_admin_log&quot; (&quot;content_type_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>django_admin_log_user_id_c564eba6</name>
+        <ddl>CREATE INDEX &quot;django_admin_log_user_id_c564eba6&quot; ON &quot;django_admin_log&quot; (&quot;user_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>django_content_type_app_label_model_76bd3d3b_uniq</name>
+        <unique>true</unique>
+        <ddl><![CDATA[CREATE UNIQUE INDEX "django_content_type_app_label_model_76bd3d3b_uniq" ON "django_content_type" ("app_label", "model")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>django_session_expire_date_a5c62663</name>
+        <ddl>CREATE INDEX &quot;django_session_expire_date_a5c62663&quot; ON &quot;django_session&quot; (&quot;expire_date&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_boleta_cliente_id_6d4fc5ad</name>
+        <ddl>CREATE INDEX &quot;punto_venta_boleta_cliente_id_6d4fc5ad&quot; ON &quot;punto_venta_boleta&quot; (&quot;cliente_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_boleta_empleado_id_0c03dcd4</name>
+        <ddl>CREATE INDEX &quot;punto_venta_boleta_empleado_id_0c03dcd4&quot; ON &quot;punto_venta_boleta&quot; (&quot;empleado_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_boleta_producto_boleta_id_964c6be4</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_boleta_producto_boleta_id_964c6be4" ON "punto_venta_boleta_producto" ("boleta_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_boleta_producto_producto_id_a84e0a8e</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_boleta_producto_producto_id_a84e0a8e" ON "punto_venta_boleta_producto" ("producto_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_boleta_servicio_boleta_id_a5a56250</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_boleta_servicio_boleta_id_a5a56250" ON "punto_venta_boleta_servicio" ("boleta_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_boleta_servicio_servicio_id_659b6b26</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_boleta_servicio_servicio_id_659b6b26" ON "punto_venta_boleta_servicio" ("servicio_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_cita_cliente_id_d0690215</name>
+        <ddl>CREATE INDEX &quot;punto_venta_cita_cliente_id_d0690215&quot; ON &quot;punto_venta_cita&quot; (&quot;cliente_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_cita_servicio_id_70a4c423</name>
+        <ddl>CREATE INDEX &quot;punto_venta_cita_servicio_id_70a4c423&quot; ON &quot;punto_venta_cita&quot; (&quot;servicio_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_factura_detalle_factura_id_3e53b026</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_factura_detalle_factura_id_3e53b026" ON "punto_venta_factura_detalle" ("factura_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_factura_detalle_producto_id_a7a6622a</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_factura_detalle_producto_id_a7a6622a" ON "punto_venta_factura_detalle" ("producto_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_factura_empleado_id_e68f0d6f</name>
+        <ddl>CREATE INDEX &quot;punto_venta_factura_empleado_id_e68f0d6f&quot; ON &quot;punto_venta_factura&quot; (&quot;empleado_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_factura_proveedor_id_ce07546c</name>
+        <ddl>CREATE INDEX &quot;punto_venta_factura_proveedor_id_ce07546c&quot; ON &quot;punto_venta_factura&quot; (&quot;proveedor_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_producto_proveedor_id_64c56173</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_producto_proveedor_id_64c56173" ON "punto_venta_producto" ("proveedor_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_servicio_empleados_empleado_id_4d585b70</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_servicio_empleados_empleado_id_4d585b70" ON "punto_venta_servicio_empleados" ("empleado_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_servicio_empleados_servicio_id_d99264a2</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_servicio_empleados_servicio_id_d99264a2" ON "punto_venta_servicio_empleados" ("servicio_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_servicio_empleados_servicio_id_empleado_id_5d91cc70_uniq</name>
+        <unique>true</unique>
+        <ddl><![CDATA[CREATE UNIQUE INDEX "punto_venta_servicio_empleados_servicio_id_empleado_id_5d91cc70_uniq" ON "punto_venta_servicio_empleados" ("servicio_id", "empleado_id")]]></ddl>
+    </index>
+</database>

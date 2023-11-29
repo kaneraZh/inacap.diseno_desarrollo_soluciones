@@ -6,13 +6,50 @@
     los transofrma automaticamente a str.
 -->
 {% block content %}
+{% if puede_crear %}
+<form action={% url crear %}>
+    <input type="submit" value="crear" />
+</form>
+{% endif %}
 <table>
     {% for objeto in object_list %}
     <tr>
         <td>
             <a href={% url detalle pk=objeto.id %}>{{objeto}}</a>
         </td>
+        {% if puede_actualizar %}
+        <td>
+            <form action={% url borrar pk=objeto.id %}>
+                <input type="submit" value="Borrar" />
+            </form>
+        </td>
+        {% endif %}
+        {% if puede_borrar %}
+        <td>
+            <form action={% url actualizar pk=objeto.id %}>
+                <input type="submit" value="Actualizar" />
+            </form>
+        </td>
+        {% endif %}
     </tr>
     {% endfor %}
 </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; primera</a>
+            <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+        {% endif %}
+
+        <span class="current">
+            Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">ultima &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock content %}

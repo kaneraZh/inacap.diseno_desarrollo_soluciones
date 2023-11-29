@@ -20,7 +20,7 @@
               <h5 class="card-title">{{ producto.nombre }}</h5>
               <p class="price">$ {{ producto.precio_venta }}</p>
             </div>
-            <a href="{% url 'producto_detalle' pk=producto.pk %}" class="btn btn-primary btn-block">Ver Detalle</a>
+            <a href="{% url 'producto_detalle' pk=producto.id %}" class="btn btn-primary btn-block">Ver Detalle</a>
           </div>
         </div>
       </div>
