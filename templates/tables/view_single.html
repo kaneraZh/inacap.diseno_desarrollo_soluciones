@@ -7,4 +7,18 @@
 -->
 {% block content %}
 {{object}}
+{% if puede_actualizar %}
+<form action={% url borrar pk=object.id %}>
+    <input type="submit" value="Borrar" />
+</form>
+{% endif %}
+{% if puede_borrar %}
+<form action={% url actualizar pk=object.id %}>
+    <input type="submit" value="Actualizar" />
+</form>
+{% endif %}
+<form action={% url lista %}>
+    <input type="submit" value="Volver a lista" />
+</form>
+
 {% endblock content %}

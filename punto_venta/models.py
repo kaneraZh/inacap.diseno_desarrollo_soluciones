@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 class Persona(User):
     #usuario = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -24,10 +25,14 @@ class Empleado(Persona):
         verbose_name = 'Empleado'
     def __str__(self):
         return f'{super().__str__()}, contrato desde:{self.fecha_contratacion}'
+    def get_absolute_url(self):
+        return reverse("empleado_detalle", kwargs={"pk": self.id})
 class Cliente(Persona):
     class Meta:
         verbose_name = 'Cliente'
-
+    def get_absolute_url(self):
+        return reverse("cliente_detalle", kwargs={"pk": self.id})
+    
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=40)
     direccion = models.CharField(max_length=40)
