@@ -190,12 +190,18 @@ def detalle_producto(request, pk):
         'productos_relacionados': productos_relacionados,
     }
 
+<<<<<<< HEAD
     return render(request, 'cita/productos.html', context)
 
 
 from django.views.generic.edit import CreateView, FormView
 
 
+=======
+    return render(request, 'ruta_a_tu_template/detalle_producto.html', context)
+
+from django.views.generic.edit import CreateView, FormView
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
 # CRUDS CLIENTES
 class ClienteCreateView(CreateView):
     from django.forms import CharField
@@ -212,6 +218,7 @@ class ClienteCreateView(CreateView):
         'fecha_nacimiento',
         'direccion',
     ]
+<<<<<<< HEAD
 
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
@@ -225,16 +232,33 @@ class ClienteCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 
 
+=======
+    
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+
+        # verifica si el usuario esta identificado (si no lo esta, redirije a URL_LOGIN)
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+
+        # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
+        if(not user.has_perm('punto_venta.create_cliente')): return redirect(URL_HOME)
+
+        return super().dispatch(request, *args, **kwargs)
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
 class ClienteListView(ListView):
     model = models.Cliente
     template_name = "tables/view_multy.html"
     paginate_by = 10
+<<<<<<< HEAD
 
+=======
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'clientes'
         context["detalle"] = 'cliente_detalle'
         return context
+<<<<<<< HEAD
 
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
@@ -249,11 +273,24 @@ class ClienteDetailView(DetailView):
     model = models.Cliente
     template_name = "tables/view_single.html"
 
+=======
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        # verifica si el usuario esta identificado (si no lo esta, redirije a URL_LOGIN)
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
+        if(not user.has_perm('punto_venta.view_cliente')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class ClienteDetailView(DetailView):
+    model = models.Cliente
+    template_name = "tables/view_single.html"
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'cliente'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cliente')
         return context
+<<<<<<< HEAD
 
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
@@ -264,16 +301,30 @@ class ClienteDetailView(DetailView):
         return super().dispatch(request, *args, **kwargs)
 
 
+=======
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        # verifica si el usuario esta identificado (si no lo esta, redirije a URL_LOGIN)
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        # verifica si el usuario tiene permiso 'punto_venta.view_cita' (si no lo tiene reenvia a URL_HOME)
+        if(not user.has_perm('punto_venta.view_cliente')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
 # cita
 class CitaListView(ListView):
     model = models.Cita
     template_name = "tables/view_multy.html"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "citas"
         context['detalle'] = 'detalle_cita'
         return context
+<<<<<<< HEAD
 
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
@@ -286,16 +337,33 @@ class CitaDetailView(DetailView):
     model = models.Cita
     template_name = "tables/view_single.html"
 
+=======
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class CitaDetailView(DetailView):
+    model = models.Cita
+    template_name = "tables/view_single.html"
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'cita'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cita')
         return context
+<<<<<<< HEAD
 
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
         if (not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if (not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
+=======
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -303,12 +371,16 @@ class CitaDetailView(DetailView):
 class ServicioListView(ListView):
     model = models.Servicio
     template_name = "tables/view_multy.html"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "servicios"
         context['detalle'] = 'detalle_servicio'
         return context
+<<<<<<< HEAD
 
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
@@ -321,16 +393,33 @@ class ServicioDetailView(DetailView):
     model = models.Servicio
     template_name = "tables/view_single.html"
 
+=======
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_servicio')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class ServicioDetailView(DetailView):
+    model = models.Servicio
+    template_name = "tables/view_single.html"
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'servicio'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_servicio')
         return context
+<<<<<<< HEAD
 
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
         if (not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if (not user.has_perm('punto_venta.view_servicio')): return redirect(URL_HOME)
+=======
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_servicio')): return redirect(URL_HOME)
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -338,12 +427,16 @@ class ServicioDetailView(DetailView):
 class ProductoListView(ListView):
     model = models.Producto
     template_name = "tables/view_multy.html"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = "productos"
         context['detalle'] = 'detalle_producto'
         return context
+<<<<<<< HEAD
 
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
@@ -356,11 +449,22 @@ class ProductoDetailView(DetailView):
     model = models.Producto
     template_name = "tables/view_single.html"
 
+=======
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_producto')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class ProductoDetailView(DetailView):
+    model = models.Producto
+    template_name = "tables/view_single.html"
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'producto'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_producto')
         return context
+<<<<<<< HEAD
 
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
@@ -368,3 +472,10 @@ class ProductoDetailView(DetailView):
         if (not user.has_perm('punto_venta.view_producto')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 
+=======
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_producto')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+>>>>>>> 29cbba0241d22080d2608b193289079152eb9c68
