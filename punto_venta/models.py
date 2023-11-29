@@ -14,12 +14,16 @@ class Persona(User):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.set_password(self.password)
         super().save(force_insert,force_update,using,update_fields)
+    def __str__(self):
+        return f'{self.username}, {self.email}, nacimiento: {self.fecha_nacimiento}'
 class Empleado(Persona):
     documento_identificador = models.CharField(max_length=30)
     fecha_contratacion = models.DateField()
     afp = models.CharField(max_length=15)
     class Meta:
         verbose_name = 'Empleado'
+    def __str__(self):
+        return f'{super().__str__()}, contrato desde:{self.fecha_contratacion}'
 class Cliente(Persona):
     class Meta:
         verbose_name = 'Cliente'
@@ -30,6 +34,8 @@ class Proveedor(models.Model):
     rut_empresa = models.CharField(max_length=30)
     telefono_celular = models.CharField(max_length=30)
     email = models.EmailField(max_length=40)
+    def __str__(self):
+        return f'{self.nombre}, {self.email}, {self.direccion}, {self.telefono_celular}'
 class Producto(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=50)
@@ -38,39 +44,36 @@ class Producto(models.Model):
     precio_venta = models.DecimalField(max_digits=10, decimal_places=2)
     stock = models.PositiveIntegerField()
     proveedor = models.ForeignKey(Proveedor, on_delete=models.RESTRICT)
+    def __str__(self):
+        return f'{self.nombre}, {self.precio_venta}, {self.stock}'
 class Servicio(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=50)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
     tiempo = models.DurationField()
     empleados = models.ManyToManyField(Empleado)
-
     def __str__(self) -> str:
-        return f'{self.nombre}'
+        return f'{self.nombre}, {self.precio}, {self.tiempo}'
 
 class Cita(models.Model):
     fecha = models.DateField()
     hora = models.TimeField(auto_now=False, auto_now_add=False)
-    #fecha_hora = models.DateTimeField(auto_now=False, auto_now_add=False)
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True)
-#    def fecha_hora():
-#        
+    def __str__(self):
+        return f'{self.fecha}, {self.hora}, {self.servicio}, {self.cliente}'
 
-#import datetime
 class Documento(models.Model):
     class Meta:
         abstract = True
     fecha_modificacion = models.DateTimeField(auto_now_add=False, auto_now=True)#, default=datetime.date.today)
     fecha_creacion = models.DateTimeField(auto_now_add=True, auto_now=False)#, default=datetime.date.today)
-
 class Boleta(Documento):
     TIPO_DE_PAGO_CHOICES = (
         ('Efectivo', 'Efectivo'),
         ('Tarjeta de crédito', 'Tarjeta de crédito'),
         ('Transferencia bancaria', 'Transferencia bancaria'),
     )
-
     tipo_de_pago = models.CharField(max_length=25, choices=TIPO_DE_PAGO_CHOICES)
     monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
     monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
@@ -83,6 +86,11 @@ class Boleta(Documento):
             ("can_delete_boleta", "Puede eliminar boletas"),
             ("can_update_boleta", "Puede actualizar boletas"),
         ]
+    def __str__(self):
+        contenidos:list = []
+        contenidos.append(Boleta_producto.objects.all().filter(boleta=self))
+        contenidos.append(Boleta_servicio.objects.all().filter(boleta=self))
+        return f'{self.fecha_creacion}, {self.tipo_de_pago}, {self.monto_neto}, {self.cliente}, {", ".join(contenidos)}'
 class Boleta_producto(Documento):
     def __str__(self): return f"{self.boleta.nombre}x{self.cantidad}: {monto_total}"
     boleta = models.ForeignKey(Boleta, on_delete=models.CASCADE)
@@ -92,6 +100,8 @@ class Boleta_producto(Documento):
     monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
     monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
     monto_total = models.DecimalField(max_digits=10, decimal_places=2)
+    def __str__(self):
+        return f'{self.producto}x{self.cantidad}'
 class Boleta_servicio(Documento):
     def __str__(self): return f"{self.servicio.nombre}x{self.cantidad}: {monto_total}"
     boleta = models.ForeignKey(Boleta, on_delete=models.CASCADE)
@@ -101,6 +111,8 @@ class Boleta_servicio(Documento):
     monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
     monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
     monto_total = models.DecimalField(max_digits=10, decimal_places=2)
+    def __str__(self):
+        return f'{self.producto}x{self.cantidad}'
 
 class Factura(Documento):
     TIPO_DE_PAGO_CHOICES = (
@@ -123,6 +135,10 @@ class Factura(Documento):
             ("can_delete_factura", "Puede eliminar facturas"),
             ("can_update_factura", "Puede actualizar facturas"),
         ]
+    def __str__(self):
+        contenidos:list = []
+        contenidos.append(Factura_detalle.objects.all().filter(factura=self))
+        return f'{self.fecha_creacion}, {self.tipo_de_pago}, {self.monto_neto}, {self.proveedor}, {", ".join(contenidos)}'
 class Factura_detalle(Documento):
     numero_factura = models.IntegerField()
     factura = models.ForeignKey(Factura, on_delete=models.CASCADE)
@@ -132,3 +148,5 @@ class Factura_detalle(Documento):
     monto_neto = models.DecimalField(max_digits=10, decimal_places=2)
     monto_iva = models.DecimalField(max_digits=10, decimal_places=2)
     monto_total = models.DecimalField(max_digits=10, decimal_places=2)
+    def __str__(self):
+        return f'{self.producto}x{self.cantidad}'

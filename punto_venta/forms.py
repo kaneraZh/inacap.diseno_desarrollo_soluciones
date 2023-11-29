@@ -14,12 +14,10 @@ class ClienteCrearForm(forms.ModelForm):
             'fecha_nacimiento',
             'direccion',
         ]
-
-
     def _clean_fields(self):
         # chequea que las contraseñas sean iguales
         if(self.__getitem__('password').data != self.__getitem__('password_confirm').data):
-            self.add_error('password_confirm', 'Passwords dont match.')
+            self.add_error('password_confirm', 'Contraseñas no son iguales.')
         super()._clean_fields()
 
 from .models import Cita
@@ -32,11 +30,9 @@ class CitaClienteForm(forms.ModelForm):
         super()._clean_fields()
         _now:date = datetime.now().date()
         _fecha:date = self.cleaned_data['fecha']
-        
-        if(_now>_fecha):self.add_error('fecha', 'Date is in the past.')
-
+        if(_now>_fecha):self.add_error('fecha', 'Fecha esta en el pasado.')
         month_distance = ((_fecha.year-_now.year)*12)+_fecha.month-_now.month
-        if( month_distance>=3 ):self.add_error('fecha', 'Date is too ahead. (3mo max)')
+        if( month_distance>=3 ):self.add_error('fecha', 'Fecha es muy a futuro. (3 meses max)')
 class CitaEmpleadoForm(forms.ModelForm):
     class Meta:
         model = Cita

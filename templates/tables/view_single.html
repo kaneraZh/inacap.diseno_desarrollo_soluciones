@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+<!--
+    template basico que renderiza el objeto enviado por 
+    la clase de view (DetailView en este caso)
+    Este renderizado sirve porque al renderizar el objeto de tabla
+    la transofrma automaticamente a str.
+-->
+{% block content %}
+{{object}}
+{% endblock content %}
