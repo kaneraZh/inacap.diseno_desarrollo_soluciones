@@ -3,7 +3,11 @@
 {% block content %}
 <div class="container mt-5">
     <h1 class="mb-4">{{ title }}</h1>
-
+    {% if puede_crear %}
+    <form action={% url crear %}>
+        <input type="submit" value="crear" />
+    </form>
+    {% endif %}
     <table class="table">
         <thead>
             <tr>
@@ -24,6 +28,20 @@
                     <td>{{ cliente.fecha_nacimiento }}</td>
                     <td>{{ cliente.direccion }}</td>
                     <td><a href="{% url 'cliente_detalle' pk=cliente.pk %}" class="btn btn-primary">Ver Detalles</a></td>
+                    {% if puede_actualizar %}
+                    <td>
+                        <form action={% url borrar pk=cliente.id %}>
+                            <input type="submit" value="Borrar" />
+                        </form>
+                    </td>
+                    {% endif %}
+                    {% if puede_borrar %}
+                    <td>
+                        <form action={% url actualizar pk=cliente.id %}>
+                            <input type="submit" value="Actualizar" />
+                        </form>
+                    </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
