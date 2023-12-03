@@ -204,7 +204,6 @@ class ClienteCreateView(CreateView):
         'fecha_nacimiento',
         'direccion',
     ]
-    
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -371,6 +370,6 @@ class ProductoDetailView(DetailView):
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.view_producto')): return redirect(URL_HOME)
+        #if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        #if(not user.has_perm('punto_venta.view_producto')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
