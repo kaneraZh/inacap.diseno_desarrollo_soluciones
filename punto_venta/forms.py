@@ -1,5 +1,5 @@
 from django import forms
-from .models import Cliente, Producto, Cita, Boleta, Boleta_producto, Boleta_servicio
+from .models import Cliente, Producto, Cita, Boleta, Boleta_producto, Boleta_servicio, Factura, Factura_detalle, Proveedor
 class ClienteCrearForm(forms.ModelForm):
     contrasena_confirmar = forms.CharField(required=True, label="Confirmar Contraseña", widget=forms.PasswordInput())
     contrasena = forms.CharField(required=True, label="Contraseña", widget=forms.PasswordInput())
@@ -72,3 +72,77 @@ class ProductoForm(forms.ModelForm):
 #BoletaProductoFormSet = inlineformset_factory(Boleta, BoletaProducto, fields=["producto"])
 #BoletaServicioFormSet = inlineformset_factory(Boleta, BoletaServicio, fields=["servicio"])
 #class BoletaInlineFormset(BaseInlineFormSet):
+
+#class FacturaDetalleForm(forms.ModelForm):
+#    class Meta:
+#        model = FacturaDetalle
+#        fields = ("producto", "cantidad")
+#        widgets = {
+#            'producto' : forms.TextInput(
+#                attrs={
+#                    'class' : 'form-control',
+#                    'placeholder' : 'Ingrese el nombre del producto',
+#                }
+#            ),
+#            'cantidad' : forms.NumberInput(
+#                attrs={
+#                    'placeholder' : 'Ingrese cantidad del producto'
+#                }
+#            )
+#        }
+class FacturaForm(forms.ModelForm):
+    class Meta:
+        model = Factura
+        fields = ("proveedor","tipo_de_pago")
+#        widgets = {
+#            "proveedor" : forms.ModelChoiceField(
+#                queryset=Proveedor.objects.all(),
+#                required=True
+#            ),
+#            "tipo_de_pago" : forms.ChoiceField(
+#                choices=Factura.TIPO_DE_PAGO_CHOICES
+#            ),
+#        }
+    def save(self, commit=True):
+        data = self.cleaned_data
+        factura = Factura(
+            proveedor = data["proveedor"],
+            tipo_de_pago = data["tipo_de_pago"],
+        )
+        factura.save()
+class FacturaDetalleForm(forms.ModelForm):
+    class Meta:
+        model = Factura_detalle
+        fields = ('producto', 'cantidad', 'monto_neto')
+    def clean(self):
+        res = super().clean()
+        if( len(Producto.objects.filter(nombre=data['producto']))>1 ):
+            self.add_error('producto', 'nombre del producto es muy generico')
+        return res
+    def save(self, commit=True):
+        super().save(False)
+        producto = Producto.objects.filter(nombre=data['producto'])
+        if(len(producto)>1):
+
+FacturaDetalleFormset = forms.modelformset_factory(
+    form=FacturaDetalleForm,
+    extra=1,
+    widgets={
+        'producto' : forms.TextInput(
+            attrs={
+                'class' : 'form-control',
+                'placeholder' : 'Ingrese el nombre del producto',
+            }
+        ),
+        'cantidad' : forms.NumberInput(
+            attrs={
+                'placeholder' : 'Ingrese cantidad del producto'
+            }
+        ),
+        'monto_neto' : forms.NumberInput(
+            attrs={
+                'placeholder' : 'Ingrese precio neto del grupo de productos'
+            }
+        )
+    },
+)

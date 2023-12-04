@@ -79,7 +79,7 @@ urlpatterns = [
 
     path('facturas/', punto_venta.FacturaListView.as_view(), name='facturas'),
     path('factura/<int:pk>/', punto_venta.FacturaDetailView.as_view(), name='factura_detalle'),
-    path('factura/crear/<int:pk>', punto_venta.FacturaCrear, name='factura_crear'),
+    path('factura/crear/', punto_venta.FacturaCreate, name='factura_crear'),
     #path('factura/actualizar/<int:pk>/', punto_venta.FacturaActualizar, name='factura_actualizar'),
     path('factura/borrar/<int:pk>/', punto_venta.FacturaDeleteView.as_view(), name='factura_borrar'),
 ]

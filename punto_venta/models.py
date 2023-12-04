@@ -30,11 +30,22 @@ class Empleado(Persona):
         return f'{super().__str__()}, contrato desde:{self.fecha_contratacion}'
     def get_absolute_url(self):
         return reverse("empleado_detalle", kwargs={"pk": self.id})
+    def save(self, commit=True):
+        save:Empleado = super().save(commit)
+        if(commit):
+            save.groups.add('empleado')
+        return save
+
 class Cliente(Persona):
     class Meta:
         verbose_name = 'Cliente'
     def get_absolute_url(self):
         return reverse("cliente_detalle", kwargs={"pk": self.id})
+    def save(self, commit=True):
+        save:Cliente = super().save(commit)
+        if(commit):
+            save.groups.add('cliente')
+        return save
     
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=40)
@@ -55,7 +66,6 @@ class Producto(models.Model):
     stock = models.PositiveIntegerField()
     proveedor = models.ForeignKey(Proveedor, on_delete=models.RESTRICT)
     imagen = models.ImageField(upload_to='productos/', default='productos/default.jpg')
-
     def __str__(self):
         return f'{self.nombre}, {self.precio_venta}, {self.stock}'
     def get_absolute_url(self):
@@ -153,9 +163,9 @@ class Factura(Documento):
     )
     numero_factura = models.PositiveIntegerField()
     tipo_de_pago = models.CharField(max_length=25, choices=TIPO_DE_PAGO_CHOICES)
+    monto_total = models.PositiveIntegerField()
     monto_neto = models.PositiveIntegerField()
     monto_iva = models.PositiveIntegerField()
-    monto_total = models.PositiveIntegerField()
     empleado = models.ForeignKey(User, on_delete=models.CASCADE, related_name='facturas_jefe')
     proveedor = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True)
     class Meta:
@@ -165,8 +175,15 @@ class Factura(Documento):
             ("can_update_factura", "Puede actualizar facturas"),
         ]
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        self.monto_iva =  self.monto_total*1.19
-        self.monto_neto = self.monto_total-self.monto_iva
+        from random import randint
+        self.numero_factura.value = randint(1, 99999999)
+        self.monto_total.value = 0
+        self.monto_neto.value = 0
+        self.monto_iva.value = 0
+        for item in Factura_detalle.objects.filter(factura=self):
+            self.monto_total.value += item.monto_total.value
+            self.monto_neto.value += item.monto_neto.value
+            self.monto_iva.value += item.monto_iva.value
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
         contenidos:list = []

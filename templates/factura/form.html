@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<form class="form-horizontal" method="POST" action="">
+{% csrf_token %}
+<div class="row spacer">
+    <div class="col-3">
+        <label>{{form_main.proveedor}}</label>
+    </div>
+    <div class="col-3">
+        <label>{{form_main.tipo_de_pago}}</label>
+    </div>
+</div>
+{{ formset.management_form }}
+{% for form in formset %}
+<div class="row form-row spacer">
+    <div class="col-3">
+        <label>{{form.producto}}</label>
+    </div>
+    <div class="col-3">
+        <label>{{form.cantidad}}</label>
+    </div>
+    <div class="col-3">
+        <label>{{form.monto_neto}} </label>
+    </div>
+    <div class="col-3">
+        <div class="input-group">
+            <div class="input-group-append">
+                <button class="btn btn-success add-form-row">+</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<div class="row spacer">
+    <div class="col-4 offset-2">
+        <button type="submit" class="btn btn-block btn-primary">Create</button>
+    </div>
+</div>
+</form>
+{% endblock content %}
