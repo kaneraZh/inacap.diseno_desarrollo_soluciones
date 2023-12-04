@@ -1,36 +1,48 @@
 {% extends 'base.html' %}
+
+{% block title %}Servicios{% endblock title %}
+
 {% block content %}
+{% load static %}
 
-<div class="table">
-    {% for objeto in object_list %}
-    <div class="col-xl-3 col-md-6 d-flex align-items-stretch aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
-        <div class="icon-box">
-            <div class="icon"><i class="bx bxl-dribbble"></i></div>
-            <h4><a href={% url detalle pk=objeto.id %}>{{objeto.nombre}}</a></h4>
-            <p>{{objeto.descripcion}}</p>
+<link rel="stylesheet" type="text/css" href="{% static 'punto_venta/servicios.css' %}">
+
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Nuestros Servicios</h2>
+
+  <div class="row">
+    {% for servicio in object_list %}
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ servicio.nombre }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ servicio.descripcion }}</h6>
+            <p class="card-text">Precio: $ {{ servicio.precio }}</p>
+            <div class="details">
+              <a href="{% url 'servicio_detalle' pk=servicio.id %}" class="btn btn-primary btn-block">Ver Detalle</a>
+            </div>
+          </div>
         </div>
-    </div>
-    {% empty %}
-    <div>No se encontraron datos</div>
+      </div>
     {% endfor %}
-</div>
+  </div>
 
-<div class="pagination">
+  <div class="pagination justify-content-center">
     <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; primera</a>
-            <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
-        {% endif %}
+      {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; primera</a>
+        <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+      {% endif %}
 
-        <span class="current">
-            Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-        </span>
+      <span class="current">
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+      </span>
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">ultima &raquo;</a>
-        {% endif %}
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
+      {% endif %}
     </span>
+  </div>
 </div>
-
 {% endblock content %}

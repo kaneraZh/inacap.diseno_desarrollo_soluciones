@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from punto_venta import forms, models
 from .models import Cita, Empleado, Producto
 from datetime import date
-from .models import Producto
+from .models import Producto, Servicio
 from .forms import ProductoForm
 
 #from django.views.generic.detail import DetailView
@@ -353,7 +353,7 @@ class ServicioCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 class ServicioUpdateView(UpdateView):
     model = models.Servicio
-    template_name = "tables/update.html"
+    template_name = "stables/update.html"
     fields = '__all__'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -472,7 +472,6 @@ class ProductoDetailView(DetailView):
         return super().dispatch(request, *args, **kwargs)
 
 # boleta
-
 def BoletaCrear(request):
     if request.method == 'POST':
         form = forms.BoletaForm(request.POST)
@@ -533,6 +532,90 @@ class BoletaDetailView(DetailView):
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if(not user.has_perm('punto_venta.view_boleta')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+
+# Empleado
+class EmpleadoCreateView(CreateView):
+    model = models.Empleado
+    template_name = "tables/create.html"
+    fields = [
+        'correo_electronico',
+        'primer_nombre',
+        'primer_apellido',
+        'fecha_nacimiento',
+        'direccion',
+        'documento_identificador',
+        'fecha_contratacion',
+        'afp',
+    ]
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.create_empleado')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class EmpleadoUpdateView(UpdateView):
+    model = models.Empleado
+    template_name = "tables/update.html"
+    fields = [
+        'correo_electronico',
+        'primer_nombre',
+        'primer_apellido',
+        'fecha_nacimiento',
+        'direccion',
+        'documento_identificador',
+        'fecha_contratacion',
+        'afp',
+    ]
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'actualizar empleado'
+        return context
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.update_empleado')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class EmpleadoDeleteView(DeleteView):
+    model = models.Empleado
+    template_name = "tables/delete.html"
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.delete_empleado')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class EmpleadoListView(ListView):
+    model = models.Empleado
+    template_name = "tables/view_multy.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'empleados'
+        context["detalle"] = 'empleado_detalle'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_empleado')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_empleado')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_empleado')
+        context["borrar"] = "empleado_borrar"
+        context["actualizar"] = "empleado_actualizar"
+        context["crear"] = "empleado_crear"
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_empleado')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class EmpleadoDetailView(DetailView):
+    model = models.Empleado
+    template_name = "tables/view_single.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'empleado'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_empleado')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_empleado')
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_empleado')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+
 
 # proveedor
 class ProveedorCreateView(CreateView):
@@ -653,3 +736,6 @@ class FacturaDetailView(DetailView):
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if(not user.has_perm('punto_venta.view_factura')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+
+
+# View para el crud de servicio
