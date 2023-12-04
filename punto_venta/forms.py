@@ -1,5 +1,6 @@
 from django import forms
-from .models import Cliente, Producto, Cita, Boleta, Boleta_producto, Boleta_servicio, Factura, Factura_detalle, Proveedor
+from .models import Cliente, Producto, Cita, Boleta, Boleta_producto, Boleta_servicio, Servicio, Factura, Factura_detalle, Proveedor
+
 class ClienteCrearForm(forms.ModelForm):
     contrasena_confirmar = forms.CharField(required=True, label="Confirmar Contraseña", widget=forms.PasswordInput())
     contrasena = forms.CharField(required=True, label="Contraseña", widget=forms.PasswordInput())

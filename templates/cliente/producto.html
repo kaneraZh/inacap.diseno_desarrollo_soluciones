@@ -23,25 +23,6 @@
       </div>
     </div>
   </div>
-    <!-- Productos relacionados -->
-<div class="container mt-4">
-    <h3>Productos relacionados</h3>
-    <div class="row">
-        {% for prod_relacionado in productos_relacionados %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <img src="{{ prod_relacionado.imagen.url }}" class="card-img-top" alt="{{ prod_relacionado.nombre }}" style="max-width: 200px; max-height: 200px;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ prod_relacionado.nombre }}</h5>
-                        <p class="card-text">{{ prod_relacionado.descripcion }}</p>
-                        <p class="card-text"><strong>Precio:</strong> ${{ prod_relacionado.precio_venta }}</p>
-                        <p class="card-text"><strong>Stock:</strong> {{ prod_relacionado.stock }}</p>
-                        <a href="{% url 'producto_detalle' pk=prod_relacionado.pk %}" class="btn btn-primary btn-block">Ver Detalles</a>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-</div>
+
 
 {% endblock content %}
