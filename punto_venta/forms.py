@@ -1,5 +1,5 @@
 from django import forms
-from .models import Cliente, Producto, Cita, Boleta, Boleta_producto, Boleta_servicio
+from .models import Cliente, Producto, Cita, Boleta, Boleta_producto, Boleta_servicio, Servicio
 class ClienteCrearForm(forms.ModelForm):
     contrasena_confirmar = forms.CharField(required=True, label="Confirmar Contraseña", widget=forms.PasswordInput())
     contrasena = forms.CharField(required=True, label="Contraseña", widget=forms.PasswordInput())
@@ -72,3 +72,5 @@ class ProductoForm(forms.ModelForm):
 #BoletaProductoFormSet = inlineformset_factory(Boleta, BoletaProducto, fields=["producto"])
 #BoletaServicioFormSet = inlineformset_factory(Boleta, BoletaServicio, fields=["servicio"])
 #class BoletaInlineFormset(BaseInlineFormSet):
+
+

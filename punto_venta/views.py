@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from punto_venta import forms, models
 from .models import Cita, Empleado, Producto
 from datetime import date
-from .models import Producto
+from .models import Producto, Servicio
 from .forms import ProductoForm
 
 #from django.views.generic.detail import DetailView
@@ -353,7 +353,7 @@ class ServicioCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 class ServicioUpdateView(UpdateView):
     model = models.Servicio
-    template_name = "tables/update.html"
+    template_name = "stables/update.html"
     fields = '__all__'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -736,3 +736,6 @@ class FacturaDetailView(DetailView):
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if(not user.has_perm('punto_venta.view_factura')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+
+
+# View para el crud de servicio
