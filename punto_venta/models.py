@@ -60,6 +60,7 @@ class Producto(models.Model):
         return f'{self.nombre}, {self.precio_venta}, {self.stock}'
     def get_absolute_url(self):
         return reverse("producto_detalle", kwargs={"pk": self.id})
+
 class Servicio(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=50)
@@ -68,8 +69,10 @@ class Servicio(models.Model):
     empleados = models.ManyToManyField(Empleado)
     def __str__(self) -> str:
         return f'{self.nombre}, {self.precio}, {self.tiempo}'
+
     def get_absolute_url(self):
         return reverse("servicio_detalle", kwargs={"pk": self.id})
+
     
 class Cita(models.Model):
     fecha = models.DateField()
