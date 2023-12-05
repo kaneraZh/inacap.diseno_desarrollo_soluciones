@@ -1,67 +1,56 @@
 {% extends 'base.html' %}
 {% block title %}Registrarse{% endblock title %}
 {% block content %}
-{% load static %}
-<link rel="stylesheet" href="{% static 'punto_venta/signin.css' %}">
-
-<div class="container-fluid">
-    <div class="row justify-content-center align-items-center min-vh-100">
-        <div class="col-md-6">
-            <div class="card shadow rounded">
-                <div class="card-body text-center">
-                    <h2 class="mb-4">Registrarse</h2>
-                    <form method="post" class="needs-validation" novalidate>
-                        {% csrf_token %}
-                        <div class="mb-3 row">
-                            <div class="col-md-6">
-                                {{ form.correo_electronico.label_tag }}
-                                {{ form.correo_electronico }}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'punto_venta/signin.css' %}">
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-6">
+                <div class="card shadow rounded">
+                    <div class="card-body text-center">
+                        <h2 class="mb-4">Registrarse</h2>
+                        <form method="post" class="needs-validation" novalidate>
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <input type="email" class="form-control" placeholder="Correo Electrónico" name="correo_electronico">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <input type="text" class="form-control" placeholder="Primer Nombre" name="primer_nombre">
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                {{ form.contrasena.label_tag }}
-                                {{ form.contrasena }}
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <input type="text" class="form-control" placeholder="Primer Apellido" name="primer_apellido">
+                                </div>
                             </div>
-                            {{ form.last_name }}
-                        </div>
-                        <div class="mb-3 row">
-                            <div class="col-md-6">
-                                {{ form.contrasena_confirmar.label_tag }}
-                                {{ form.contrasena_confirmar }}
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <input type="text" class="form-control" placeholder="Fecha de Nacimiento" name="fecha_nacimiento">
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                {{ form.primer_nombre.label_tag }}
-                                {{ form.primer_nombre }}
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <input type="text" class="form-control" placeholder="Dirección" name="direccion">
+                                </div>
                             </div>
-                            {{ form.email }}
-                        </div>
-                        <div class="mb-3 row">
-                            <div class="col-md-12">
-                                {{ form.primer_apellido.label_tag }}
-                                {{ form.primer_apellido }}
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <input type="password" class="form-control" placeholder="Contraseña" name="contrasena">
+                                </div>
                             </div>
-                            {{ form.direccion }}
-                        </div>
-                        <div class="mb-3 row">
-                            <div class="col-md-12">
-                                {{ form.fecha_nacimiento.label_tag }}
-                                {{ form.fecha_nacimiento }}
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <input type="password" class="form-control" placeholder="Confirmar Contraseña" name="contrasena_confirmar">
+                                </div>
                             </div>
-                            {{ form.password }}
-                        </div>
-                        <div class="mb-3 row">
-                            <div class="col-md-12">
-                                {{ form.direccion.label_tag }}
-                                {{ form.direccion }}
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
                             </div>
-                            {{ form.password_confirm }}
-                        </div>
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock content %}
