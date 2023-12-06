@@ -1,0 +1,60 @@
+<!-- lista.html -->
+{% extends 'base.html' %}
+
+{% block title %}Lista de Servicios{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Lista de Servicios</h2>
+
+        {% if puede_crear %}
+            <form action="{% url crear %}">
+                <button type="submit" class="btn btn-primary mb-3">
+                    <i class="fas fa-plus"></i> Crear Servicio
+                </button>
+            </form>
+        {% endif %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                    <th>Tiempo</th>
+                    {% if puede_actualizar or puede_borrar %}
+                        <th>Acciones</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for servicio in object_list %}
+                    <tr>
+                        <td>{{ servicio.nombre }}</td>
+                        <td>{{ servicio.descripcion }}</td>
+                        <td>${{ servicio.precio }}</td>
+                        <td>{{ servicio.tiempo }}</td>
+                        {% if puede_actualizar or puede_borrar %}
+                            <td>
+                                {% if puede_actualizar %}
+                                    <form action="{% url actualizar pk=servicio.id %}">
+                                        <button type="submit" class="btn btn-warning btn-sm me-1">
+                                            <i class="fas fa-pen-to-square"></i> Actualizar
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                {% if puede_borrar %}
+                                    <form action="{% url borrar pk=servicio.id %}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Borrar
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

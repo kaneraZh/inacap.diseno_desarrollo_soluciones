@@ -10,14 +10,26 @@ class Persona(User):
     contrasena = models.CharField(max_length=20, null=True, verbose_name='contraseña')
     fecha_nacimiento = models.DateField()
     direccion = models.CharField(max_length=20, null=True)
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    #def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(
+        self,
+        force_insert=False, 
+        force_update=False, 
+        using=None, 
+        update_fields=None,
+    ):
         self.username = self.correo_electronico
         self.first_name = self.primer_nombre
         self.last_name = self.primer_apellido
         self.email = self.correo_electronico
         self.set_password(self.contrasena)
         self.contrasena = self.password
-        super().save(force_insert,force_update,using,update_fields)
+        return super().save(
+            force_insert=force_insert, 
+            force_update=force_update, 
+            using=using, 
+            update_fields=update_fields, 
+        )
     def __str__(self):
         return f'{self.username}, {self.email}, nacimiento: {self.fecha_nacimiento}'
 class Empleado(Persona):
@@ -55,7 +67,6 @@ class Producto(models.Model):
     stock = models.PositiveIntegerField()
     proveedor = models.ForeignKey(Proveedor, on_delete=models.RESTRICT)
     imagen = models.ImageField(upload_to='productos/', default='productos/default.jpg')
-
     def __str__(self):
         return f'{self.nombre}, {self.precio_venta}, {self.stock}'
     def get_absolute_url(self):
@@ -65,11 +76,12 @@ class Servicio(models.Model):
     descripcion = models.CharField(max_length=50)
     precio = models.PositiveIntegerField()
     tiempo = models.DurationField()
-    empleados = models.ManyToManyField(Empleado)
+    empleados = models.ManyToManyField(Empleado, null=True)
     def __str__(self) -> str:
         return f'{self.nombre}, {self.precio}, {self.tiempo}'
     def get_absolute_url(self):
         return reverse("servicio_detalle", kwargs={"pk": self.id})
+
     
 class Cita(models.Model):
     fecha = models.DateField()
@@ -93,9 +105,9 @@ class Boleta(Documento):
         ('Transferencia bancaria', 'Transferencia bancaria'),
     )
     tipo_de_pago = models.CharField(max_length=25, choices=TIPO_DE_PAGO_CHOICES)
+    monto_total = models.PositiveIntegerField()
     monto_neto = models.PositiveIntegerField()
     monto_iva = models.PositiveIntegerField()
-    monto_total = models.PositiveIntegerField()
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True)
     empleado = models.ForeignKey(Empleado, on_delete=models.SET_NULL, null=True)
     class Meta:
@@ -106,11 +118,26 @@ class Boleta(Documento):
         ]
     def __str__(self):
         contenidos:list = []
-        contenidos.append(Boleta_producto.objects.all().filter(boleta=self))
-        contenidos.append(Boleta_servicio.objects.all().filter(boleta=self))
+        for item in Boleta_producto.objects.all().filter(boleta=self):
+            contenidos.append(f'{item}')
+        for item in Boleta_servicio.objects.all().filter(boleta=self):
+            contenidos.append(f'{item}')
         return f'{self.fecha_creacion}, {self.tipo_de_pago}, {self.monto_neto}, {self.cliente}, {", ".join(contenidos)}'
     def get_absolute_url(self):
         return reverse("boleta_detalle", kwargs={"pk": self.id})
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.monto_total = 0
+        self.monto_neto = 0
+        self.monto_iva = 0
+        for item in Boleta_producto.objects.filter(boleta=self):
+            self.monto_total += item.monto_total
+            self.monto_neto += item.monto_neto
+            self.monto_iva += item.monto_iva
+        for item in Boleta_servicio.objects.filter(boleta=self):
+            self.monto_total += item.monto_total
+            self.monto_neto += item.monto_neto
+            self.monto_iva += item.monto_iva
+        super().save(force_insert,force_update,using,update_fields)
 class Boleta_producto(Documento):
     boleta = models.ForeignKey(Boleta, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.SET_NULL, null=True)
@@ -124,6 +151,7 @@ class Boleta_producto(Documento):
         self.monto_total = self.monto_unidad*self.cantidad
         self.monto_iva =  self.monto_total/6.2631 # valor para extraer 19% del 100% original (valor total es de 119%)
         self.monto_neto = self.monto_total-self.monto_iva
+        self.boleta.save()
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
         return f'{self.producto}x{self.cantidad}'
@@ -139,11 +167,12 @@ class Boleta_servicio(Documento):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.monto_unidad = self.servicio.precio
         self.monto_total = self.monto_unidad*self.cantidad
-        self.monto_iva =  self.monto_total*0.19
+        self.monto_iva =  self.monto_total/6.2631 # valor para extraer 19% del 100% original (valor total es de 119%)
         self.monto_neto = self.monto_total-self.monto_iva
+        self.boleta.save()
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
-        return f'{self.producto}x{self.cantidad}'
+        return f'{self.servicio}x{self.cantidad}'
 
 class Factura(Documento):
     TIPO_DE_PAGO_CHOICES = (
@@ -153,9 +182,9 @@ class Factura(Documento):
     )
     numero_factura = models.PositiveIntegerField()
     tipo_de_pago = models.CharField(max_length=25, choices=TIPO_DE_PAGO_CHOICES)
+    monto_total = models.PositiveIntegerField()
     monto_neto = models.PositiveIntegerField()
     monto_iva = models.PositiveIntegerField()
-    monto_total = models.PositiveIntegerField()
     empleado = models.ForeignKey(User, on_delete=models.CASCADE, related_name='facturas_jefe')
     proveedor = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True)
     class Meta:
@@ -165,12 +194,20 @@ class Factura(Documento):
             ("can_update_factura", "Puede actualizar facturas"),
         ]
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        self.monto_iva =  self.monto_total*1.19
-        self.monto_neto = self.monto_total-self.monto_iva
+        from random import randint
+        self.numero_factura = randint(1, 99999999)
+        self.monto_total = 0
+        self.monto_neto = 0
+        self.monto_iva = 0
+        for item in Factura_detalle.objects.filter(factura=self):
+            self.monto_total += item.monto_total
+            self.monto_neto += item.monto_neto
+            self.monto_iva += item.monto_iva
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
         contenidos:list = []
-        contenidos.append(Factura_detalle.objects.all().filter(factura=self))
+        for con in Factura_detalle.objects.all().filter(factura=self):
+            contenidos.append(f'{con}')
         return f'{self.fecha_creacion}, {self.tipo_de_pago}, {self.monto_neto}, {self.proveedor}, {", ".join(contenidos)}'
     def get_absolute_url(self):
         return reverse("factura_detalle", kwargs={"pk": self.id})
@@ -186,8 +223,8 @@ class Factura_detalle(Documento):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.numero_factura = self.factura.numero_factura
         self.monto_unidad = self.monto_total/self.cantidad
-        self.monto_iva =  self.monto_total*1.19
+        self.monto_iva =  self.monto_total*0.19
         self.monto_neto = self.monto_total-self.monto_iva
-        super().save(force_insert,force_update,using,update_fields)
+        super().save()
     def __str__(self):
         return f'{self.producto}x{self.cantidad}'

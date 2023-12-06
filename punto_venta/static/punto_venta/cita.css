@@ -1,0 +1,36 @@
+/* CITAS FORM STYLES */
+body {
+    background-color: var(--darkened-bg);
+}
+
+.card {
+    width: 28em;
+    min-width: 300px;
+    background-color: var(--body-bg);
+    border: 1px solid var(--hairline-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 100px auto;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+h2 {
+    color: var(--header-link-color);
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: var(--body-bg);
+    padding: 10px;
+    text-align: left;
+}
+
+/* Additional styles can be added as needed */

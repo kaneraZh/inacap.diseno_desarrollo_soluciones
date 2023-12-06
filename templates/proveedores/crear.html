@@ -1,0 +1,36 @@
+<!-- crear.html -->
+{% extends 'base.html' %}
+
+{% block title %}Crear Proveedor{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Crear Proveedor</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_nombre" class="form-label">Nombre:</label>
+                <input type="text" name="nombre" id="id_nombre" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_direccion" class="form-label">Dirección:</label>
+                <input type="text" name="direccion" id="id_direccion" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_rut_empresa" class="form-label">RUT Empresa:</label>
+                <input type="text" name="rut_empresa" id="id_rut_empresa" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_telefono_celular" class="form-label">Teléfono Celular:</label>
+                <input type="text" name="telefono_celular" id="id_telefono_celular" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Email:</label>
+                <input type="email" name="email" id="id_email" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'proveedores' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+{% endblock content %}

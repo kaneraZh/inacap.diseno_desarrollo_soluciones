@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="System"?>
+<database>
+    <name>db</name>
+    <table>
+        <database></database>
+        <name>auth_group</name>
+        <ddl><![CDATA[CREATE TABLE "auth_group" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(150) NOT NULL UNIQUE)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>name</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>UNIQUE</type>
+                        <definition>UNIQUE</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">jefe</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">empleado</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">cliente</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>auth_group_permissions</name>
+        <ddl><![CDATA[CREATE TABLE "auth_group_permissions" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "group_id" integer NOT NULL REFERENCES "auth_group" ("id") DEFERRABLE INITIALLY DEFERRED, "permission_id" integer NOT NULL REFERENCES "auth_permission" ("id") DEFERRABLE INITIALLY DEFERRED)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>group_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES &quot;auth_group&quot; (&quot;id&quot;) </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>permission_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES &quot;auth_permission&quot; (&quot;id&quot;) </definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">1</value>
+                <value column="2">25</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">1</value>
+                <value column="2">26</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">1</value>
+                <value column="2">27</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">1</value>
+                <value column="2">28</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">1</value>
+                <value column="2">29</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">1</value>
+                <value column="2">30</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">1</value>
+                <value column="2">31</value>
+            </row>
+            <row>
+                <value column="0">8</value>
+                <value column="1">1</value>
+                <value column="2">32</value>
+            </row>
+            <row>
+                <value column="0">9</value>
+                <value column="1">1</value>
+                <value column="2">33</value>
+            </row>
+            <row>
+                <value column="0">10</value>
+                <value column="1">1</value>
+                <value column="2">34</value>
+            </row>
+            <row>
+                <value column="0">11</value>
+                <value column="1">1</value>
+                <value column="2">35</value>
+            </row>
+            <row>
+                <value column="0">12</value>
+                <value column="1">1</value>
+                <value column="2">36</value>
+            </row>
+            <row>
+                <value column="0">13</value>
+                <value column="1">1</value>
+                <value column="2">37</value>
+            </row>
+            <row>
+                <value column="0">14</value>
+                <value column="1">1</value>
+                <value column="2">38</value>
+            </row>
+            <row>
+                <value column="0">15</value>
+                <value column="1">1</value>
+                <value column="2">39</value>
+            </row>
+            <row>
+                <value column="0">16</value>
+                <value column="1">1</value>
+                <value column="2">40</value>
+            </row>
+            <row>
+                <value column="0">17</value>
+                <value column="1">1</value>
+                <value column="2">41</value>
+            </row>
+            <row>
+                <value column="0">18</value>
+                <value column="1">1</value>
+                <value column="2">42</value>
+            </row>
+            <row>
+                <value column="0">19</value>
+                <value column="1">1</value>
+                <value column="2">43</value>
+            </row>
+            <row>
+                <value column="0">20</value>
+                <value column="1">1</value>
+                <value column="2">44</value>
+            </row>
+            <row>
+                <value column="0">21</value>
+                <value column="1">1</value>
+                <value column="2">45</value>
+            </row>
+            <row>
+                <value column="0">22</value>
+                <value column="1">1</value>
+                <value column="2">46</value>
+            </row>
+            <row>
+                <value column="0">23</value>
+                <value column="1">1</value>
+                <value column="2">47</value>
+            </row>
+            <row>
+                <value column="0">24</value>
+                <value column="1">1</value>
+                <value column="2">48</value>
+            </row>
+            <row>
+                <value column="0">25</value>
+                <value column="1">1</value>
+                <value column="2">49</value>
+            </row>
+            <row>
+                <value column="0">26</value>
+                <value column="1">1</value>
+                <value column="2">50</value>
+            </row>
+            <row>
+                <value column="0">27</value>
+                <value column="1">1</value>
+                <value column="2">51</value>
+            </row>
+            <row>
+                <value column="0">28</value>
+                <value column="1">1</value>
+                <value column="2">52</value>
+            </row>
+            <row>
+                <value column="0">29</value>
+                <value column="1">1</value>
+                <value column="2">53</value>
+            </row>
+            <row>
+                <value column="0">30</value>
+                <value column="1">1</value>
+                <value column="2">54</value>
+            </row>
+            <row>
+                <value column="0">31</value>
+                <value column="1">1</value>
+                <value column="2">55</value>
+            </row>
+            <row>
+                <value column="0">32</value>
+                <value column="1">1</value>
+                <value column="2">56</value>
+            </row>
+            <row>
+                <value column="0">33</value>
+                <value column="1">1</value>
+                <value column="2">57</value>
+            </row>
+            <row>
+                <value column="0">34</value>
+                <value column="1">1</value>
+                <value column="2">58</value>
+            </row>
+            <row>
+                <value column="0">35</value>
+                <value column="1">1</value>
+                <value column="2">59</value>
+            </row>
+            <row>
+                <value column="0">36</value>
+                <value column="1">1</value>
+                <value column="2">60</value>
+            </row>
+            <row>
+                <value column="0">37</value>
+                <value column="1">1</value>
+                <value column="2">61</value>
+            </row>
+            <row>
+                <value column="0">38</value>
+                <value column="1">1</value>
+                <value column="2">62</value>
+            </row>
+            <row>
+                <value column="0">39</value>
+                <value column="1">1</value>
+                <value column="2">63</value>
+            </row>
+            <row>
+                <value column="0">40</value>
+                <value column="1">1</value>
+                <value column="2">64</value>
+            </row>
+            <row>
+                <value column="0">41</value>
+                <value column="1">1</value>
+                <value column="2">65</value>
+            </row>
+            <row>
+                <value column="0">42</value>
+                <value column="1">1</value>
+                <value column="2">66</value>
+            </row>
+            <row>
+                <value column="0">43</value>
+                <value column="1">1</value>
+                <value column="2">67</value>
+            </row>
+            <row>
+                <value column="0">44</value>
+                <value column="1">1</value>
+                <value column="2">68</value>
+            </row>
+            <row>
+                <value column="0">45</value>
+                <value column="1">1</value>
+                <value column="2">69</value>
+            </row>
+            <row>
+                <value column="0">46</value>
+                <value column="1">1</value>
+                <value column="2">70</value>
+            </row>
+            <row>
+                <value column="0">47</value>
+                <value column="1">1</value>
+                <value column="2">71</value>
+            </row>
+            <row>
+                <value column="0">48</value>
+                <value column="1">1</value>
+                <value column="2">72</value>
+            </row>
+            <row>
+                <value column="0">49</value>
+                <value column="1">1</value>
+                <value column="2">73</value>
+            </row>
+            <row>
+                <value column="0">50</value>
+                <value column="1">1</value>
+                <value column="2">74</value>
+            </row>
+            <row>
+                <value column="0">51</value>
+                <value column="1">1</value>
+                <value column="2">75</value>
+            </row>
+            <row>
+                <value column="0">52</value>
+                <value column="1">1</value>
+                <value column="2">76</value>
+            </row>
+            <row>
+                <value column="0">53</value>
+                <value column="1">1</value>
+                <value column="2">77</value>
+            </row>
+            <row>
+                <value column="0">54</value>
+                <value column="1">1</value>
+                <value column="2">78</value>
+            </row>
+            <row>
+                <value column="0">55</value>
+                <value column="1">2</value>
+                <value column="2">67</value>
+            </row>
+            <row>
+                <value column="0">56</value>
+                <value column="1">2</value>
+                <value column="2">68</value>
+            </row>
+            <row>
+                <value column="0">57</value>
+                <value column="1">2</value>
+                <value column="2">70</value>
+            </row>
+            <row>
+                <value column="0">58</value>
+                <value column="1">2</value>
+                <value column="2">71</value>
+            </row>
+            <row>
+                <value column="0">59</value>
+                <value column="1">2</value>
+                <value column="2">72</value>
+            </row>
+            <row>
+                <value column="0">60</value>
+                <value column="1">2</value>
+                <value column="2">74</value>
+            </row>
+            <row>
+                <value column="0">61</value>
+                <value column="1">2</value>
+                <value column="2">60</value>
+            </row>
+            <row>
+                <value column="0">62</value>
+                <value column="1">2</value>
+                <value column="2">47</value>
+            </row>
+            <row>
+                <value column="0">63</value>
+                <value column="1">2</value>
+                <value column="2">48</value>
+            </row>
+            <row>
+                <value column="0">64</value>
+                <value column="1">2</value>
+                <value column="2">49</value>
+            </row>
+            <row>
+                <value column="0">65</value>
+                <value column="1">2</value>
+                <value column="2">50</value>
+            </row>
+            <row>
+                <value column="0">66</value>
+                <value column="1">2</value>
+                <value column="2">25</value>
+            </row>
+            <row>
+                <value column="0">67</value>
+                <value column="1">2</value>
+                <value column="2">26</value>
+            </row>
+            <row>
+                <value column="0">68</value>
+                <value column="1">2</value>
+                <value column="2">59</value>
+            </row>
+            <row>
+                <value column="0">69</value>
+                <value column="1">2</value>
+                <value column="2">28</value>
+            </row>
+            <row>
+                <value column="0">70</value>
+                <value column="1">2</value>
+                <value column="2">61</value>
+            </row>
+            <row>
+                <value column="0">71</value>
+                <value column="1">2</value>
+                <value column="2">62</value>
+            </row>
+            <row>
+                <value column="0">72</value>
+                <value column="1">3</value>
+                <value column="2">75</value>
+            </row>
+            <row>
+                <value column="0">73</value>
+                <value column="1">3</value>
+                <value column="2">77</value>
+            </row>
+            <row>
+                <value column="0">74</value>
+                <value column="1">3</value>
+                <value column="2">78</value>
+            </row>
+            <row>
+                <value column="0">75</value>
+                <value column="1">3</value>
+                <value column="2">50</value>
+            </row>
+            <row>
+                <value column="0">76</value>
+                <value column="1">3</value>
+                <value column="2">62</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>auth_permission</name>
+        <ddl><![CDATA[CREATE TABLE "auth_permission" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "content_type_id" integer NOT NULL REFERENCES "django_content_type" ("id") DEFERRABLE INITIALLY DEFERRED, "codename" varchar(100) NOT NULL, "name" varchar(255) NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>content_type_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES &quot;django_content_type&quot; (&quot;id&quot;) </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>codename</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>name</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">1</value>
+                <value column="2">add_logentry</value>
+                <value column="3">Can add log entry</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">1</value>
+                <value column="2">change_logentry</value>
+                <value column="3">Can change log entry</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">1</value>
+                <value column="2">delete_logentry</value>
+                <value column="3">Can delete log entry</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">1</value>
+                <value column="2">view_logentry</value>
+                <value column="3">Can view log entry</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">2</value>
+                <value column="2">add_permission</value>
+                <value column="3">Can add permission</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">2</value>
+                <value column="2">change_permission</value>
+                <value column="3">Can change permission</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">2</value>
+                <value column="2">delete_permission</value>
+                <value column="3">Can delete permission</value>
+            </row>
+            <row>
+                <value column="0">8</value>
+                <value column="1">2</value>
+                <value column="2">view_permission</value>
+                <value column="3">Can view permission</value>
+            </row>
+            <row>
+                <value column="0">9</value>
+                <value column="1">3</value>
+                <value column="2">add_group</value>
+                <value column="3">Can add group</value>
+            </row>
+            <row>
+                <value column="0">10</value>
+                <value column="1">3</value>
+                <value column="2">change_group</value>
+                <value column="3">Can change group</value>
+            </row>
+            <row>
+                <value column="0">11</value>
+                <value column="1">3</value>
+                <value column="2">delete_group</value>
+                <value column="3">Can delete group</value>
+            </row>
+            <row>
+                <value column="0">12</value>
+                <value column="1">3</value>
+                <value column="2">view_group</value>
+                <value column="3">Can view group</value>
+            </row>
+            <row>
+                <value column="0">13</value>
+                <value column="1">4</value>
+                <value column="2">add_user</value>
+                <value column="3">Can add user</value>
+            </row>
+            <row>
+                <value column="0">14</value>
+                <value column="1">4</value>
+                <value column="2">change_user</value>
+                <value column="3">Can change user</value>
+            </row>
+            <row>
+                <value column="0">15</value>
+                <value column="1">4</value>
+                <value column="2">delete_user</value>
+                <value column="3">Can delete user</value>
+            </row>
+            <row>
+                <value column="0">16</value>
+                <value column="1">4</value>
+                <value column="2">view_user</value>
+                <value column="3">Can view user</value>
+            </row>
+            <row>
+                <value column="0">17</value>
+                <value column="1">5</value>
+                <value column="2">add_contenttype</value>
+                <value column="3">Can add content type</value>
+            </row>
+            <row>
+                <value column="0">18</value>
+                <value column="1">5</value>
+                <value column="2">change_contenttype</value>
+                <value column="3">Can change content type</value>
+            </row>
+            <row>
+                <value column="0">19</value>
+                <value column="1">5</value>
+                <value column="2">delete_contenttype</value>
+                <value column="3">Can delete content type</value>
+            </row>
+            <row>
+                <value column="0">20</value>
+                <value column="1">5</value>
+                <value column="2">view_contenttype</value>
+                <value column="3">Can view content type</value>
+            </row>
+            <row>
+                <value column="0">21</value>
+                <value column="1">6</value>
+                <value column="2">add_session</value>
+                <value column="3">Can add session</value>
+            </row>
+            <row>
+                <value column="0">22</value>
+                <value column="1">6</value>
+                <value column="2">change_session</value>
+                <value column="3">Can change session</value>
+            </row>
+            <row>
+                <value column="0">23</value>
+                <value column="1">6</value>
+                <value column="2">delete_session</value>
+                <value column="3">Can delete session</value>
+            </row>
+            <row>
+                <value column="0">24</value>
+                <value column="1">6</value>
+                <value column="2">view_session</value>
+                <value column="3">Can view session</value>
+            </row>
+            <row>
+                <value column="0">25</value>
+                <value column="1">7</value>
+                <value column="2">add_boleta</value>
+                <value column="3">Can add boleta</value>
+            </row>
+            <row>
+                <value column="0">26</value>
+                <value column="1">7</value>
+                <value column="2">change_boleta</value>
+                <value column="3">Can change boleta</value>
+            </row>
+            <row>
+                <value column="0">27</value>
+                <value column="1">7</value>
+                <value column="2">delete_boleta</value>
+                <value column="3">Can delete boleta</value>
+            </row>
+            <row>
+                <value column="0">28</value>
+                <value column="1">7</value>
+                <value column="2">view_boleta</value>
+                <value column="3">Can view boleta</value>
+            </row>
+            <row>
+                <value column="0">29</value>
+                <value column="1">7</value>
+                <value column="2">can_add_boleta</value>
+                <value column="3">Puede agregar boletas</value>
+            </row>
+            <row>
+                <value column="0">30</value>
+                <value column="1">7</value>
+                <value column="2">can_delete_boleta</value>
+                <value column="3">Puede eliminar boletas</value>
+            </row>
+            <row>
+                <value column="0">31</value>
+                <value column="1">7</value>
+                <value column="2">can_update_boleta</value>
+                <value column="3">Puede actualizar boletas</value>
+            </row>
+            <row>
+                <value column="0">32</value>
+                <value column="1">8</value>
+                <value column="2">add_factura</value>
+                <value column="3">Can add factura</value>
+            </row>
+            <row>
+                <value column="0">33</value>
+                <value column="1">8</value>
+                <value column="2">change_factura</value>
+                <value column="3">Can change factura</value>
+            </row>
+            <row>
+                <value column="0">34</value>
+                <value column="1">8</value>
+                <value column="2">delete_factura</value>
+                <value column="3">Can delete factura</value>
+            </row>
+            <row>
+                <value column="0">35</value>
+                <value column="1">8</value>
+                <value column="2">view_factura</value>
+                <value column="3">Can view factura</value>
+            </row>
+            <row>
+                <value column="0">36</value>
+                <value column="1">8</value>
+                <value column="2">can_add_factura</value>
+                <value column="3">Puede agregar facturas</value>
+            </row>
+            <row>
+                <value column="0">37</value>
+                <value column="1">8</value>
+                <value column="2">can_delete_factura</value>
+                <value column="3">Puede eliminar facturas</value>
+            </row>
+            <row>
+                <value column="0">38</value>
+                <value column="1">8</value>
+                <value column="2">can_update_factura</value>
+                <value column="3">Puede actualizar facturas</value>
+            </row>
+            <row>
+                <value column="0">39</value>
+                <value column="1">9</value>
+                <value column="2">add_persona</value>
+                <value column="3">Can add user</value>
+            </row>
+            <row>
+                <value column="0">40</value>
+                <value column="1">9</value>
+                <value column="2">change_persona</value>
+                <value column="3">Can change user</value>
+            </row>
+            <row>
+                <value column="0">41</value>
+                <value column="1">9</value>
+                <value column="2">delete_persona</value>
+                <value column="3">Can delete user</value>
+            </row>
+            <row>
+                <value column="0">42</value>
+                <value column="1">9</value>
+                <value column="2">view_persona</value>
+                <value column="3">Can view user</value>
+            </row>
+            <row>
+                <value column="0">43</value>
+                <value column="1">10</value>
+                <value column="2">add_proveedor</value>
+                <value column="3">Can add proveedor</value>
+            </row>
+            <row>
+                <value column="0">44</value>
+                <value column="1">10</value>
+                <value column="2">change_proveedor</value>
+                <value column="3">Can change proveedor</value>
+            </row>
+            <row>
+                <value column="0">45</value>
+                <value column="1">10</value>
+                <value column="2">delete_proveedor</value>
+                <value column="3">Can delete proveedor</value>
+            </row>
+            <row>
+                <value column="0">46</value>
+                <value column="1">10</value>
+                <value column="2">view_proveedor</value>
+                <value column="3">Can view proveedor</value>
+            </row>
+            <row>
+                <value column="0">47</value>
+                <value column="1">11</value>
+                <value column="2">add_servicio</value>
+                <value column="3">Can add servicio</value>
+            </row>
+            <row>
+                <value column="0">48</value>
+                <value column="1">11</value>
+                <value column="2">change_servicio</value>
+                <value column="3">Can change servicio</value>
+            </row>
+            <row>
+                <value column="0">49</value>
+                <value column="1">11</value>
+                <value column="2">delete_servicio</value>
+                <value column="3">Can delete servicio</value>
+            </row>
+            <row>
+                <value column="0">50</value>
+                <value column="1">11</value>
+                <value column="2">view_servicio</value>
+                <value column="3">Can view servicio</value>
+            </row>
+            <row>
+                <value column="0">51</value>
+                <value column="1">12</value>
+                <value column="2">add_cliente</value>
+                <value column="3">Can add Cliente</value>
+            </row>
+            <row>
+                <value column="0">52</value>
+                <value column="1">12</value>
+                <value column="2">change_cliente</value>
+                <value column="3">Can change Cliente</value>
+            </row>
+            <row>
+                <value column="0">53</value>
+                <value column="1">12</value>
+                <value column="2">delete_cliente</value>
+                <value column="3">Can delete Cliente</value>
+            </row>
+            <row>
+                <value column="0">54</value>
+                <value column="1">12</value>
+                <value column="2">view_cliente</value>
+                <value column="3">Can view Cliente</value>
+            </row>
+            <row>
+                <value column="0">55</value>
+                <value column="1">13</value>
+                <value column="2">add_empleado</value>
+                <value column="3">Can add Empleado</value>
+            </row>
+            <row>
+                <value column="0">56</value>
+                <value column="1">13</value>
+                <value column="2">change_empleado</value>
+                <value column="3">Can change Empleado</value>
+            </row>
+            <row>
+                <value column="0">57</value>
+                <value column="1">13</value>
+                <value column="2">delete_empleado</value>
+                <value column="3">Can delete Empleado</value>
+            </row>
+            <row>
+                <value column="0">58</value>
+                <value column="1">13</value>
+                <value column="2">view_empleado</value>
+                <value column="3">Can view Empleado</value>
+            </row>
+            <row>
+                <value column="0">59</value>
+                <value column="1">14</value>
+                <value column="2">add_producto</value>
+                <value column="3">Can add producto</value>
+            </row>
+            <row>
+                <value column="0">60</value>
+                <value column="1">14</value>
+                <value column="2">change_producto</value>
+                <value column="3">Can change producto</value>
+            </row>
+            <row>
+                <value column="0">61</value>
+                <value column="1">14</value>
+                <value column="2">delete_producto</value>
+                <value column="3">Can delete producto</value>
+            </row>
+            <row>
+                <value column="0">62</value>
+                <value column="1">14</value>
+                <value column="2">view_producto</value>
+                <value column="3">Can view producto</value>
+            </row>
+            <row>
+                <value column="0">63</value>
+                <value column="1">15</value>
+                <value column="2">add_factura_detalle</value>
+                <value column="3">Can add factura_detalle</value>
+            </row>
+            <row>
+                <value column="0">64</value>
+                <value column="1">15</value>
+                <value column="2">change_factura_detalle</value>
+                <value column="3">Can change factura_detalle</value>
+            </row>
+            <row>
+                <value column="0">65</value>
+                <value column="1">15</value>
+                <value column="2">delete_factura_detalle</value>
+                <value column="3">Can delete factura_detalle</value>
+            </row>
+            <row>
+                <value column="0">66</value>
+                <value column="1">15</value>
+                <value column="2">view_factura_detalle</value>
+                <value column="3">Can view factura_detalle</value>
+            </row>
+            <row>
+                <value column="0">67</value>
+                <value column="1">16</value>
+                <value column="2">add_boleta_servicio</value>
+                <value column="3">Can add boleta_servicio</value>
+            </row>
+            <row>
+                <value column="0">68</value>
+                <value column="1">16</value>
+                <value column="2">change_boleta_servicio</value>
+                <value column="3">Can change boleta_servicio</value>
+            </row>
+            <row>
+                <value column="0">69</value>
+                <value column="1">16</value>
+                <value column="2">delete_boleta_servicio</value>
+                <value column="3">Can delete boleta_servicio</value>
+            </row>
+            <row>
+                <value column="0">70</value>
+                <value column="1">16</value>
+                <value column="2">view_boleta_servicio</value>
+                <value column="3">Can view boleta_servicio</value>
+            </row>
+            <row>
+                <value column="0">71</value>
+                <value column="1">17</value>
+                <value column="2">add_boleta_producto</value>
+                <value column="3">Can add boleta_producto</value>
+            </row>
+            <row>
+                <value column="0">72</value>
+                <value column="1">17</value>
+                <value column="2">change_boleta_producto</value>
+                <value column="3">Can change boleta_producto</value>
+            </row>
+            <row>
+                <value column="0">73</value>
+                <value column="1">17</value>
+                <value column="2">delete_boleta_producto</value>
+                <value column="3">Can delete boleta_producto</value>
+            </row>
+            <row>
+                <value column="0">74</value>
+                <value column="1">17</value>
+                <value column="2">view_boleta_producto</value>
+                <value column="3">Can view boleta_producto</value>
+            </row>
+            <row>
+                <value column="0">75</value>
+                <value column="1">18</value>
+                <value column="2">add_cita</value>
+                <value column="3">Can add cita</value>
+            </row>
+            <row>
+                <value column="0">76</value>
+                <value column="1">18</value>
+                <value column="2">change_cita</value>
+                <value column="3">Can change cita</value>
+            </row>
+            <row>
+                <value column="0">77</value>
+                <value column="1">18</value>
+                <value column="2">delete_cita</value>
+                <value column="3">Can delete cita</value>
+            </row>
+            <row>
+                <value column="0">78</value>
+                <value column="1">18</value>
+                <value column="2">view_cita</value>
+                <value column="3">Can view cita</value>
+            </row>
+        </rows>
+    </table>
+    <index>
+        <database></database>
+        <name>auth_group_permissions_group_id_b120cbf9</name>
+        <ddl>CREATE INDEX &quot;auth_group_permissions_group_id_b120cbf9&quot; ON &quot;auth_group_permissions&quot; (&quot;group_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_group_permissions_group_id_permission_id_0cd325b0_uniq</name>
+        <unique>true</unique>
+        <ddl><![CDATA[CREATE UNIQUE INDEX "auth_group_permissions_group_id_permission_id_0cd325b0_uniq" ON "auth_group_permissions" ("group_id", "permission_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_group_permissions_permission_id_84c5c92e</name>
+        <ddl><![CDATA[CREATE INDEX "auth_group_permissions_permission_id_84c5c92e" ON "auth_group_permissions" ("permission_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_permission_content_type_id_2f476e4b</name>
+        <ddl>CREATE INDEX &quot;auth_permission_content_type_id_2f476e4b&quot; ON &quot;auth_permission&quot; (&quot;content_type_id&quot;)</ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>auth_permission_content_type_id_codename_01ab375a_uniq</name>
+        <unique>true</unique>
+        <ddl><![CDATA[CREATE UNIQUE INDEX "auth_permission_content_type_id_codename_01ab375a_uniq" ON "auth_permission" ("content_type_id", "codename")]]></ddl>
+    </index>
+</database>

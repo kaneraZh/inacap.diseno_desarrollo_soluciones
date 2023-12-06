@@ -1,0 +1,62 @@
+<!-- proveedores.html -->
+{% extends 'base.html' %}
+
+{% block title %}Proveedores{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Lista de Proveedores</h2>
+
+        {% if puede_crear %}
+    <form action="{% url crear %}">
+        <button type="submit" class="btn btn-primary mb-3">
+            <i class="fas fa-plus"></i> Crear
+        </button>
+    </form>
+{% endif %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>RUT Empresa</th>
+                    <th>Teléfono Celular</th>
+                    <th>Email</th>
+                    {% if puede_actualizar or puede_borrar %}
+                        <th>Acciones</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for proveedor in object_list %}
+                    <tr>
+                        <td>{{ proveedor.nombre }}</td>
+                        <td>{{ proveedor.direccion }}</td>
+                        <td>{{ proveedor.rut_empresa }}</td>
+                        <td>{{ proveedor.telefono_celular }}</td>
+                        <td>{{ proveedor.email }}</td>
+                        {% if puede_actualizar or puede_borrar %}
+                            <td>
+                             {% if puede_actualizar %}
+                                    <form action="{% url actualizar pk=proveedor.id %}">
+                                        <button type="submit" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-pen-to-square"></i> Actualizar
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                {% if puede_borrar %}
+                                    <form action="{% url borrar pk=proveedor.id %}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Borrar
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
