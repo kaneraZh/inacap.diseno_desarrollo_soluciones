@@ -207,8 +207,8 @@ class Factura_detalle(Documento):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.numero_factura = self.factura.numero_factura
         self.monto_unidad = self.monto_total/self.cantidad
-        self.monto_iva =  self.monto_total*1.19
+        self.monto_iva =  self.monto_total*0.19
         self.monto_neto = self.monto_total-self.monto_iva
-        super().save(force_insert,force_update,using,update_fields)
+        super().save()
     def __str__(self):
         return f'{self.producto}x{self.cantidad}'
