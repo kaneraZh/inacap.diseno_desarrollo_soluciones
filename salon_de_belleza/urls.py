@@ -30,18 +30,18 @@ urlpatterns = [
     path('accounts/profile/', TemplateView.as_view(template_name='cliente/home.html'), name='home2'),
     path('', TemplateView.as_view(template_name='cliente/home.html'), name='home'),
     path('signin/', punto_venta.ClienteSignin, name='signin'),
-    path('cita/agendar', punto_venta.ClienteCitaAgendar, name='cliente_cita_agendar'),
+    path('cita/agendar/', punto_venta.ClienteCitaAgendar, name='cliente_cita_agendar'),
 #    path('cita/calendario', punto_venta.calendario, name='calendario'),
-    path('cita/calendario', punto_venta.CitaListViewCliente.as_view(), name='cita_calendario'),
+    path('cita/calendario/', punto_venta.CitaListViewCliente.as_view(), name='cita_calendario'),
 
-    path('servicios/lista', punto_venta.ServicioListView.as_view(), name='servicios'),
+    path('servicios/lista/', punto_venta.ServicioListView.as_view(), name='servicios'),
     path('servicios/', punto_venta.ServicioCardView.as_view(), name='servicios_tarjeta'),
     path('servicio/<int:pk>/', punto_venta.ServicioDetailView.as_view(), name='servicio_detalle'),
     path('servicio/crear/', punto_venta.ServicioCreateView.as_view(), name='servicio_crear'),
     path('servicio/actualizar/<int:pk>/', punto_venta.ServicioUpdateView.as_view(), name='servicio_actualizar'),
     path('servicio/borrar/<int:pk>/', punto_venta.ServicioDeleteView.as_view(), name='servicio_borrar'),
 
-    path('productos/lista', punto_venta.ProductoListView.as_view(), name='productos'),
+    path('productos/lista/', punto_venta.ProductoListView.as_view(), name='productos'),
     path('productos/', punto_venta.ProductoCardView.as_view(), name='productos_tarjeta'),
     path('producto/<int:pk>/', punto_venta.ProductoDetailView.as_view(), name='producto_detalle'),
     path('producto/crear/', punto_venta.ProductoCreateView.as_view(), name='producto_crear'),
@@ -62,7 +62,7 @@ urlpatterns = [
     
     path('empleados/', punto_venta.EmpleadoListView.as_view(), name='empleados'),
     path('empleado/<int:pk>/', punto_venta.EmpleadoDetailView.as_view(), name='empleado_detalle'),
-    path('empleado/crear/', punto_venta.EmpleadoCreateView.as_view(), name='empleado_crear'),
+    path('empleado/crear/', punto_venta.EmpleadoCreate, name='empleado_crear'),
     path('empleado/actualizar/<int:pk>/', punto_venta.EmpleadoUpdateView.as_view(), name='empleado_actualizar'),
     path('empleado/borrar/<int:pk>/', punto_venta.EmpleadoDeleteView.as_view(), name='empleado_borrar'),
 
@@ -80,7 +80,7 @@ urlpatterns = [
 
     path('facturas/', punto_venta.FacturaListView.as_view(), name='facturas'),
     path('factura/<int:pk>/', punto_venta.FacturaDetailView.as_view(), name='factura_detalle'),
-    path('factura/crear/<int:pk>', punto_venta.FacturaCrear, name='factura_crear'),
+    path('factura/crear/', punto_venta.FacturaCreate, name='factura_crear'),
     #path('factura/actualizar/<int:pk>/', punto_venta.FacturaActualizar, name='factura_actualizar'),
     path('factura/borrar/<int:pk>/', punto_venta.FacturaDeleteView.as_view(), name='factura_borrar'),
 ]
