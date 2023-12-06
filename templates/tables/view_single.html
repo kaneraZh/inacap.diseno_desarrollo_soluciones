@@ -9,12 +9,12 @@
 {{object}}
 {% if puede_actualizar %}
 <form action={% url actualizar pk=object.id %}>
-    <input type="submit" value="Borrar" />
+    <input type="submit" value="Actualizar" />
 </form>
 {% endif %}
 {% if puede_borrar %}
 <form action={% url borrar pk=object.id %}>
-    <input type="submit" value="Actualizar" />
+    <input type="submit" value="Borrar" />
 </form>
 {% endif %}
 <form action={% url lista %}>
