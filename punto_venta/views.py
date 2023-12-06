@@ -160,34 +160,6 @@ class CitaDetailViewCliente(DetailView):
         if(not user.has_perm('punto_venta.view_cita')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 
-def agregar_producto(request):
-    if request.method == 'POST':
-        form = ProductoForm(request.POST, request.FILES)
-        if form.is_valid():
-            producto = form.save()
-            # Puedes hacer algo con la imagen aquí, como renombrarla según la ID del producto
-            return redirect('detalle_producto', pk=producto.pk)
-    else:
-        form = ProductoForm()
-    return render(request, 'agregar_producto.html', {'form': form})
-
-def detalle_producto(request, pk):
-    # Obtiene el producto actual
-    producto = get_object_or_404(Producto, pk=pk)
-
-    # Obtiene la categoría del producto actual
-    categoria_actual = producto.categoria
-
-    # Obtiene productos relacionados (excluyendo el producto actual)
-    productos_relacionados = Producto.objects.filter(categoria=categoria_actual).exclude(pk=pk)
-
-    context = {
-        'producto': producto,
-        'productos_relacionados': productos_relacionados,
-    }
-
-    return render(request, 'ruta_a_tu_template/detalle_producto.html', context)
-
 from django.views.generic.edit import CreateView, FormView, UpdateView, DeleteView
 # CRUDS CLIENTES
 def ClienteCreate(request:HttpRequest):
@@ -626,7 +598,6 @@ class EmpleadoDetailView(DetailView):
         if(not user.has_perm('punto_venta.view_empleado')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 
-
 # proveedor
 class ProveedorCreateView(CreateView):
     model = models.Proveedor
@@ -708,13 +679,6 @@ def FacturaCrear(request, pk):
     else:
         formset = FacturaInlineFormSet(instance=factura)
     return render(request, "tables/create_factura.html", {"formset":formset})
-#def FacturaCreate(request, pk:int):
-#    factura = models.Factura.object.get(id=pk)
-#    detalles= models.Factura_detalle.get(factura=factura)
-#    main = forms.FacturaForms(instance=factura)
-#    items = []
-#    for d in detalles:
-#        items.append( forms.FacturaDetalleForm() )
 class FacturaDeleteView(DeleteView):
     model = models.Factura
     template_name = "table/delete.html"

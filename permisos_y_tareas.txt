@@ -35,7 +35,6 @@ Objetivos:
 	- cliente: Registrarse como cliente e ingresar a una cuenta
 	- servicio: Ver servicios disponibles, y detalles del que desee
 	- producto: Ver productos disponibles, y detalles del que desee
-	
 	CLIENTE: 
 	- cita: Poder agendar y ver citas por venir, puede agendar un maximo de 5 citas por cuenta, con un maximo de 3(<) meses a futuro
 	- servicio: Ver servicios disponibles, y detalles del que desee
