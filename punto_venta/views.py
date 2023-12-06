@@ -91,7 +91,7 @@ class ProductoCardView(ListView):
         return context
 class ServicioCardView(ListView):
     model = models.Servicio
-    paginate_by = 8
+    paginate_by = 10
     template_name = "cliente/servicios.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

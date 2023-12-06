@@ -52,3 +52,9 @@ body {
 .form-row:last-child {
   margin-bottom: 20px; /* O el valor que prefieras */
 }
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
