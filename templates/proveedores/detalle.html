@@ -1,0 +1,29 @@
+<!-- detalle_proveedor.html -->
+{% extends 'base.html' %}
+
+{% block title %}Detalles del Proveedor: {{ proveedor.nombre }}{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Detalles del Proveedor: {{ proveedor.nombre }}</h2>
+
+        <dl class="row">
+            <dt class="col-sm-3">Nombre:</dt>
+            <dd class="col-sm-9">{{ proveedor.nombre }}</dd>
+
+            <dt class="col-sm-3">Dirección:</dt>
+            <dd class="col-sm-9">{{ proveedor.direccion }}</dd>
+
+            <dt class="col-sm-3">RUT Empresa:</dt>
+            <dd class="col-sm-9">{{ proveedor.rut_empresa }}</dd>
+
+            <dt class="col-sm-3">Teléfono Celular:</dt>
+            <dd class="col-sm-9">{{ proveedor.telefono_celular }}</dd>
+
+            <dt class="col-sm-3">Email:</dt>
+            <dd class="col-sm-9">{{ proveedor.email }}</dd>
+        </dl>
+
+        <a href="{% url 'proveedores' %}" class="btn btn-primary">Volver</a>
+    </div>
+{% endblock content %}

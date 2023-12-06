@@ -57,7 +57,7 @@ class EmpleadoCrearForm(forms.ModelForm):
         template_name = "tables/create.html"
         fields = (
             'correo_electronico',
-            'password',
+            'contrasena',
             'primer_nombre',
             'primer_apellido',
             'fecha_nacimiento',
@@ -93,104 +93,39 @@ class ClienteCrearForm(forms.ModelForm):
             res.groups.add(Group.objects.get(name='cliente').id)
         return res
 
-#class BoletaProductoForm(forms.ModelForm):
-#    nombre = forms.CharField(label='Producto', max_length=30, required=True)
-#    class Meta:
-#        model = Boleta_producto
-#        fields = ["cantidad"]
-#ProductoFormSet:forms.formset_factory = forms.formset_factory(BoletaProductoForm, extra=1)
-#class BoletaServicioForm(forms.ModelForm):
-#    nombre = forms.CharField(label='Servicio', max_length=30, required=True)
-#    class Meta:
-#        model = Boleta_servicio
-#        fields = ["cantidad"]
-#ServicioFormSet:forms.formset_factory = forms.formset_factory(BoletaServicioForm, extra=1)
-#class BoletaForm(forms.ModelForm):
-#    cliente_correo = forms.CharField(label='Correo Electronico', max_length=30)
-#    productos = ProductoFormSet
-#    servicios = ServicioFormSet
-#    class Meta:
-#        model = Boleta
-#        fields = ["cliente", "tipo_de_pago"]
+class BoletaForm(forms.ModelForm):
+    class Meta:
+        model = Boleta
+        fields = ("tipo_de_pago","cliente")
+class BoletaProductoForm(forms.ModelForm):
+    class Meta:
+        model = Boleta_producto
+        fields = ("producto","cantidad")
+class BoletaServicioForm(forms.ModelForm):
+    class Meta:
+        model = Boleta_servicio
+        fields = ("servicio","cantidad")
+BoletaProductoFormset = forms.modelformset_factory(
+    form=BoletaProductoForm,
+    model=Boleta_producto,
+    extra=1,
+)
+BoletaServicioFormset = forms.modelformset_factory(
+    form=BoletaServicioForm,
+    model=Boleta_servicio,
+    extra=5,
+)
 
-#from django.forms import inlineformset_factory, BaseInlineFormSet
-#BoletaProductoFormSet = inlineformset_factory(Boleta, BoletaProducto, fields=["producto"])
-#BoletaServicioFormSet = inlineformset_factory(Boleta, BoletaServicio, fields=["servicio"])
-#class BoletaInlineFormset(BaseInlineFormSet):
-
-#class FacturaDetalleForm(forms.ModelForm):
-#    class Meta:
-#        model = FacturaDetalle
-#        fields = ("producto", "cantidad")
-#        widgets = {
-#            'producto' : forms.TextInput(
-#                attrs={
-#                    'class' : 'form-control',
-#                    'placeholder' : 'Ingrese el nombre del producto',
-#                }
-#            ),
-#            'cantidad' : forms.NumberInput(
-#                attrs={
-#                    'placeholder' : 'Ingrese cantidad del producto'
-#                }
-#            )
-#        }
 class FacturaForm(forms.ModelForm):
     class Meta:
         model = Factura
         fields = ("proveedor","tipo_de_pago")
-#        widgets = {
-#            "proveedor" : forms.ModelChoiceField(
-#                queryset=Proveedor.objects.all(),
-#                required=True
-#            ),
-#            "tipo_de_pago" : forms.ChoiceField(
-#                choices=Factura.TIPO_DE_PAGO_CHOICES
-#            ),
-#        }
-#    def save(self, commit=True):
-#        data = self.cleaned_data
-#        factura = Factura(
-#            proveedor = data["proveedor"],
-#            tipo_de_pago = data["tipo_de_pago"],
-#        )
-#        factura.save()
 class FacturaDetalleForm(forms.ModelForm):
     class Meta:
         model = Factura_detalle
         fields = ('producto', 'cantidad', 'monto_total')
-    def clean(self):
-        res = super().clean()
-#        if( len(Producto.objects.filter(nombre=data['producto']))>1 ):
-#            self.add_error('producto', 'nombre del producto es muy generico')
-        return res
-    def save(self, commit=True):
-        res = super().save(False)
-        #res.producto = Producto.objects.get(id=self.data['proveedor'])
-        return res.save(commit)
-
 FacturaDetalleFormset = forms.modelformset_factory(
     form=FacturaDetalleForm,
     model=Factura_detalle,
     extra=1,
-#    widgets={
-#        'id' : forms.NumberInput(
-#            attrs={
-#                'class' : 'form-control',
-#                'placeholder' : 'Ingrese id del producto',
-#            }
-#        ),
-#        'cantidad' : forms.NumberInput(
-#            attrs={
-#                'class' : 'form-control',
-#                'placeholder' : 'Ingrese cantidad del producto'
-#            }
-#        ),
-#        'monto_neto' : forms.NumberInput(
-#            attrs={
-#                'class' : 'form-control',
-#                'placeholder' : 'Ingrese precio neto del grupo de productos'
-#            }
-#        ),
-#    },
 )

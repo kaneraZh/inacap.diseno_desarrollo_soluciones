@@ -1,0 +1,36 @@
+<!-- actualizar.html -->
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Servicio{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Actualizar Servicio</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_nombre" class="form-label">Nombre:</label>
+                <input type="text" name="nombre" id="id_nombre" class="form-control" value="{{ servicio.nombre }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_descripcion" class="form-label">Descripción:</label>
+                <input type="text" name="descripcion" id="id_descripcion" class="form-control" value="{{ servicio.descripcion }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_precio" class="form-label">Precio:</label>
+                <input type="number" name="precio" id="id_precio" class="form-control" value="{{ servicio.precio }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_tiempo" class="form-label">Tiempo:</label>
+                <input type="text" name="tiempo" id="id_tiempo" class="form-control" value="{{ servicio.tiempo }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Guardar Cambios
+            </button>
+            <a href="{% url 'servicios' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Cancelar
+            </a>
+        </form>
+    </div>
+{% endblock content %}

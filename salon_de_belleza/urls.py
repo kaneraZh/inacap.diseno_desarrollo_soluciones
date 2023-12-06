@@ -31,7 +31,6 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='cliente/home.html'), name='home'),
     path('signin/', punto_venta.ClienteSignin, name='signin'),
     path('cita/agendar/', punto_venta.ClienteCitaAgendar, name='cliente_cita_agendar'),
-#    path('cita/calendario', punto_venta.calendario, name='calendario'),
     path('cita/calendario/', punto_venta.CitaListViewCliente.as_view(), name='cita_calendario'),
 
     path('servicios/lista/', punto_venta.ServicioListView.as_view(), name='servicios'),
@@ -54,7 +53,7 @@ urlpatterns = [
     path('cita/actualizar/<int:pk>/', punto_venta.CitaUpdateView.as_view(), name='cita_actualizar'),
     path('cita/borrar/<int:pk>/', punto_venta.CitaDeleteView.as_view(), name='cita_borrar'),
     
-    path('clientes/', punto_venta.ClienteCreate, name='clientes'),
+    path('clientes/', punto_venta.ClienteListView.as_view(), name='clientes'),
     path('cliente/<int:pk>/', punto_venta.ClienteDetailView.as_view(), name='cliente_detalle'),
     path('cliente/crear/', punto_venta.ClienteCreate, name='cliente_crear'),
     path('cliente/actualizar/<int:pk>/', punto_venta.ClienteUpdateView.as_view(), name='cliente_actualizar'),
@@ -68,8 +67,8 @@ urlpatterns = [
 
     path('boletas/', punto_venta.BoletaListView.as_view(), name='boletas'),
     path('boleta/<int:pk>/', punto_venta.BoletaDetailView.as_view(), name='boleta_detalle'),
-    #path('boleta/crear/', punto_venta.BoletaCrear, name='boleta_crear'),
-    #path('boleta/actualizar/<int:pk>/', punto_venta.BoletaActualizar, name='factura_actualizar'),
+    path('boleta/crear/', punto_venta.BoletaCreate, name='boleta_crear'),
+    path('boleta/actualizar/<int:pk>/', punto_venta.BoletaActualizar, name='boleta_actualizar'),
     path('boleta/borrar/<int:pk>/', punto_venta.BoletaDeleteView.as_view(), name='boleta_borrar'),
     
     path('proveedores/', punto_venta.ProveedorListView.as_view(), name='proveedores'),
@@ -81,7 +80,7 @@ urlpatterns = [
     path('facturas/', punto_venta.FacturaListView.as_view(), name='facturas'),
     path('factura/<int:pk>/', punto_venta.FacturaDetailView.as_view(), name='factura_detalle'),
     path('factura/crear/', punto_venta.FacturaCreate, name='factura_crear'),
-    #path('factura/actualizar/<int:pk>/', punto_venta.FacturaActualizar, name='factura_actualizar'),
+    path('factura/actualizar/<int:pk>/', punto_venta.FacturaUpdate, name='factura_actualizar'),
     path('factura/borrar/<int:pk>/', punto_venta.FacturaDeleteView.as_view(), name='factura_borrar'),
 ]
 
@@ -89,6 +88,3 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
-
