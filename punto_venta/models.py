@@ -22,7 +22,7 @@ class Persona(User):
         self.first_name = self.primer_nombre
         self.last_name = self.primer_apellido
         self.email = self.correo_electronico
-        self.set_password(self.password)
+        self.set_password(self.contrasena)
         self.contrasena = self.password
         return super().save(
             force_insert=force_insert, 

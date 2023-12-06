@@ -19,15 +19,15 @@
         </td>
         {% if puede_actualizar %}
         <td>
-            <form action={% url borrar pk=objeto.id %}>
-                <input type="submit" value="Borrar" />
+            <form action={% url actualizar pk=objeto.id %}>
+                <input type="submit" value="Actualizar" />
             </form>
         </td>
         {% endif %}
         {% if puede_borrar %}
         <td>
-            <form action={% url actualizar pk=objeto.id %}>
-                <input type="submit" value="Actualizar" />
+            <form action={% url borrar pk=objeto.id %}>
+                <input type="submit" value="Borrar" />
             </form>
         </td>
         {% endif %}
