@@ -28,6 +28,9 @@
 *cliente tiene solo acceso a las tablas que involucran a su usuario, descontando boletas
 
 Objetivos:
++-------------------------------------------
+| ITERACION 1:
++-------------------------------------------
 	INVITADO:
 	- cliente: Registrarse como cliente e ingresar a una cuenta
 	- servicio: Ver servicios disponibles, y detalles del que desee
@@ -37,7 +40,10 @@ Objetivos:
 	- cita: Poder agendar y ver citas por venir, puede agendar un maximo de 5 citas por cuenta, con un maximo de 3(<) meses a futuro
 	- servicio: Ver servicios disponibles, y detalles del que desee
 	- producto: Ver productos disponibles, y detalles del que desee
-	
+
++-------------------------------------------
+| ITERACION 2:
++-------------------------------------------
 	EMPLEADO:
 	- cliente: Puede registrar a clientes que lo deseen
 	- cita: administracion completa de citas, solo puede cambiar citas a futuro
@@ -46,7 +52,10 @@ Objetivos:
 	- boleta: capacidad de crear y modificar boletas, pero no de borrarlas
 		- boleta_servicio: privilegio necesario para registrar servicios en boletas
 		- boleta_producto: privilegio necesario para registrar productos en boletas
-	
+
++-------------------------------------------
+| ITERACION 3:
++-------------------------------------------
 	JEFE: (un empleado con privilegios administrativos)
 	- persona: administracion completa de personas
 	- empleado: administracion completa de empleados

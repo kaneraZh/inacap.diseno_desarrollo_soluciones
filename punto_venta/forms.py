@@ -139,7 +139,6 @@ class FacturaForm(forms.ModelForm):
 #        )
 #        factura.save()
 class FacturaDetalleForm(forms.ModelForm):
-    factura = forms.HiddenInput()
     class Meta:
         model = Factura_detalle
         fields = ('producto', 'cantidad', 'monto_total')
