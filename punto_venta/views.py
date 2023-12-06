@@ -95,7 +95,7 @@ class ServicioCardView(ListView):
     template_name = "cliente/servicios.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["detalle"] = 'servicio_detalle'
+        context["detalle"] = 's_detalle'
         context["title"] = 'servicios'
         return context
 from datetime import date
@@ -321,7 +321,7 @@ class CitaDetailView(DetailView):
 # servicio
 class ServicioCreateView(CreateView):
     model = models.Servicio
-    template_name = "tables/create.html"
+    template_name = "servicio/crear.html"
     fields = "__all__"
     def dispatch(self, request, *args, **kwargs):
         user = request.user
@@ -330,7 +330,7 @@ class ServicioCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 class ServicioUpdateView(UpdateView):
     model = models.Servicio
-    template_name = "stables/update.html"
+    template_name = "servicio/actualizar.html"
     fields = '__all__'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -343,7 +343,7 @@ class ServicioUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class ServicioDeleteView(DeleteView):
     model = models.Servicio
-    template_name = "tables/delete.html"
+    template_name = "servicio/eliminar.html"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -351,7 +351,7 @@ class ServicioDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class ServicioListView(ListView):
     model = models.Servicio
-    template_name = "tables/view_multy.html"
+    template_name = "servicio/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'servicios'
@@ -362,15 +362,20 @@ class ServicioListView(ListView):
         context["borrar"] = "servicio_borrar"
         context["actualizar"] = "servicio_actualizar"
         context["crear"] = "servicio_crear"
+    # Obtener la lista de empleados y agregarla al contexto
+        context["empleados"] = models.Empleado.objects.all()
+
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.view_servicio')): return redirect(URL_HOME)
+        if(not user.is_authenticated):
+            return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_servicio')):
+            return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ServicioDetailView(DetailView):
     model = models.Servicio
-    template_name = "cliente/servicio.html"
+    template_name = "servicio/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'servicio'
@@ -601,7 +606,7 @@ class EmpleadoDetailView(DetailView):
 # proveedor
 class ProveedorCreateView(CreateView):
     model = models.Proveedor
-    template_name = "tables/create.html"
+    template_name = "proveedores/crear.html"
     fields = '__all__'
     def dispatch(self, request, *args, **kwargs):
         user = request.user
@@ -610,7 +615,7 @@ class ProveedorCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 class ProveedorUpdateView(UpdateView):
     model = models.Proveedor
-    template_name = "tables/update.html"
+    template_name = "proveedores/actualizar.html"
     fields = '__all__'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -623,7 +628,7 @@ class ProveedorUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class ProveedorDeleteView(DeleteView):
     model = models.Proveedor
-    template_name = "tables/delete.html"
+    template_name = "proveedores/eliminar.html"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -631,7 +636,7 @@ class ProveedorDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class ProveedorListView(ListView):
     model = models.Proveedor
-    template_name = "tables/view_multy.html"
+    template_name = "proveedores/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'proveedores'
@@ -650,12 +655,12 @@ class ProveedorListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class ProveedorDetailView(DetailView):
     model = models.Proveedor
-    template_name = "tables/view_single.html"
+    template_name = "proveedores/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'proveedor'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_proveedor')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_proveedor')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_s')
         context["borrar"] = "proveedor_borrar"
         context["actualizar"] = "proveedor_actualizar"
         context["lista"] = "proveedores"

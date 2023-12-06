@@ -1,0 +1,46 @@
+<!-- crear.html -->
+{% extends 'base.html' %}
+
+{% block title %}Crear Servicio{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Crear Servicio</h2>
+
+        <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_nombre" class="form-label">Nombre:</label>
+        <input type="text" name="nombre" id="id_nombre" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="id_descripcion" class="form-label">Descripción:</label>
+        <input type="text" name="descripcion" id="id_descripcion" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="id_precio" class="form-label">Precio:</label>
+        <input type="number" name="precio" id="id_precio" class="form-control" required>
+    </div>
+    <div class="mb-3">
+        <label for="id_tiempo" class="form-label">Tiempo:</label>
+        <input type="text" name="tiempo" id="id_tiempo" class="form-control" required>
+    </div>
+    <div class="mb-3">
+    <label for="id_empleados" class="form-label">Empleado a Cargo:</label>
+    <select name="empleados" id="id_empleados" class="form-select" required>
+        {% for empleado in empleados %}
+            <option value="{{ empleado.id }}">{{ empleado.nombre }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Crear Servicio
+    </button>
+    <a href="{% url 'servicios' %}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Cancelar
+    </a>
+</form>
+
+    </div>
+{% endblock content %}
