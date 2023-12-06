@@ -54,7 +54,7 @@ urlpatterns = [
     path('cita/actualizar/<int:pk>/', punto_venta.CitaUpdateView.as_view(), name='cita_actualizar'),
     path('cita/borrar/<int:pk>/', punto_venta.CitaDeleteView.as_view(), name='cita_borrar'),
     
-    path('clientes/', punto_venta.ClienteCreate, name='clientes'),
+    path('clientes/', punto_venta.ClienteListView.as_view(), name='clientes'),
     path('cliente/<int:pk>/', punto_venta.ClienteDetailView.as_view(), name='cliente_detalle'),
     path('cliente/crear/', punto_venta.ClienteCreate, name='cliente_crear'),
     path('cliente/actualizar/<int:pk>/', punto_venta.ClienteUpdateView.as_view(), name='cliente_actualizar'),
