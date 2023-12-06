@@ -71,16 +71,14 @@ class Producto(models.Model):
         return f'{self.nombre}, {self.precio_venta}, {self.stock}'
     def get_absolute_url(self):
         return reverse("producto_detalle", kwargs={"pk": self.id})
-
 class Servicio(models.Model):
     nombre = models.CharField(max_length=30)
     descripcion = models.CharField(max_length=50)
     precio = models.PositiveIntegerField()
     tiempo = models.DurationField()
-    empleados = models.ManyToManyField(Empleado)
+    empleados = models.ManyToManyField(Empleado, null=True)
     def __str__(self) -> str:
         return f'{self.nombre}, {self.precio}, {self.tiempo}'
-
     def get_absolute_url(self):
         return reverse("servicio_detalle", kwargs={"pk": self.id})
 
@@ -107,9 +105,9 @@ class Boleta(Documento):
         ('Transferencia bancaria', 'Transferencia bancaria'),
     )
     tipo_de_pago = models.CharField(max_length=25, choices=TIPO_DE_PAGO_CHOICES)
+    monto_total = models.PositiveIntegerField()
     monto_neto = models.PositiveIntegerField()
     monto_iva = models.PositiveIntegerField()
-    monto_total = models.PositiveIntegerField()
     cliente = models.ForeignKey(Cliente, on_delete=models.SET_NULL, null=True)
     empleado = models.ForeignKey(Empleado, on_delete=models.SET_NULL, null=True)
     class Meta:
@@ -120,11 +118,26 @@ class Boleta(Documento):
         ]
     def __str__(self):
         contenidos:list = []
-        contenidos.append(Boleta_producto.objects.all().filter(boleta=self))
-        contenidos.append(Boleta_servicio.objects.all().filter(boleta=self))
+        for item in Boleta_producto.objects.all().filter(boleta=self):
+            contenidos.append(f'{item}')
+        for item in Boleta_servicio.objects.all().filter(boleta=self):
+            contenidos.append(f'{item}')
         return f'{self.fecha_creacion}, {self.tipo_de_pago}, {self.monto_neto}, {self.cliente}, {", ".join(contenidos)}'
     def get_absolute_url(self):
         return reverse("boleta_detalle", kwargs={"pk": self.id})
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.monto_total = 0
+        self.monto_neto = 0
+        self.monto_iva = 0
+        for item in Boleta_producto.objects.filter(boleta=self):
+            self.monto_total += item.monto_total
+            self.monto_neto += item.monto_neto
+            self.monto_iva += item.monto_iva
+        for item in Boleta_servicio.objects.filter(boleta=self):
+            self.monto_total += item.monto_total
+            self.monto_neto += item.monto_neto
+            self.monto_iva += item.monto_iva
+        super().save(force_insert,force_update,using,update_fields)
 class Boleta_producto(Documento):
     boleta = models.ForeignKey(Boleta, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.SET_NULL, null=True)
@@ -138,6 +151,7 @@ class Boleta_producto(Documento):
         self.monto_total = self.monto_unidad*self.cantidad
         self.monto_iva =  self.monto_total/6.2631 # valor para extraer 19% del 100% original (valor total es de 119%)
         self.monto_neto = self.monto_total-self.monto_iva
+        self.boleta.save()
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
         return f'{self.producto}x{self.cantidad}'
@@ -153,11 +167,12 @@ class Boleta_servicio(Documento):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.monto_unidad = self.servicio.precio
         self.monto_total = self.monto_unidad*self.cantidad
-        self.monto_iva =  self.monto_total*0.19
+        self.monto_iva =  self.monto_total/6.2631 # valor para extraer 19% del 100% original (valor total es de 119%)
         self.monto_neto = self.monto_total-self.monto_iva
+        self.boleta.save()
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
-        return f'{self.producto}x{self.cantidad}'
+        return f'{self.servicio}x{self.cantidad}'
 
 class Factura(Documento):
     TIPO_DE_PAGO_CHOICES = (
