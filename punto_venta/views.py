@@ -76,7 +76,6 @@ def calendario(request):
     context = {
         'citas': citas,
     }
-
     return render(request, 'cliente/cita/calendario.html', context)
 
 from django.views.generic.list import ListView
@@ -256,6 +255,7 @@ class CitaCreateView(CreateView):
         context["borrar"] = "cita_borrar"
         context["actualizar"] = "cita_actualizar"
         context["crear"] = "cita_crear"
+        return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
