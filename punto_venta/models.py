@@ -10,14 +10,26 @@ class Persona(User):
     contrasena = models.CharField(max_length=20, null=True, verbose_name='contraseña')
     fecha_nacimiento = models.DateField()
     direccion = models.CharField(max_length=20, null=True)
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    #def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(
+        self,
+        force_insert=False, 
+        force_update=False, 
+        using=None, 
+        update_fields=None,
+    ):
         self.username = self.correo_electronico
         self.first_name = self.primer_nombre
         self.last_name = self.primer_apellido
         self.email = self.correo_electronico
-        self.set_password(self.contrasena)
+        self.set_password(self.password)
         self.contrasena = self.password
-        super().save(force_insert,force_update,using,update_fields)
+        return super().save(
+            force_insert=force_insert, 
+            force_update=force_update, 
+            using=using, 
+            update_fields=update_fields, 
+        )
     def __str__(self):
         return f'{self.username}, {self.email}, nacimiento: {self.fecha_nacimiento}'
 class Empleado(Persona):
@@ -55,7 +67,6 @@ class Producto(models.Model):
     stock = models.PositiveIntegerField()
     proveedor = models.ForeignKey(Proveedor, on_delete=models.RESTRICT)
     imagen = models.ImageField(upload_to='productos/', default='productos/default.jpg')
-
     def __str__(self):
         return f'{self.nombre}, {self.precio_venta}, {self.stock}'
     def get_absolute_url(self):
@@ -156,9 +167,9 @@ class Factura(Documento):
     )
     numero_factura = models.PositiveIntegerField()
     tipo_de_pago = models.CharField(max_length=25, choices=TIPO_DE_PAGO_CHOICES)
+    monto_total = models.PositiveIntegerField()
     monto_neto = models.PositiveIntegerField()
     monto_iva = models.PositiveIntegerField()
-    monto_total = models.PositiveIntegerField()
     empleado = models.ForeignKey(User, on_delete=models.CASCADE, related_name='facturas_jefe')
     proveedor = models.ForeignKey(Proveedor, on_delete=models.SET_NULL, null=True)
     class Meta:
@@ -168,8 +179,15 @@ class Factura(Documento):
             ("can_update_factura", "Puede actualizar facturas"),
         ]
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        self.monto_iva =  self.monto_total*1.19
-        self.monto_neto = self.monto_total-self.monto_iva
+        from random import randint
+        self.numero_factura = randint(1, 99999999)
+        self.monto_total = 0
+        self.monto_neto = 0
+        self.monto_iva = 0
+        for item in Factura_detalle.objects.filter(factura=self):
+            self.monto_total += item.monto_total
+            self.monto_neto += item.monto_neto
+            self.monto_iva += item.monto_iva
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
         contenidos:list = []
@@ -189,8 +207,8 @@ class Factura_detalle(Documento):
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         self.numero_factura = self.factura.numero_factura
         self.monto_unidad = self.monto_total/self.cantidad
-        self.monto_iva =  self.monto_total*1.19
+        self.monto_iva =  self.monto_total*0.19
         self.monto_neto = self.monto_total-self.monto_iva
-        super().save(force_insert,force_update,using,update_fields)
+        super().save()
     def __str__(self):
         return f'{self.producto}x{self.cantidad}'

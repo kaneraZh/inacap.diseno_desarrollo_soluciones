@@ -1,15 +1,28 @@
 {% extends 'base.html' %}
-{% block title %}cita{% endblock title %}
+{% block title %}Cita{% endblock title %}
 {% block content %}
-<table>
-    <tr>
-      <th>fecha : {{object.fecha}}</th>
-    </tr>
-    <tr>
-        <th>hora : {{object.hora}}</th>
-    </tr>
-    <tr>
-        <th>servicio : {{object.servicio}}</th>
-    </tr>
-</table>
+{% load static %}
+<link rel="stylesheet" href="{% static 'punto_venta/cita.css' %}">
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-md-6">
+                <div class="card shadow rounded">
+                    <div class="card-body text-center">
+                        <h2 class="mb-4">Cita</h2>
+                        <table>
+                            <tr>
+                                <th>Fecha: {{ object.fecha }}</th>
+                            </tr>
+                            <tr>
+                                <th>Hora: {{ object.hora }}</th>
+                            </tr>
+                            <tr>
+                                <th>Servicio: {{ object.servicio }}</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
