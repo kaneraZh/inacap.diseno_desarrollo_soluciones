@@ -1,0 +1,18 @@
+<!-- detalle.html -->
+{% extends 'base.html' %}
+
+{% block title %}Detalles del Servicio{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">{{ servicio.nombre }}</h2>
+
+        <p><strong>Descripción:</strong> {{ servicio.descripcion }}</p>
+        <p><strong>Precio:</strong> ${{ servicio.precio }}</p>
+        <p><strong>Tiempo:</strong> {{ servicio.tiempo }}</p>
+
+        <a href="{% url 'servicios' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver a la Lista
+        </a>
+    </div>
+{% endblock content %}
