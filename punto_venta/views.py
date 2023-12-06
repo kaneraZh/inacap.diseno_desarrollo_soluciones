@@ -674,6 +674,7 @@ class ProveedorDetailView(DetailView):
 
 # factura
 def FacturaCreate(request:HttpRequest):
+    user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.add_factura')): return redirect(URL_HOME)
     template_name = 'factura/form.html'
@@ -702,12 +703,13 @@ def FacturaCreate(request:HttpRequest):
     }
     return render(request, template_name, context)
 def FacturaUpdate(request:HttpRequest, pk:int):
-    template_name = 'factura/form.html'
+    user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.change_factura')): return redirect(URL_HOME)
+    template_name = 'factura/form.html'
     if(request.method == 'GET'):
         factura = models.Factura.objects.get(id=pk)
-        form_main = forms.FacturaForm(factura)
+        form_main = forms.FacturaForm(instance=factura)
         formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.filter(factura=factura))
     elif(request.method == 'POST'):
         form_main = forms.FacturaForm(request.POST)
