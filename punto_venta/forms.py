@@ -57,7 +57,7 @@ class EmpleadoCrearForm(forms.ModelForm):
         template_name = "tables/create.html"
         fields = (
             'correo_electronico',
-            'password',
+            'contrasena',
             'primer_nombre',
             'primer_apellido',
             'fecha_nacimiento',
