@@ -191,7 +191,8 @@ class Factura(Documento):
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
         contenidos:list = []
-        contenidos.append(Factura_detalle.objects.all().filter(factura=self))
+        for con in Factura_detalle.objects.all().filter(factura=self):
+            contenidos.append(f'{con}')
         return f'{self.fecha_creacion}, {self.tipo_de_pago}, {self.monto_neto}, {self.proveedor}, {", ".join(contenidos)}'
     def get_absolute_url(self):
         return reverse("factura_detalle", kwargs={"pk": self.id})

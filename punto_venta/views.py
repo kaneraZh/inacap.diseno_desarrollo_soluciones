@@ -189,7 +189,7 @@ class ClienteUpdateView(UpdateView):
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.update_cliente')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.change_cliente')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ClienteDeleteView(DeleteView):
     model = models.Cliente
@@ -209,7 +209,7 @@ class ClienteListView(ListView):
         context["title"] = 'clientes'
         context["detalle"] = 'cliente_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cliente')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cliente')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_cliente')
         context["puede_crear"] = self.request.user.has_perm('punto_venta.add_cliente')
         context["borrar"] = "cliente_borrar"
         context["actualizar"] = "cliente_actualizar"
@@ -229,7 +229,7 @@ class ClienteDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'detalle cliente'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cliente')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cliente')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_cliente')
         context["borrar"] = "cliente_borrar"
         context["actualizar"] = "cliente_actualizar"
         context["lista"] = "clientes"
@@ -250,7 +250,7 @@ class CitaCreateView(CreateView):
         context["title"] = 'cita'
         context["detalle"] = 'cita_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cita')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cita')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_cita')
         context["puede_crear"] = self.request.user.has_perm('punto_venta.add_cita')
         context["borrar"] = "cita_borrar"
         context["actualizar"] = "cita_actualizar"
@@ -272,7 +272,7 @@ class CitaUpdateView(UpdateView):
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.update_cita')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.change_cita')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class CitaDeleteView(DeleteView):
     model = models.Cita
@@ -290,7 +290,7 @@ class CitaListView(ListView):
         context["title"] = 'citas'
         context["detalle"] = 'cita_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cita')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cita')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_cita')
         context["puede_crear"] = self.request.user.has_perm('punto_venta.add_cita')
         context["borrar"] = "cita_borrar"
         context["actualizar"] = "cita_actualizar"
@@ -307,7 +307,7 @@ class CitaDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'detalle cita'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cita')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cita')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_cita')
         context["borrar"] = "cita_borrar"
         context["actualizar"] = "cita_actualizar"
         context["lista"] = "citas"
@@ -339,7 +339,7 @@ class ServicioUpdateView(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.update_servicio')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.change_servicio')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ServicioDeleteView(DeleteView):
     model = models.Servicio
@@ -357,7 +357,7 @@ class ServicioListView(ListView):
         context["title"] = 'servicios'
         context["detalle"] = 'servicio_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_servicio')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_servicio')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_servicio')
         context["puede_crear"] = self.request.user.has_perm('punto_venta.add_servicio')
         context["borrar"] = "servicio_borrar"
         context["actualizar"] = "servicio_actualizar"
@@ -380,7 +380,7 @@ class ServicioDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'servicio'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_servicio')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_servicio')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_servicio')
         context["borrar"] = "servicio_borrar"
         context["actualizar"] = "servicio_actualizar"
         context["lista"] = "servicios"
@@ -412,7 +412,7 @@ class ProductoUpdateView(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.update_producto')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.change_producto')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ProductoDeleteView(DeleteView):
     model = models.Producto
@@ -430,7 +430,7 @@ class ProductoListView(ListView):
         context["title"] = 'productos'
         context["detalle"] = 'producto_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_producto')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_producto')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_producto')
         context["puede_crear"] = self.request.user.has_perm('punto_venta.add_producto')
         context["borrar"] = "producto_borrar"
         context["actualizar"] = "producto_actualizar"
@@ -448,7 +448,7 @@ class ProductoDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'producto'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_producto')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_producto')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_producto')
         context["borrar"] = "producto_borrar"
         context["actualizar"] = "producto_actualizar"
         context["lista"] = "productos"
@@ -495,7 +495,7 @@ class BoletaListView(ListView):
         context["title"] = 'boletas'
         context["detalle"] = 'boleta_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_boleta')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_boleta')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_boleta')
         context["puede_crear"] = self.request.user.has_perm('punto_venta.add_boleta')
         context["borrar"] = "boleta_borrar"
         context["actualizar"] = "boleta_actualizar"
@@ -513,7 +513,7 @@ class BoletaDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'boleta'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_boleta')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_boleta')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_boleta')
         context["borrar"] = "boleta_borrar"
         context["actualizar"] = "boleta_actualizar"
         context["lista"] = "boletas"
@@ -556,11 +556,12 @@ class EmpleadoUpdateView(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.update_empleado')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.change_empleado')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class EmpleadoDeleteView(DeleteView):
     model = models.Empleado
     template_name = "tables/delete.html"
+    success_url = '/empleados/'
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -574,7 +575,7 @@ class EmpleadoListView(ListView):
         context["title"] = 'empleados'
         context["detalle"] = 'empleado_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_empleado')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_empleado')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_empleado')
         context["puede_crear"] = self.request.user.has_perm('punto_venta.add_empleado')
         context["borrar"] = "empleado_borrar"
         context["actualizar"] = "empleado_actualizar"
@@ -592,7 +593,7 @@ class EmpleadoDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'empleado'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_empleado')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_empleado')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_empleado')
         context["borrar"] = "empleado_borrar"
         context["actualizar"] = "empleado_actualizar"
         context["lista"] = "empleados"
@@ -624,7 +625,7 @@ class ProveedorUpdateView(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.update_proveedor')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.change_proveedor')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ProveedorDeleteView(DeleteView):
     model = models.Proveedor
@@ -642,7 +643,7 @@ class ProveedorListView(ListView):
         context["title"] = 'proveedores'
         context["detalle"] = 'proveedor_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_proveedor')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_proveedor')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_proveedor')
         context["puede_crear"] = self.request.user.has_perm('punto_venta.add_proveedor')
         context["borrar"] = "proveedor_borrar"
         context["actualizar"] = "proveedor_actualizar"
@@ -660,7 +661,7 @@ class ProveedorDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["title"] = 'proveedor'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_proveedor')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_s')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_proveedor')
         context["borrar"] = "proveedor_borrar"
         context["actualizar"] = "proveedor_actualizar"
         context["lista"] = "proveedores"
@@ -672,63 +673,9 @@ class ProveedorDetailView(DetailView):
         return super().dispatch(request, *args, **kwargs)
 
 # factura
-from django.forms import inlineformset_factory
-def FacturaCrear(request, pk):
-    factura = models.Factura.objects.get(id=pk)
-    FacturaInlineFormSet = inlineformset_factory(models.Factura, models.Factura_detalle, fields=["producto, cantidad"])
-    if (request.method=="POST"):
-        formset = FacturaInlineFormSet(request.POST, request.FILES, instance=factura)
-        if( formset.is_valid() ):
-            formset.save()
-            return redirect(models.Factura.get_absolute_url())
-    else:
-        formset = FacturaInlineFormSet(instance=factura)
-    return render(request, "tables/create_factura.html", {"formset":formset})
-class FacturaDeleteView(DeleteView):
-    model = models.Factura
-    template_name = "table/delete.html"
-    def dispatch(self, request:HttpRequest, *args, **kwargs):
-        user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.delete_factura')): return redirect(URL_HOME)
-        return super().dispatch(request, *args, **kwargs)
-class FacturaListView(ListView):
-    model = models.Factura
-    template_name = "tables/view_multy.html"
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = 'facturas'
-        context["detalle"] = 'factura_detalle'
-        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_factura')
-        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_factura')
-        context["borrar"] = "factura_borrar"
-        context["actualizar"] = "factura_actualizar"
-        context["crear"] = "factura_crear"
-        return context
-    def dispatch(self, request:HttpRequest, *args, **kwargs):
-        user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.view_factura')): return redirect(URL_HOME)
-        return super().dispatch(request, *args, **kwargs)
-class FacturaDetailView(DetailView):
-    model = models.Factura
-    template_name = "tables/view_single.html"
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = 'factura'
-        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
-        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_factura')
-        context["borrar"] = "factura_borrar"
-        context["actualizar"] = "factura_actualizar"
-        context["lista"] = "facturas"
-        return context
-    def dispatch(self, request:HttpRequest, *args, **kwargs):
-        user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.view_factura')): return redirect(URL_HOME)
-        return super().dispatch(request, *args, **kwargs)
 def FacturaCreate(request:HttpRequest):
+    if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+    if(not user.has_perm('punto_venta.add_factura')): return redirect(URL_HOME)
     template_name = 'factura/form.html'
     if(request.method == 'GET'):
         form_main = forms.FacturaForm(request.GET or None)
@@ -754,5 +701,77 @@ def FacturaCreate(request:HttpRequest):
         'formset' : formset,
     }
     return render(request, template_name, context)
-
+def FacturaUpdate(request:HttpRequest, pk:int):
+    template_name = 'factura/form.html'
+    if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+    if(not user.has_perm('punto_venta.change_factura')): return redirect(URL_HOME)
+    if(request.method == 'GET'):
+        factura = models.Factura.objects.get(id=pk)
+        form_main = forms.FacturaForm(factura)
+        formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.filter(factura=factura))
+    elif(request.method == 'POST'):
+        form_main = forms.FacturaForm(request.POST)
+        formset = forms.FacturaDetalleFormset(request.POST)
+        if(
+            form_main.is_valid() and 
+            formset.is_valid() and 
+            hasattr(request.user, 'persona')
+        ):
+            factura = form_main.save(False)
+            factura.empleado = request.user.persona.empleado
+            factura.save()
+            for form in formset:
+                detalle = form.instance
+                detalle.factura = factura
+                detalle.save()
+            return redirect('facturas')
+    context = {
+        'form_main' : form_main,
+        'formset' : formset,
+    }
+    return render(request, template_name, context)
+class FacturaDeleteView(DeleteView):
+    model = models.Factura
+    template_name = "table/delete.html"
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.delete_factura')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class FacturaListView(ListView):
+    model = models.Factura
+    template_name = "tables/view_multy.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'facturas'
+        context["detalle"] = 'factura_detalle'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_factura')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_factura')
+        context["borrar"] = "factura_borrar"
+        context["actualizar"] = "factura_actualizar"
+        context["crear"] = "factura_crear"
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_factura')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
+class FacturaDetailView(DetailView):
+    model = models.Factura
+    template_name = "tables/view_single.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'factura'
+        context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
+        context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_factura')
+        context["borrar"] = "factura_borrar"
+        context["actualizar"] = "factura_actualizar"
+        context["lista"] = "facturas"
+        return context
+    def dispatch(self, request:HttpRequest, *args, **kwargs):
+        user = request.user
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_factura')): return redirect(URL_HOME)
+        return super().dispatch(request, *args, **kwargs)
 # View para el crud de servicio
