@@ -75,6 +75,23 @@ class EmpleadoCrearForm(forms.ModelForm):
                     grupo = Group.objects.get(name='jefe')
             res.groups.add(grupo.id)
         return res
+class ClienteCrearForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        template_name = "tables/create.html"
+        fields = [
+            'primer_nombre',
+            'primer_apellido',
+            'correo_electronico',
+            'contrasena',
+            'fecha_nacimiento',
+            'direccion',
+        ]
+    def save(self, commit=True):
+        res = super().save(commit)
+        if(commit):
+            res.groups.add(Group.objects.get(name='cliente').id)
+        return res
 
 #class BoletaProductoForm(forms.ModelForm):
 #    nombre = forms.CharField(label='Producto', max_length=30, required=True)
