@@ -70,14 +70,6 @@ def ClienteCitaAgendar(request:HttpRequest):
     context = {'form':form}
     return render(request, 'cliente/cita/agendar.html', context)
 
-def calendario(request):
-    # Obtener las citas futuras
-    citas = Cita.objects.filter(fecha__gte=date.today()).order_by('fecha', 'hora')
-    context = {
-        'citas': citas,
-    }
-    return render(request, 'cliente/cita/calendario.html', context)
-
 from django.views.generic.list import ListView
 class ProductoCardView(ListView):
     model = models.Producto
@@ -322,7 +314,12 @@ class CitaDetailView(DetailView):
 class ServicioCreateView(CreateView):
     model = models.Servicio
     template_name = "servicio/crear.html"
-    fields = "__all__"
+    fields = '__all__'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'crear servicio'
+        context["empleados"] = Empleado.objects.all()
+        return context
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -460,25 +457,82 @@ class ProductoDetailView(DetailView):
         return super().dispatch(request, *args, **kwargs)
 
 # boleta
-def BoletaCrear(request:HttpRequest):
-    if request.method == 'POST':
-        form = forms.BoletaForm(request.POST)
-        if form.is_valid():
-            boleta = form.save(commit=False)
+def BoletaCreate(request:HttpRequest):
+    user = request.user
+    if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+    if(not user.has_perm('punto_venta.add_boleta')): return redirect(URL_HOME)
+    template_name = 'boleta/form.html'
+    if(request.method == 'GET'):
+        form_main = forms.BoletaForm(request.GET or None)
+        formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.none())
+        from django.db.models import QuerySet
+        formset_servicio = forms.BoletaServicioFormset(queryset=models.Boleta_servicio.objects.none())
+    elif(request.method == 'POST'):
+        form_main = forms.BoletaForm(request.POST)
+        formset_producto = forms.BoletaProductoFormset(request.POST)
+        formset_servicio = forms.BoletaServicioFormset(request.POST)
+        if(
+            form_main.is_valid() and 
+            formset_producto.is_valid() and
+            formset_servicio.is_valid() and
+            hasattr(request.user, 'persona')
+        ):
+            boleta = form_main.save(False)
+            boleta.empleado = request.user.persona.empleado
             boleta.save()
-            for boleta_producto_form in form.cleaned_data['productos']:
-                boleta_producto_form = boleta_producto_form.save(commit=False)
-                boleta_producto_form.boleta = boleta
-                boleta_producto_form.save()
-            for boleta_servicio_form in form.cleaned_data['servicios']:
-                boleta_servicio_form = boleta_servicio_form.save(commit=False)
-                boleta_servicio_form.boleta = boleta
-                boleta_servicio_form.save()
-            
-            return redirect('boletas')  # Redirect to the ticket list page
-    else:
-        form = forms.BoletaForm()
-    return render(request, 'tables/create_boleta.html', {'form': form})
+            for form in formset_producto:
+                detalle = form.instance
+                detalle.boleta = boleta
+                detalle.save()
+            for form in formset_servicio:
+                detalle = form.instance
+                detalle.boleta = boleta
+                detalle.save()
+            return redirect('boletas')
+    context = {
+        'form_main' : form_main,
+        'formset_producto' : formset_producto,
+        'formset_servicio' : formset_servicio,
+    }
+    return render(request, template_name, context)
+def BoletaActualizar(request, pk:int):
+    user = request.user
+    if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+    if(not user.has_perm('punto_venta.change_boleta')): return redirect(URL_HOME)
+    template_name = 'boleta/form.html'
+    if(request.method == 'GET'):
+        boleta = models.Boleta.objects.get(id=pk)
+        form_main = forms.BoletaForm(instance=boleta)
+        formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.filter(boleta=boleta))
+        formset_servicio = forms.BoletaServicioFormset(queryset=models.Boleta_servicio.objects.filter(boleta=boleta))
+    elif(request.method == 'POST'):
+        form_main = forms.BoletaForm(request.POST)
+        formset_producto = forms.BoletaProductoFormset(request.POST)
+        formset_servicio = forms.BoletaServicioFormset(request.POST)
+        if(
+            form_main.is_valid() and 
+            formset_producto.is_valid() and
+            formset_servicio.is_valid() and
+            hasattr(request.user, 'persona')
+        ):
+            boleta = form_main.save(False)
+            boleta.empleado = request.user.persona.empleado
+            boleta.save()
+            for form in formset_producto:
+                detalle = form.instance
+                detalle.boleta = boleta
+                detalle.save()
+            for form in formset_servicio:
+                detalle = form.instance
+                detalle.boleta = boleta
+                detalle.save()
+            return redirect('facturas')
+    context = {
+        'form_main' : form_main,
+        'formset_producto' : formset_producto,
+        'formset_servicio' : formset_servicio,
+    }
+    return render(request, template_name, context)
 class BoletaDeleteView(DeleteView):
     model = models.Boleta
     template_name = "table/delete.html"
@@ -508,7 +562,7 @@ class BoletaListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class BoletaDetailView(DetailView):
     model = models.Boleta
-    template_name = "tabla/view_single.html"
+    template_name = "tables/view_single.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'boleta'
