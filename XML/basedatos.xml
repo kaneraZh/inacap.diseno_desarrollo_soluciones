@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="System"?>
+<database>
+    <name>db1</name>
+    <table>
+        <database></database>
+        <name>punto_venta_cliente</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_cliente" ("persona_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "punto_venta_persona" ("user_ptr_id") DEFERRABLE INITIALLY DEFERRED)]]></ddl>
+        <columns>
+            <column>
+                <name>persona_ptr_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_persona" ("user_ptr_id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">2</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_empleado</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_empleado" ("persona_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "punto_venta_persona" ("user_ptr_id") DEFERRABLE INITIALLY DEFERRED, "documento_identificador" varchar(30) NOT NULL, "fecha_contratacion" date NOT NULL, "afp" varchar(15) NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>persona_ptr_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_persona" ("user_ptr_id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>documento_identificador</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_contratacion</name>
+                <type>date</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>afp</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">4</value>
+                <value column="1">212121212</value>
+                <value column="2">2023-11-14</value>
+                <value column="3">HABITAT</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_persona</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_persona" ("user_ptr_id" integer NOT NULL PRIMARY KEY REFERENCES "auth_user" ("id") DEFERRABLE INITIALLY DEFERRED, "fecha_nacimiento" date NOT NULL, "direccion" varchar(20) NULL, "contrasena" varchar(20) NULL, "correo_electronico" varchar(30) NULL, "primer_apellido" varchar(20) NULL, "primer_nombre" varchar(20) NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>user_ptr_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "auth_user" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>fecha_nacimiento</name>
+                <type>date</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>direccion</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>contrasena</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>correo_electronico</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>primer_apellido</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>primer_nombre</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type></type>
+                        <definition>NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">2</value>
+                <value column="1">2003-11-29</value>
+                <value column="2">pedro 120</value>
+                <value column="3" null="true"/>
+                <value column="4" null="true"/>
+                <value column="5" null="true"/>
+                <value column="6" null="true"/>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">2003-11-29</value>
+                <value column="2">washington 234</value>
+                <value column="3">pbkdf2_sha256$600000$lftmmXVqzQ8uevdKQognIM$hR94AXPpe4KLn6xQPg0Xmf2q7QgEFHX5yhxpVgJ1ENc=</value>
+                <value column="4">pipevilla@gmail.com</value>
+                <value column="5">Villarroel</value>
+                <value column="6">Felipe</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">1999-11-11</value>
+                <value column="2">El Colorado</value>
+                <value column="3">pbkdf2_sha256$600000$n0f5sEmmpbu4SFLAoTBcJa$IsqXwsyRf/AYRmL8itm001HWxK3M+D9EwaEgBw5b8dc=</value>
+                <value column="4">juan123@gmail.com</value>
+                <value column="5">Sepulveda</value>
+                <value column="6">Juan</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_producto</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_producto" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "nombre" varchar(30) NOT NULL, "categoria" varchar(20) NOT NULL, "precio_compra" integer unsigned NOT NULL CHECK ("precio_compra" >= 0), "precio_venta" integer unsigned NOT NULL CHECK ("precio_venta" >= 0), "stock" integer unsigned NOT NULL CHECK ("stock" >= 0), "proveedor_id" bigint NOT NULL REFERENCES "punto_venta_proveedor" ("id") DEFERRABLE INITIALLY DEFERRED, "imagen" varchar(100) NOT NULL, "descripcion" varchar(300) NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>nombre</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>categoria</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>precio_compra</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("precio_compra" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>precio_venta</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("precio_venta" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>stock</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("stock" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>proveedor_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_proveedor" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>imagen</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>descripcion</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">shampoo</value>
+                <value column="2">pelo</value>
+                <value column="3">1000</value>
+                <value column="4">3000</value>
+                <value column="5">20</value>
+                <value column="6">1</value>
+                <value column="7">productos/shampootionacho.webp</value>
+                <value column="8">shampoo sin sal</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">shampoo tio nacho</value>
+                <value column="2">aa</value>
+                <value column="3">1231123</value>
+                <value column="4">12321</value>
+                <value column="5">132</value>
+                <value column="6">1</value>
+                <value column="7">productos/tionacho_Qcq8Sag.jpg</value>
+                <value column="8">aa</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">Nishman Cera Pasta Mate M1 100</value>
+                <value column="2">pelo</value>
+                <value column="3">5</value>
+                <value column="4">10000</value>
+                <value column="5">10</value>
+                <value column="6">2</value>
+                <value column="7">productos/D_NQ_NP_636462-MLC53103942838_122022-O.webp</value>
+                <value column="8">Viene en frasco. Es vegano. Funciones: fijadora. E</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">Nish-man Cera Spider Wax 150ml</value>
+                <value column="2">pelo</value>
+                <value column="3">5000</value>
+                <value column="4">10000</value>
+                <value column="5">20</value>
+                <value column="6">2</value>
+                <value column="7">productos/D_NQ_NP_755494-MLU72565649032_112023-O.webp</value>
+                <value column="8">Viene en frasco. Es vegano. Funciones: fijador. Es</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">Polvo Texturizador Capilar</value>
+                <value column="2">pelo</value>
+                <value column="3">5000</value>
+                <value column="4">8990</value>
+                <value column="5">7</value>
+                <value column="6">2</value>
+                <value column="7">productos/D_NQ_NP_742534-MLC49334821055_032022-O.webp</value>
+                <value column="8">Viene en frasco. Es vegano. Funciones: fijador. Es</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">Polvo Texturizador</value>
+                <value column="2">pelo</value>
+                <value column="3">5000</value>
+                <value column="4">7990</value>
+                <value column="5">1</value>
+                <value column="6">2</value>
+                <value column="7">productos/D_NQ_NP_646611-MLU72635546487_112023-O.webp</value>
+                <value column="8">Viene en frasco. Es vegano. Funciones: fijador. Es</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">Cera Buffalo Fiber 150 Ml Cera</value>
+                <value column="2">pelo</value>
+                <value column="3">1000</value>
+                <value column="4">5700</value>
+                <value column="5">4</value>
+                <value column="6">2</value>
+                <value column="7">productos/D_NQ_NP_700904-MLU70661221349_072023-O.webp</value>
+                <value column="8">Viene en frasco. Es vegano. Funciones: fijador. Está dermatológicamente testeado. Sus ingredientes destacados son: aqua. Es libre de gluten.</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_proveedor</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_proveedor" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "nombre" varchar(40) NOT NULL, "direccion" varchar(40) NOT NULL, "rut_empresa" varchar(30) NOT NULL, "telefono_celular" varchar(30) NOT NULL, "email" varchar(40) NOT NULL)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>nombre</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>direccion</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>rut_empresa</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>telefono_celular</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>email</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">Tio Nacho</value>
+                <value column="2">pedro 120</value>
+                <value column="3">312432434</value>
+                <value column="4">34254324</value>
+                <value column="5">tionacho@gmail.com</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">solopelo</value>
+                <value column="2">washington 234</value>
+                <value column="3">1311441</value>
+                <value column="4">3425432423</value>
+                <value column="5">sfjklsjflk@gmail.com</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_servicio</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_servicio" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "nombre" varchar(30) NOT NULL, "descripcion" varchar(50) NOT NULL, "tiempo" bigint NOT NULL, "precio" integer unsigned NOT NULL CHECK ("precio" >= 0))]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>nombre</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>descripcion</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>tiempo</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>precio</name>
+                <type>integer unsigned</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>CHECK</type>
+                        <definition>CHECK ("precio" >= 0)</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">Corte Varon</value>
+                <value column="2">Corte de pelo Varón Clásico</value>
+                <value column="3">60000000</value>
+                <value column="4">7000</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">Pedicure</value>
+                <value column="2">Lorem ipsum dolor sit amet, consectetur adipiscing</value>
+                <value column="3">60000000</value>
+                <value column="4">5644</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">Manicure</value>
+                <value column="2">tratamiento de belleza para las uñas y las manos</value>
+                <value column="3">60000000</value>
+                <value column="4">5500</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">Corte Dama</value>
+                <value column="2">Corte de cabello para damas</value>
+                <value column="3">60000000</value>
+                <value column="4">20000</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">Teñido de pelo</value>
+                <value column="2">Cambia el color de tu pelo con nuestros profesiona</value>
+                <value column="3">60000000</value>
+                <value column="4">12930</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">Pestañas</value>
+                <value column="2">Extensiones de pestañas espectaculares!!!!</value>
+                <value column="3">30000000</value>
+                <value column="4">4500</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">Peinado Mujer</value>
+                <value column="2">Te peinamos para tus ocasiones especiales!!!</value>
+                <value column="3">45000000</value>
+                <value column="4">13000</value>
+            </row>
+            <row>
+                <value column="0">8</value>
+                <value column="1">Peinado Hombre</value>
+                <value column="2">Nos encargamos de tu estilo de cabello!!!</value>
+                <value column="3">5000000</value>
+                <value column="4">10000</value>
+            </row>
+            <row>
+                <value column="0">9</value>
+                <value column="1">Depilacion</value>
+                <value column="2">Simplemente depilacion</value>
+                <value column="3">120000000</value>
+                <value column="4">20000</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>punto_venta_servicio_empleados</name>
+        <ddl><![CDATA[CREATE TABLE "punto_venta_servicio_empleados" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "servicio_id" bigint NOT NULL REFERENCES "punto_venta_servicio" ("id") DEFERRABLE INITIALLY DEFERRED, "empleado_id" integer NOT NULL REFERENCES "punto_venta_empleado" ("persona_ptr_id") DEFERRABLE INITIALLY DEFERRED)]]></ddl>
+        <columns>
+            <column>
+                <name>id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>servicio_id</name>
+                <type>bigint</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_servicio" ("id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>empleado_id</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES "punto_venta_empleado" ("persona_ptr_id") </definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">1</value>
+                <value column="2">4</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">2</value>
+                <value column="2">4</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">3</value>
+                <value column="2">4</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">4</value>
+                <value column="2">4</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">5</value>
+                <value column="2">4</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">6</value>
+                <value column="2">4</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">7</value>
+                <value column="2">4</value>
+            </row>
+            <row>
+                <value column="0">8</value>
+                <value column="1">8</value>
+                <value column="2">4</value>
+            </row>
+            <row>
+                <value column="0">9</value>
+                <value column="1">9</value>
+                <value column="2">4</value>
+            </row>
+        </rows>
+    </table>
+    <index>
+        <database></database>
+        <name>punto_venta_producto_proveedor_id_64c56173</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_producto_proveedor_id_64c56173" ON "punto_venta_producto" ("proveedor_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_servicio_empleados_empleado_id_4d585b70</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_servicio_empleados_empleado_id_4d585b70" ON "punto_venta_servicio_empleados" ("empleado_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_servicio_empleados_servicio_id_d99264a2</name>
+        <ddl><![CDATA[CREATE INDEX "punto_venta_servicio_empleados_servicio_id_d99264a2" ON "punto_venta_servicio_empleados" ("servicio_id")]]></ddl>
+    </index>
+    <index>
+        <database></database>
+        <name>punto_venta_servicio_empleados_servicio_id_empleado_id_5d91cc70_uniq</name>
+        <unique>true</unique>
+        <ddl><![CDATA[CREATE UNIQUE INDEX "punto_venta_servicio_empleados_servicio_id_empleado_id_5d91cc70_uniq" ON "punto_venta_servicio_empleados" ("servicio_id", "empleado_id")]]></ddl>
+    </index>
+</database>
