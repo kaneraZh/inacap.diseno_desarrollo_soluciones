@@ -1,5 +1,5 @@
 from django import forms
-from .models import Cliente, Producto, Cita, Boleta, Boleta_producto, Boleta_servicio, Servicio, Factura, Factura_detalle, Proveedor
+from .models import Cliente, Empleado, Producto, Cita, Boleta, Boleta_producto, Boleta_servicio, Servicio, Factura, Factura_detalle, Proveedor
 
 class ClienteCrearForm(forms.ModelForm):
     contrasena_confirmar = forms.CharField(required=True, label="Confirmar Contraseña", widget=forms.PasswordInput())
@@ -48,6 +48,33 @@ class ProductoForm(forms.ModelForm):
         model = Producto
         fields = ['nombre', 'descripcion', 'categoria', 'precio_compra', 'precio_venta', 'stock', 'proveedor', 'imagen']
 
+
+from django.contrib.auth.models import Group, Permission
+class EmpleadoCrearForm(forms.ModelForm):
+    es_jefe = forms.BooleanField(label='Es Jefe?', required=False)
+    class Meta:
+        model = Empleado
+        template_name = "tables/create.html"
+        fields = (
+            'correo_electronico',
+            'password',
+            'primer_nombre',
+            'primer_apellido',
+            'fecha_nacimiento',
+            'direccion',
+            'documento_identificador',
+            'fecha_contratacion',
+            'afp',
+        )
+    def save(self, commit=True):
+        res = super().save(commit)
+        if(commit):
+            grupo = Group.objects.get(name='empleado')
+            if('es_jefe' in self.data):
+                if(self.data['es_jefe'] == 'on'):
+                    grupo = Group.objects.get(name='jefe')
+            res.groups.add(grupo.id)
+        return res
 
 #class BoletaProductoForm(forms.ModelForm):
 #    nombre = forms.CharField(label='Producto', max_length=30, required=True)
@@ -104,46 +131,50 @@ class FacturaForm(forms.ModelForm):
 #                choices=Factura.TIPO_DE_PAGO_CHOICES
 #            ),
 #        }
-    def save(self, commit=True):
-        data = self.cleaned_data
-        factura = Factura(
-            proveedor = data["proveedor"],
-            tipo_de_pago = data["tipo_de_pago"],
-        )
-        factura.save()
+#    def save(self, commit=True):
+#        data = self.cleaned_data
+#        factura = Factura(
+#            proveedor = data["proveedor"],
+#            tipo_de_pago = data["tipo_de_pago"],
+#        )
+#        factura.save()
 class FacturaDetalleForm(forms.ModelForm):
+    factura = forms.HiddenInput()
     class Meta:
         model = Factura_detalle
-        fields = ('producto', 'cantidad', 'monto_neto')
+        fields = ('producto', 'cantidad', 'monto_total')
     def clean(self):
         res = super().clean()
-        if( len(Producto.objects.filter(nombre=data['producto']))>1 ):
-            self.add_error('producto', 'nombre del producto es muy generico')
+#        if( len(Producto.objects.filter(nombre=data['producto']))>1 ):
+#            self.add_error('producto', 'nombre del producto es muy generico')
         return res
     def save(self, commit=True):
-        super().save(False)
-        producto = Producto.objects.filter(nombre=data['producto'])
-        if(len(producto)>1):
+        res = super().save(False)
+        #res.producto = Producto.objects.get(id=self.data['proveedor'])
+        return res.save(commit)
 
 FacturaDetalleFormset = forms.modelformset_factory(
     form=FacturaDetalleForm,
+    model=Factura_detalle,
     extra=1,
-    widgets={
-        'producto' : forms.TextInput(
-            attrs={
-                'class' : 'form-control',
-                'placeholder' : 'Ingrese el nombre del producto',
-            }
-        ),
-        'cantidad' : forms.NumberInput(
-            attrs={
-                'placeholder' : 'Ingrese cantidad del producto'
-            }
-        ),
-        'monto_neto' : forms.NumberInput(
-            attrs={
-                'placeholder' : 'Ingrese precio neto del grupo de productos'
-            }
-        )
-    },
+#    widgets={
+#        'id' : forms.NumberInput(
+#            attrs={
+#                'class' : 'form-control',
+#                'placeholder' : 'Ingrese id del producto',
+#            }
+#        ),
+#        'cantidad' : forms.NumberInput(
+#            attrs={
+#                'class' : 'form-control',
+#                'placeholder' : 'Ingrese cantidad del producto'
+#            }
+#        ),
+#        'monto_neto' : forms.NumberInput(
+#            attrs={
+#                'class' : 'form-control',
+#                'placeholder' : 'Ingrese precio neto del grupo de productos'
+#            }
+#        ),
+#    },
 )

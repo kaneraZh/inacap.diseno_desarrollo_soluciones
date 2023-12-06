@@ -10,14 +10,26 @@ class Persona(User):
     contrasena = models.CharField(max_length=20, null=True, verbose_name='contraseña')
     fecha_nacimiento = models.DateField()
     direccion = models.CharField(max_length=20, null=True)
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    #def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+    def save(
+        self,
+        force_insert=False, 
+        force_update=False, 
+        using=None, 
+        update_fields=None,
+    ):
         self.username = self.correo_electronico
         self.first_name = self.primer_nombre
         self.last_name = self.primer_apellido
         self.email = self.correo_electronico
-        self.set_password(self.contrasena)
+        self.set_password(self.password)
         self.contrasena = self.password
-        super().save(force_insert,force_update,using,update_fields)
+        return super().save(
+            force_insert=force_insert, 
+            force_update=force_update, 
+            using=using, 
+            update_fields=update_fields, 
+        )
     def __str__(self):
         return f'{self.username}, {self.email}, nacimiento: {self.fecha_nacimiento}'
 class Empleado(Persona):
@@ -30,22 +42,11 @@ class Empleado(Persona):
         return f'{super().__str__()}, contrato desde:{self.fecha_contratacion}'
     def get_absolute_url(self):
         return reverse("empleado_detalle", kwargs={"pk": self.id})
-    def save(self, commit=True):
-        save:Empleado = super().save(commit)
-        if(commit):
-            save.groups.add('empleado')
-        return save
-
 class Cliente(Persona):
     class Meta:
         verbose_name = 'Cliente'
     def get_absolute_url(self):
         return reverse("cliente_detalle", kwargs={"pk": self.id})
-    def save(self, commit=True):
-        save:Cliente = super().save(commit)
-        if(commit):
-            save.groups.add('cliente')
-        return save
     
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=40)
@@ -179,14 +180,14 @@ class Factura(Documento):
         ]
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         from random import randint
-        self.numero_factura.value = randint(1, 99999999)
-        self.monto_total.value = 0
-        self.monto_neto.value = 0
-        self.monto_iva.value = 0
+        self.numero_factura = randint(1, 99999999)
+        self.monto_total = 0
+        self.monto_neto = 0
+        self.monto_iva = 0
         for item in Factura_detalle.objects.filter(factura=self):
-            self.monto_total.value += item.monto_total.value
-            self.monto_neto.value += item.monto_neto.value
-            self.monto_iva.value += item.monto_iva.value
+            self.monto_total += item.monto_total
+            self.monto_neto += item.monto_neto
+            self.monto_iva += item.monto_iva
         super().save(force_insert,force_update,using,update_fields)
     def __str__(self):
         contenidos:list = []

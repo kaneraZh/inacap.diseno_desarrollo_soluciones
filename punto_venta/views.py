@@ -204,8 +204,12 @@ class ClienteCreateView(CreateView):
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.create_cliente')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.add_cliente')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+    def form_valid(self,form):
+        res = form.save(True)
+        res.groups.add(Group.objects.get(name='cliente').id)
+        return super().form_valid(form)
 class ClienteUpdateView(UpdateView):
     model = models.Cliente
     template_name = "tables/update.html"
@@ -244,7 +248,7 @@ class ClienteListView(ListView):
         context["detalle"] = 'cliente_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cliente')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cliente')
-        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_cliente')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_cliente')
         context["borrar"] = "cliente_borrar"
         context["actualizar"] = "cliente_actualizar"
         context["crear"] = "cliente_crear"
@@ -285,14 +289,14 @@ class CitaCreateView(CreateView):
         context["detalle"] = 'cita_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cita')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cita')
-        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_cita')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_cita')
         context["borrar"] = "cita_borrar"
         context["actualizar"] = "cita_actualizar"
         context["crear"] = "cita_crear"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.create_cita')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.add_cita')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class CitaUpdateView(UpdateView):
     model = models.Cita
@@ -324,7 +328,7 @@ class CitaListView(ListView):
         context["detalle"] = 'cita_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_cita')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_cita')
-        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_cita')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_cita')
         context["borrar"] = "cita_borrar"
         context["actualizar"] = "cita_actualizar"
         context["crear"] = "cita_crear"
@@ -359,7 +363,7 @@ class ServicioCreateView(CreateView):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.create_servicio')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.add_servicio')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ServicioUpdateView(UpdateView):
     model = models.Servicio
@@ -391,7 +395,7 @@ class ServicioListView(ListView):
         context["detalle"] = 'servicio_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_servicio')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_servicio')
-        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_servicio')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_servicio')
         context["borrar"] = "servicio_borrar"
         context["actualizar"] = "servicio_actualizar"
         context["crear"] = "servicio_crear"
@@ -427,7 +431,7 @@ class ProductoCreateView(CreateView):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.create_producto')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.add_producto')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ProductoUpdateView(UpdateView):
     model = models.Producto
@@ -459,7 +463,7 @@ class ProductoListView(ListView):
         context["detalle"] = 'producto_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_producto')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_producto')
-        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_producto')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_producto')
         context["borrar"] = "producto_borrar"
         context["actualizar"] = "producto_actualizar"
         context["crear"] = "producto_crear"
@@ -488,7 +492,7 @@ class ProductoDetailView(DetailView):
         return super().dispatch(request, *args, **kwargs)
 
 # boleta
-def BoletaCrear(request):
+def BoletaCrear(request:HttpRequest):
     if request.method == 'POST':
         form = forms.BoletaForm(request.POST)
         if form.is_valid():
@@ -524,7 +528,7 @@ class BoletaListView(ListView):
         context["detalle"] = 'boleta_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_boleta')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_boleta')
-        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_boleta')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_boleta')
         context["borrar"] = "boleta_borrar"
         context["actualizar"] = "boleta_actualizar"
         context["crear"] = "boleta_crear"
@@ -553,11 +557,25 @@ class BoletaDetailView(DetailView):
         return super().dispatch(request, *args, **kwargs)
 
 # Empleado
+def EmpleadoCreate(request:HttpRequest):
+    user = request.user
+    if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+    if(not user.has_perm('punto_venta.add_cliente')): return redirect(URL_HOME)
+    form = forms.EmpleadoCrearForm()
+    if(request.method=='POST'):
+        form = forms.EmpleadoCrearForm(request.POST)
+        if(form.is_valid()):
+            form.save()
+            return redirect('empleados')
+    return render(request, "tables/create.html", {'form':form})
+
+from django.forms import BooleanField
 class EmpleadoCreateView(CreateView):
     model = models.Empleado
     template_name = "tables/create.html"
     fields = [
         'correo_electronico',
+        'password',
         'primer_nombre',
         'primer_apellido',
         'fecha_nacimiento',
@@ -566,11 +584,112 @@ class EmpleadoCreateView(CreateView):
         'fecha_contratacion',
         'afp',
     ]
+    es_jefe = BooleanField(label='Es Jefe?')
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.create_empleado')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.add_empleado')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+    def form_valid(self,form):
+        res = form.save(commit=False)
+        if(self.data['es_jefe'].value == True):
+            if(not Group.objects.get(name='jefe')):
+                grupo = Group(name='jefe').save()
+                grupo.permissions.add( Permission.objects.get(codename="add_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="change_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="view_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="can_add_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="can_delete_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="can_update_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="add_factura") )
+                grupo.permissions.add( Permission.objects.get(codename="change_factura") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_factura") )
+                grupo.permissions.add( Permission.objects.get(codename="view_factura") )
+                grupo.permissions.add( Permission.objects.get(codename="can_add_factura") )
+                grupo.permissions.add( Permission.objects.get(codename="can_delete_factura") )
+                grupo.permissions.add( Permission.objects.get(codename="can_update_factura") )
+                grupo.permissions.add( Permission.objects.get(codename="add_persona") )
+                grupo.permissions.add( Permission.objects.get(codename="change_persona") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_persona") )
+                grupo.permissions.add( Permission.objects.get(codename="view_persona") )
+                grupo.permissions.add( Permission.objects.get(codename="add_proveedor") )
+                grupo.permissions.add( Permission.objects.get(codename="change_proveedor") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_proveedor") )
+                grupo.permissions.add( Permission.objects.get(codename="view_proveedor") )
+                grupo.permissions.add( Permission.objects.get(codename="add_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="change_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="view_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="add_cliente") )
+                grupo.permissions.add( Permission.objects.get(codename="change_cliente") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_cliente") )
+                grupo.permissions.add( Permission.objects.get(codename="view_cliente") )
+                grupo.permissions.add( Permission.objects.get(codename="add_empleado") )
+                grupo.permissions.add( Permission.objects.get(codename="change_empleado") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_empleado") )
+                grupo.permissions.add( Permission.objects.get(codename="view_empleado") )
+                grupo.permissions.add( Permission.objects.get(codename="add_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="change_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="view_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="add_factura_detalle") )
+                grupo.permissions.add( Permission.objects.get(codename="change_factura_detalle") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_factura_detalle") )
+                grupo.permissions.add( Permission.objects.get(codename="view_factura_detalle") )
+                grupo.permissions.add( Permission.objects.get(codename="add_boleta_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="change_boleta_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_boleta_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="view_boleta_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="add_boleta_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="change_boleta_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_boleta_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="view_boleta_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="add_cita") )
+                grupo.permissions.add( Permission.objects.get(codename="change_cita") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_cita") )
+                grupo.permissions.add( Permission.objects.get(codename="view_cita") )
+            res.groups.add('jefe')
+        else:
+            if(not Group.objects.get(name='empleado')):
+                grupo = Group(name='empleado').save()
+                grupo.permissions.add( Permission.objects.get(codename="add_cliente") )
+                grupo.permissions.add( Permission.objects.get(codename="change_cliente") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_cliente") )
+                grupo.permissions.add( Permission.objects.get(codename="view_cliente") )
+
+                grupo.permissions.add( Permission.objects.get(codename="add_cita") )
+                grupo.permissions.add( Permission.objects.get(codename="change_cita") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_cita") )
+                grupo.permissions.add( Permission.objects.get(codename="view_cita") )
+
+                grupo.permissions.add( Permission.objects.get(codename="add_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="change_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="view_servicio") )
+
+                grupo.permissions.add( Permission.objects.get(codename="add_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="change_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="view_producto") )
+
+                grupo.permissions.add( Permission.objects.get(codename="add_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="change_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="view_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="can_add_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="can_delete_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="can_update_boleta") )
+                grupo.permissions.add( Permission.objects.get(codename="add_boleta_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="change_boleta_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_boleta_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="view_boleta_servicio") )
+                grupo.permissions.add( Permission.objects.get(codename="add_boleta_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="change_boleta_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="delete_boleta_producto") )
+                grupo.permissions.add( Permission.objects.get(codename="view_boleta_producto") )
+            res.groups.add('empleado')
+        return super().form_valid(form)
 class EmpleadoUpdateView(UpdateView):
     model = models.Empleado
     template_name = "tables/update.html"
@@ -610,7 +729,7 @@ class EmpleadoListView(ListView):
         context["detalle"] = 'empleado_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_empleado')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_empleado')
-        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_empleado')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_empleado')
         context["borrar"] = "empleado_borrar"
         context["actualizar"] = "empleado_actualizar"
         context["crear"] = "empleado_crear"
@@ -647,7 +766,7 @@ class ProveedorCreateView(CreateView):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.create_proveedor')): return redirect(URL_HOME)
+        if(not user.has_perm('punto_venta.add_proveedor')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ProveedorUpdateView(UpdateView):
     model = models.Proveedor
@@ -679,7 +798,7 @@ class ProveedorListView(ListView):
         context["detalle"] = 'proveedor_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_proveedor')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_proveedor')
-        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_proveedor')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_proveedor')
         context["borrar"] = "proveedor_borrar"
         context["actualizar"] = "proveedor_actualizar"
         context["crear"] = "proveedor_crear"
@@ -714,7 +833,7 @@ def FacturaCrear(request, pk):
     FacturaInlineFormSet = inlineformset_factory(models.Factura, models.Factura_detalle, fields=["producto, cantidad"])
     if (request.method=="POST"):
         formset = FacturaInlineFormSet(request.POST, request.FILES, instance=factura)
-        if formset.is_valid():
+        if( formset.is_valid() ):
             formset.save()
             return redirect(models.Factura.get_absolute_url())
     else:
@@ -744,7 +863,7 @@ class FacturaListView(ListView):
         context["detalle"] = 'factura_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.update_factura')
-        context["puede_crear"] = self.request.user.has_perm('punto_venta.create_factura')
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.add_factura')
         context["borrar"] = "factura_borrar"
         context["actualizar"] = "factura_actualizar"
         context["crear"] = "factura_crear"
@@ -780,15 +899,15 @@ def FacturaCreate(request:HttpRequest):
         form_main = forms.FacturaForm(request.POST)
         formset = forms.FacturaDetalleFormset(request.POST)
         if(
-            form_main.is_valid and 
-            formset.is_valid and 
-            hasattr(request.user, 'Persona')
+            form_main.is_valid() and 
+            formset.is_valid() and 
+            hasattr(request.user, 'persona')
         ):
             factura = form_main.save(False)
-            factura.empleado = request.user.Persona.Empleado
+            factura.empleado = request.user.persona.empleado
             factura.save()
             for form in formset:
-                detalle = form.save(commit=False)
+                detalle = form.instance
                 detalle.factura = factura
                 detalle.save()
             return redirect('facturas')
