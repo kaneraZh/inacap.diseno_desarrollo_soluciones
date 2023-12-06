@@ -149,3 +149,12 @@ h1 {
   box-shadow: 0 5px 10px rgba(0,0,0,.3);
   transform: translateY(-2px);
 }
+
+footer {
+    margin-top: 50px; /* Ajusta este valor según sea necesario */
+}
+
+.pagination {
+    z-index: 1;
+}
+

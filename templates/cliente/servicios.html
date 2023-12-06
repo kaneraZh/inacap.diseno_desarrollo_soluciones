@@ -19,9 +19,6 @@
             <h5 class="card-title">{{ servicio.nombre }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">{{ servicio.descripcion }}</h6>
             <p class="card-text">Precio: $ {{ servicio.precio }}</p>
-            <div class="details">
-              <a href="{% url 'servicio_detalle' pk=servicio.id %}" class="btn btn-primary btn-block">Ver Detalle</a>
-            </div>
           </div>
         </div>
       </div>
