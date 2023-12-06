@@ -56,7 +56,7 @@ urlpatterns = [
     
     path('clientes/', punto_venta.ClienteCreate, name='clientes'),
     path('cliente/<int:pk>/', punto_venta.ClienteDetailView.as_view(), name='cliente_detalle'),
-    path('cliente/crear/', punto_venta.ClienteCreateView.as_view(), name='cliente_crear'),
+    path('cliente/crear/', punto_venta.ClienteCreate, name='cliente_crear'),
     path('cliente/actualizar/<int:pk>/', punto_venta.ClienteUpdateView.as_view(), name='cliente_actualizar'),
     path('cliente/borrar/<int:pk>/', punto_venta.ClienteDeleteView.as_view(), name='cliente_borrar'),
     
