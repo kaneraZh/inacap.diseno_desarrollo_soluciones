@@ -535,7 +535,7 @@ def BoletaActualizar(request, pk:int):
     return render(request, template_name, context)
 class BoletaDeleteView(DeleteView):
     model = models.Boleta
-    template_name = "table/delete.html"
+    template_name = "tables/delete.html"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
