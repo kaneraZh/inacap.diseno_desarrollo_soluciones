@@ -738,11 +738,7 @@ def FacturaCreate(request:HttpRequest):
     elif(request.method == 'POST'):
         form_main = forms.FacturaForm(request.POST)
         formset = forms.FacturaDetalleFormset(request.POST)
-        if(
-            form_main.is_valid() and 
-            formset.is_valid() and 
-            hasattr(request.user, 'persona')
-        ):
+        if(form_main.is_valid() and formset.is_valid() and hasattr(request.user, 'persona')):
             factura = form_main.save(False)
             factura.empleado = request.user.persona.empleado
             factura.save()
