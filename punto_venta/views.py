@@ -535,7 +535,7 @@ def BoletaActualizar(request, pk:int):
     return render(request, template_name, context)
 class BoletaDeleteView(DeleteView):
     model = models.Boleta
-    template_name = "table/delete.html"
+    template_name = "tables/delete.html"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -788,7 +788,7 @@ def FacturaUpdate(request:HttpRequest, pk:int):
     return render(request, template_name, context)
 class FacturaDeleteView(DeleteView):
     model = models.Factura
-    template_name = "table/delete.html"
+    template_name = "tables/delete.html"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -830,4 +830,3 @@ class FacturaDetailView(DetailView):
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if(not user.has_perm('punto_venta.view_factura')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
-# View para el crud de servicio

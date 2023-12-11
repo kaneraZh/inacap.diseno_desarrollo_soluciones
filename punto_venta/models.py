@@ -151,8 +151,8 @@ class Boleta_producto(Documento):
         self.monto_total = self.monto_unidad*self.cantidad
         self.monto_iva =  self.monto_total/6.2631 # valor para extraer 19% del 100% original (valor total es de 119%)
         self.monto_neto = self.monto_total-self.monto_iva
-        self.boleta.save()
         super().save(force_insert,force_update,using,update_fields)
+        self.boleta.save()
     def __str__(self):
         return f'{self.producto}x{self.cantidad}'
 class Boleta_servicio(Documento):
@@ -169,8 +169,8 @@ class Boleta_servicio(Documento):
         self.monto_total = self.monto_unidad*self.cantidad
         self.monto_iva =  self.monto_total/6.2631 # valor para extraer 19% del 100% original (valor total es de 119%)
         self.monto_neto = self.monto_total-self.monto_iva
-        self.boleta.save()
         super().save(force_insert,force_update,using,update_fields)
+        self.boleta.save()
     def __str__(self):
         return f'{self.servicio}x{self.cantidad}'
 
@@ -226,5 +226,6 @@ class Factura_detalle(Documento):
         self.monto_iva =  self.monto_total*0.19
         self.monto_neto = self.monto_total-self.monto_iva
         super().save()
+        self.factura.save()
     def __str__(self):
         return f'{self.producto}x{self.cantidad}'
