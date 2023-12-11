@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:\Users\alumnosnunoa\Documents\GitHub\inacap.diseno_desarrollo_soluciones\db.sqlite3" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="4522"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,10:mainauth_group"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1">--
+-- File generated with SQLiteStudio v3.4.4 on Wed Dec 6 02:22:06 2023
+--
+-- Text encoding used: System
+--
+PRAGMA foreign_keys = off;
+
+-- Table: auth_group
+CREATE TABLE IF NOT EXISTS &quot;auth_group&quot; (&quot;id&quot; integer NOT NULL PRIMARY KEY AUTOINCREMENT, &quot;name&quot; varchar(150) NOT NULL UNIQUE);
+INSERT INTO auth_group (id, name) VALUES (1, 'jefe');
+INSERT INTO auth_group (id, name) VALUES (2, 'empleado');
+INSERT INTO auth_group (id, name) VALUES (3, 'cliente');
+
+-- Table: auth_group_permissions
+CREATE TABLE IF NOT EXISTS &quot;auth_group_permissions&quot; (&quot;id&quot; integer NOT NULL PRIMARY KEY AUTOINCREMENT, &quot;group_id&quot; integer NOT NULL REFERENCES &quot;auth_group&quot; (&quot;id&quot;) DEFERRABLE INITIALLY DEFERRED, &quot;permission_id&quot; integer NOT NULL REFERENCES &quot;auth_permission&quot; (&quot;id&quot;) DEFERRABLE INITIALLY DEFERRED);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (1, 1, 25);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (2, 1, 26);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (3, 1, 27);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (4, 1, 28);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (5, 1, 29);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (6, 1, 30);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (7, 1, 31);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (8, 1, 32);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (9, 1, 33);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (10, 1, 34);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (11, 1, 35);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (12, 1, 36);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (13, 1, 37);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (14, 1, 38);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (15, 1, 39);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (16, 1, 40);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (17, 1, 41);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (18, 1, 42);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (19, 1, 43);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (20, 1, 44);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (21, 1, 45);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (22, 1, 46);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (23, 1, 47);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (24, 1, 48);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (25, 1, 49);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (26, 1, 50);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (27, 1, 51);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (28, 1, 52);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (29, 1, 53);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (30, 1, 54);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (31, 1, 55);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (32, 1, 56);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (33, 1, 57);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (34, 1, 58);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (35, 1, 59);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (36, 1, 60);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (37, 1, 61);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (38, 1, 62);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (39, 1, 63);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (40, 1, 64);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (41, 1, 65);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (42, 1, 66);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (43, 1, 67);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (44, 1, 68);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (45, 1, 69);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (46, 1, 70);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (47, 1, 71);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (48, 1, 72);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (49, 1, 73);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (50, 1, 74);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (51, 1, 75);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (52, 1, 76);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (53, 1, 77);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (54, 1, 78);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (55, 2, 67);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (56, 2, 68);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (57, 2, 70);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (58, 2, 71);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (59, 2, 72);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (60, 2, 74);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (61, 2, 60);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (62, 2, 47);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (63, 2, 48);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (64, 2, 49);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (65, 2, 50);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (66, 2, 25);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (67, 2, 26);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (68, 2, 59);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (69, 2, 28);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (70, 2, 61);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (71, 2, 62);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (72, 3, 75);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (73, 3, 77);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (74, 3, 78);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (75, 3, 50);
+INSERT INTO auth_group_permissions (id, group_id, permission_id) VALUES (76, 3, 62);
+
+-- Index: auth_group_permissions_group_id_b120cbf9
+CREATE INDEX IF NOT EXISTS &quot;auth_group_permissions_group_id_b120cbf9&quot; ON &quot;auth_group_permissions&quot; (&quot;group_id&quot;);
+
+-- Index: auth_group_permissions_group_id_permission_id_0cd325b0_uniq
+CREATE UNIQUE INDEX IF NOT EXISTS &quot;auth_group_permissions_group_id_permission_id_0cd325b0_uniq&quot; ON &quot;auth_group_permissions&quot; (&quot;group_id&quot;, &quot;permission_id&quot;);
+
+-- Index: auth_group_permissions_permission_id_84c5c92e
+CREATE INDEX IF NOT EXISTS &quot;auth_group_permissions_permission_id_84c5c92e&quot; ON &quot;auth_group_permissions&quot; (&quot;permission_id&quot;);
+
+-- Index: auth_permission_content_type_id_2f476e4b
+CREATE INDEX IF NOT EXISTS &quot;auth_permission_content_type_id_2f476e4b&quot; ON &quot;auth_permission&quot; (&quot;content_type_id&quot;);
+
+-- Index: auth_permission_content_type_id_codename_01ab375a_uniq
+CREATE UNIQUE INDEX IF NOT EXISTS &quot;auth_permission_content_type_id_codename_01ab375a_uniq&quot; ON &quot;auth_permission&quot; (&quot;content_type_id&quot;, &quot;codename&quot;);
+
+COMMIT TRANSACTION;
+PRAGMA foreign_keys = on;
+</sql><current_tab id="0"/></tab_sql></sqlb_project>

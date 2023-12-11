@@ -4,23 +4,43 @@
 {% csrf_token %}
 <div class="row spacer">
     <div class="col-3">
-        <label>{{form_main.proveedor}}</label>
+        <label>{{form_main.cliente}}</label>
     </div>
     <div class="col-3">
         <label>{{form_main.tipo_de_pago}}</label>
     </div>
 </div>
-{{ formset.management_form }}
-{% for form in formset %}
+{{ formset_servicio.management_form }}
+{% for form in formset_servicio %}
+<div class="row form-row spacer">
+    <div class="col-3">
+        <label>Servicio:{{form.servicio}}</label>
+    </div>
+    <div class="col-3">
+        <label>Cantidad:{{form.cantidad}}</label>
+    </div>
+    <div class="col-3">
+        <div class="input-group">
+            <div class="input-group-append">
+                <button class="btn btn-success add-form-row">+</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<div>
+    <br>
+    <br>
+    <br>
+</div>
+{{ formset_producto.management_form }}
+{% for form in formset_producto %}
 <div class="row form-row spacer">
     <div class="col-3">
         <label>Producto:{{form.producto}}</label>
     </div>
     <div class="col-3">
         <label>Cantidad:{{form.cantidad}}</label>
-    </div>
-    <div class="col-3">
-        <label>Monto Total:{{form.monto_total}} </label>
     </div>
     <div class="col-3">
         <div class="input-group">
@@ -103,4 +123,4 @@ $(document).on('click', '.remove-form-row', function(e){
 });
 
 </script>
-{% endblock %}
+{% endblock custom_js %}

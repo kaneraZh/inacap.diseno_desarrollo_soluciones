@@ -73,7 +73,7 @@
                         </li>
                         {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'cita_crear' %}">Agendar Cita</a>
+                            <a class="nav-link" href="{% url 'cliente_cita_agendar' %}">Agendar Cita</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href={% url 'cita_calendario' %}>Citas</a>
@@ -90,6 +90,46 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
+                        </li>
+                        {% endif %}
+                        {% if perms.punto_venta.view_boleta %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'boletas' %}">boletas</a>
+                        </li>
+                        {% endif %}
+                        {% if perms.punto_venta.view_empleado %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'empleados' %}">empleados</a>
+                        </li>
+                        {% endif %}
+                        {% if perms.punto_venta.view_cliente %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'clientes' %}">clientes</a>
+                        </li>
+                        {% endif %}
+                        {% if perms.punto_venta.view_cita %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'citas' %}">citas</a>
+                        </li>
+                        {% endif %}
+                        {% if perms.punto_venta.view_servicio %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'servicios' %}">servicios</a>
+                        </li>
+                        {% endif %}
+                        {% if perms.punto_venta.view_producto %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'productos' %}">productos</a>
+                        </li>
+                        {% endif %}
+                        {% if perms.punto_venta.view_proveedor %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'proveedores' %}">proveedores</a>
+                        </li>
+                        {% endif %}
+                        {% if perms.punto_venta.view_factura %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'facturas' %}">facturas</a>
                         </li>
                         {% endif %}
                     </ul>
