@@ -113,7 +113,7 @@ BoletaProductoFormset = forms.modelformset_factory(
 BoletaServicioFormset = forms.modelformset_factory(
     form=BoletaServicioForm,
     model=Boleta_servicio,
-    extra=5,
+    extra=1,
 )
 
 class FacturaForm(forms.ModelForm):
@@ -128,4 +128,5 @@ FacturaDetalleFormset = forms.modelformset_factory(
     form=FacturaDetalleForm,
     model=Factura_detalle,
     extra=1,
+    min_num=1,
 )
