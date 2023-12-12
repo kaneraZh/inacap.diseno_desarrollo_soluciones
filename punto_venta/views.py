@@ -391,7 +391,7 @@ class ServicioDetailView(DetailView):
 # producto
 class ProductoCreateView(CreateView):
     model = Producto
-    template_name = "tables/create.html"
+    template_name = "productos/crear.html"
     fields = '__all__'
     def dispatch(self, request, *args, **kwargs):
         user = request.user
@@ -400,7 +400,7 @@ class ProductoCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 class ProductoUpdateView(UpdateView):
     model = models.Producto
-    template_name = "tables/update.html"
+    template_name = "productos/actualizar.html"
     fields = '__all__'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -413,7 +413,7 @@ class ProductoUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class ProductoDeleteView(DeleteView):
     model = models.Producto
-    template_name = "tables/delete.html"
+    template_name = "productos/eliminar.html"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -421,7 +421,7 @@ class ProductoDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class ProductoListView(ListView):
     model = models.Producto
-    template_name = "tables/view_multy.html"
+    template_name = "productos/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'productos'
