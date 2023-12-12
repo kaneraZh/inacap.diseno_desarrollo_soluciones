@@ -128,5 +128,4 @@ FacturaDetalleFormset = forms.modelformset_factory(
     form=FacturaDetalleForm,
     model=Factura_detalle,
     extra=1,
-    min_num=1,
 )
