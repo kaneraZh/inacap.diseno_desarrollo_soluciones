@@ -1,9 +1,69 @@
 {% extends 'base.html' %}
-{% block title %}Pagina Principal{% endblock title %}
-{% block content %}
-    {% if user.is_authenticated %}
-    Hi {{ user.first_name }}
-    {% else %}
 
-    {% endif %}
+{% block title %}Pagina Principal{% endblock title %}
+
+{% block content %}
+  {% load static %}
+
+      <link rel="stylesheet" href="{% static 'punto_venta/home.css' %}">
+
+    <!-- Carrusel de imágenes -->
+<div id="carouselExample" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'punto_venta/cortedama.jpg' %}" class="d-block mx-auto" style="max-width: 65%; max-height: 50%;" alt="Imagen 1">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'punto_venta/cortevaron.jpg' %}" class="d-block mx-auto" style="max-width: 65%; max-height: 50%;" alt="Imagen 2">
+    </div>
+    <!-- Agrega más imágenes según sea necesario -->
+
+    <!-- Controles del carrusel -->
+    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev"  style="color: #1b1b1b;">
+        <i class="fa-solid fa-arrow-left" ></i>
+      <span class="sr-only">Anterior</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next" style="color: #1b1b1b;">
+        <i class="fa-solid fa-arrow-right"></i> <!-- Icono de Font Awesome -->
+      <span class="sr-only">Siguiente</span>
+    </a>
+  </div>
+</div>
+
+    <!-- Texto "Nuestros Valores" -->
+    <div class="container mt-4 text-center">
+      <h2>Nuestros Valores</h2>
+      <p>
+        Ashe's Salón de Belleza es un lugar de prestigio donde nos esforzamos por ofrecer servicios de belleza excepcionales.
+        Nuestro compromiso con la calidad y la satisfacción del cliente nos distingue en la industria de la belleza.
+        Trabajamos con pasión para realzar la belleza única de cada persona y crear experiencias inolvidables.
+      </p>
+    </div>
+
+      <!-- Agrega esto al bloque "Ubicación del salón de belleza" -->
+<div class="container mt-4 text-center">
+  <h2>Ubicación</h2>
+    <p>
+    Estamos ubicados en Av. Irarrázaval 2821. Haz clic en el mapa para obtener direcciones en Google Maps.
+  </p>
+  <iframe
+    width="100%"
+    height="300"
+    frameborder="0" style="border:0"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.800740358665!2d-70.60273169999998!3d-33.45493589999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cf875e51656b%3A0xf64835afcf5f5a7b!2sSal%C3%B3n%20de%20belleza%20Ashes!5e0!3m2!1sen!2sus!4v1648121325384!5m2!1sen!2sus" allowfullscreen>
+  </iframe>
+
+</div>
+
+
+
+    <!-- Agrega la referencia de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Script de inicialización del carrusel -->
+    <script>
+      $(document).ready(function(){
+        $('.carousel').carousel();
+      });
+    </script>
 {% endblock content %}
