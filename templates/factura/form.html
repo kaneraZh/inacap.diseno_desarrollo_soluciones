@@ -12,7 +12,7 @@
 </div>
 {{ formset.management_form }}
 {% for form in formset %}
-<div class="row form-row spacer">
+<div class="row form-{{formset.prefix}} spacer">
     <div class="col-3">
         <label>Producto:{{form.producto}}</label>
     </div>
@@ -23,11 +23,7 @@
         <label>Monto Total:{{form.monto_total}} </label>
     </div>
     <div class="col-3">
-        <div class="input-group">
-            <div class="input-group-append">
-                <button class="btn btn-success add-form-row">+</button>
-            </div>
-        </div>
+        <button class="btn btn-success formset-row-add">+</button>
     </div>
 </div>
 {% endfor %}
@@ -42,16 +38,16 @@
 {% block custom_js %}
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script type="text/javascript">
-function updateElementIndex(el, prefix, ndx) {
-    var id_regex = new RegExp('(' + prefix + '-\\d+)');
-    var replacement = prefix + '-' + ndx;
+function updateElementIndex(el, form_prefix, ndx) {
+    var id_regex = new RegExp('(' + form_prefix + '-\\d+)');
+    var replacement = form_prefix + '-' + ndx;
     if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
     if (el.id) el.id = el.id.replace(id_regex, replacement);
     if (el.name) el.name = el.name.replace(id_regex, replacement);
 }
-function cloneMore(selector, prefix) {
+function cloneMore(selector, form_prefix) {
     var newElement = $(selector).clone(true);
-    var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    var total = $('#id_' + form_prefix + '-TOTAL_FORMS').val();
     newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
         var name = $(this).attr('name')
         if(name) {
@@ -68,37 +64,51 @@ function cloneMore(selector, prefix) {
         }
     });
     total++;
-    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+    $('#id_' + form_prefix + '-TOTAL_FORMS').val(total);
     $(selector).after(newElement);
-    var conditionRow = $('.form-row:not(:last)');
-    conditionRow.find('.btn.add-form-row')
+    var conditionRow = $('.form-'+form_prefix+':not(:last)');
+    conditionRow.find('.btn.formset-row-add')
     .removeClass('btn-success').addClass('btn-danger')
-    .removeClass('add-form-row').addClass('remove-form-row')
+    .removeClass('formset-row-add').addClass('formset-row-del')
     .html('-');
     return false;
 }
-function deleteForm(prefix, btn) {
-    var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+function deleteForm(btn, form_prefix) {
+    var total = parseInt($('#id_' + form_prefix + '-TOTAL_FORMS').val());
     if (total > 1){
-        btn.closest('.form-row').remove();
-        var forms = $('.form-row');
-        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+        btn.closest('.form-'+form_prefix+'').remove();
+        var forms = $('.form-'+form_prefix+'');
+        $('#id_' + form_prefix + '-TOTAL_FORMS').val(forms.length);
         for (var i=0, formCount=forms.length; i<formCount; i++) {
             $(forms.get(i)).find(':input').each(function() {
-                updateElementIndex(this, prefix, i);
+                updateElementIndex(this, form_prefix, i);
             });
         }
     }
     return false;
 }
-$(document).on('click', '.add-form-row', function(e){
-    e.preventDefault();
-    cloneMore('.form-row:last', 'form');
+function formsetClass(element){
+    var class_list = element.currentTarget.parentElement.parentElement.classList
+    for (var i=0; i<class_list.length; i++) {
+        const prefix = /^form-/g
+        var cls = class_list[i]
+
+        if(cls.match(prefix)){
+            return cls.replace(prefix, "");
+        }
+    }
+    return "form"
+}
+$(document).on('click', '.formset-row-add', function(element){
+    var form_class = formsetClass(element);
+    element.preventDefault();
+    cloneMore('.form-'+form_class+':last', form_class);
     return false;
 });
-$(document).on('click', '.remove-form-row', function(e){
-    e.preventDefault();
-    deleteForm('form', $(this));
+$(document).on('click', '.formset-row-del', function(element){
+    var form_class = formsetClass(element);
+    element.preventDefault();
+    deleteForm($(this), form_class);
     return false;
 });
 
