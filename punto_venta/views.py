@@ -464,13 +464,12 @@ def BoletaCreate(request:HttpRequest):
     template_name = 'boleta/form.html'
     if(request.method == 'GET'):
         form_main = forms.BoletaForm(request.GET or None)
-        formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.none())
-        from django.db.models import QuerySet
-        formset_servicio = forms.BoletaServicioFormset(queryset=models.Boleta_servicio.objects.none())
+        formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.none(), prefix='producto')
+        formset_servicio = forms.BoletaServicioFormset(queryset=models.Boleta_servicio.objects.none(), prefix='servicio')
     elif(request.method == 'POST'):
         form_main = forms.BoletaForm(request.POST)
-        formset_producto = forms.BoletaProductoFormset(request.POST)
-        formset_servicio = forms.BoletaServicioFormset(request.POST)
+        formset_producto = forms.BoletaProductoFormset(request.POST, prefix='producto')
+        formset_servicio = forms.BoletaServicioFormset(request.POST, prefix='servicio')
         if(
             form_main.is_valid() and 
             formset_producto.is_valid() and
@@ -503,12 +502,12 @@ def BoletaActualizar(request, pk:int):
     if(request.method == 'GET'):
         boleta = models.Boleta.objects.get(id=pk)
         form_main = forms.BoletaForm(instance=boleta)
-        formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.filter(boleta=boleta))
-        formset_servicio = forms.BoletaServicioFormset(queryset=models.Boleta_servicio.objects.filter(boleta=boleta))
+        formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.filter(boleta=boleta), prefix='producto')
+        formset_servicio = forms.BoletaServicioFormset(queryset=models.Boleta_servicio.objects.filter(boleta=boleta), prefix='servicio')
     elif(request.method == 'POST'):
         form_main = forms.BoletaForm(request.POST)
-        formset_producto = forms.BoletaProductoFormset(request.POST)
-        formset_servicio = forms.BoletaServicioFormset(request.POST)
+        formset_producto = forms.BoletaProductoFormset(request.POST, prefix='producto')
+        formset_servicio = forms.BoletaServicioFormset(request.POST, prefix='servicio')
         if(
             form_main.is_valid() and 
             formset_producto.is_valid() and
@@ -734,15 +733,17 @@ def FacturaCreate(request:HttpRequest):
     template_name = 'factura/form.html'
     if(request.method == 'GET'):
         form_main = forms.FacturaForm(request.GET or None)
-        formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.none())
+        formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.none(), prefix='detalle')
     elif(request.method == 'POST'):
         form_main = forms.FacturaForm(request.POST)
-        formset = forms.FacturaDetalleFormset(request.POST)
+        formset = forms.FacturaDetalleFormset(request.POST, prefix='detalle')
         if(form_main.is_valid() and formset.is_valid() and hasattr(request.user, 'persona')):
             factura = form_main.save(False)
             factura.empleado = request.user.persona.empleado
             factura.save()
             for form in formset:
+                if(not bool(form.cleaned_data)):
+                    continue
                 detalle = form.instance
                 detalle.factura = factura
                 detalle.save()
@@ -760,10 +761,10 @@ def FacturaUpdate(request:HttpRequest, pk:int):
     if(request.method == 'GET'):
         factura = models.Factura.objects.get(id=pk)
         form_main = forms.FacturaForm(instance=factura)
-        formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.filter(factura=factura))
+        formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.filter(factura=factura), prefix='detalle')
     elif(request.method == 'POST'):
         form_main = forms.FacturaForm(request.POST)
-        formset = forms.FacturaDetalleFormset(request.POST)
+        formset = forms.FacturaDetalleFormset(request.POST, prefix='detalle')
         if(
             form_main.is_valid() and 
             formset.is_valid() and 
