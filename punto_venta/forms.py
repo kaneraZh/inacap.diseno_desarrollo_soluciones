@@ -120,6 +120,14 @@ class FacturaForm(forms.ModelForm):
         model = Factura
         fields = ("proveedor","tipo_de_pago")
 class FacturaDetalleForm(forms.ModelForm):
+    producto = forms.models.ModelChoiceIterator(field=forms.ModelChoiceField(
+        queryset=Producto.objects.all(),
+        empty_label='---------',
+        required=False,
+        label="Producto",
+    ))
+    cantidad = forms.IntegerField(min_value=0, required=False)
+    monto_total = forms.IntegerField(min_value=0, required=False)
     class Meta:
         model = Factura_detalle
         fields = ('producto', 'cantidad', 'monto_total')
