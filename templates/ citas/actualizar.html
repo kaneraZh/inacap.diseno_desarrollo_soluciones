@@ -1,0 +1,40 @@
+<!-- actualizar.html -->
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Cita{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Actualizar Cita</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_fecha" class="form-label">Fecha:</label>
+                <input type="date" name="fecha" id="id_fecha" class="form-control" value="{{ cita.fecha }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_hora" class="form-label">Hora:</label>
+                <input type="time" name="hora" id="id_hora" class="form-control" value="{{ cita.hora }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_servicio" class="form-label">Servicio:</label>
+                <select name="servicio" id="id_servicio" class="form-select" required>
+                    <!-- Opciones de servicios, puedes cargarlas desde el backend si es necesario -->
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="id_cliente" class="form-label">Cliente:</label>
+                <select name="cliente" id="id_cliente" class="form-select" required>
+                    <!-- Opciones de clientes, puedes cargarlas desde el backend si es necesario -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-warning">
+                <i class="fas fa-pen-to-square"></i> Actualizar Cita
+            </button>
+            <a href="{% url 'citas_lista' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Cancelar
+            </a>
+        </form>
+    </div>
+{% endblock content %}
