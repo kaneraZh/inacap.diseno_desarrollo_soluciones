@@ -499,10 +499,14 @@ def BoletaCreate(request:HttpRequest):
             boleta.empleado = request.user.persona.empleado
             boleta.save()
             for form in formset_producto:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
             for form in formset_servicio:
+                if(not 'servicio' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
@@ -537,10 +541,14 @@ def BoletaActualizar(request, pk:int):
             boleta.empleado = request.user.persona.empleado
             boleta.save()
             for form in formset_producto:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
             for form in formset_servicio:
+                if(not 'servicio' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
@@ -569,7 +577,7 @@ class BoletaDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class BoletaListView(ListView):
     model = models.Boleta
-    template_name = "tables/view_multy.html"
+    template_name = "boleta/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'boletas'
@@ -588,7 +596,7 @@ class BoletaListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class BoletaDetailView(DetailView):
     model = models.Boleta
-    template_name = "tables/view_single.html"
+    template_name = "boleta/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'boleta'
