@@ -1,127 +1,131 @@
+<!-- base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashe's - {% block title %}Pagina Principal{% endblock title %}</title>
+    <title>
+        Ashe's - {% block title %}Pagina Principal{% endblock title %}
+    </title>
     <script src="https://kit.fontawesome.com/65f745cc17.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
+
+
         header {
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px -6px #808080;
+            background-color: #ffffff; /* Color de fondo del encabezado */
+            box-shadow: 0 4px 6px -6px #808080; /* Sombra para el borde claro y medio transparente */
         }
         .navbar-brand {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #000000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Tipografía de la marca */
+            font-size: 1.5rem; /* Tamaño de la tipografía de la marca */
+            font-weight: bold; /* Peso de la tipografía de la marca */
+            color: #000000; /* Color del texto de la marca */
         }
         .navbar-nav .nav-link {
-            color: #000000;
-            transition: color 0.3s ease;
+            color: #000000; /* Color del texto de los enlaces en la barra de navegación */
+            transition: color 0.3s ease; /* Efecto de transición de color */
         }
         .navbar-nav .nav-link:hover {
-            color: #ffc107;
+            color: #ffc107; /* Cambia el color al hacer hover */
         }
         body {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
+
         main {
             flex: 1;
         }
+
         footer {
             font-size: 14px;
             background-color: #f8f9fa;
             padding: 20px 0;
             width: 100%;
-            text-align: center;
+            text-align: center; /* Alinea el contenido al centro */
         }
+
+
+        
     </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href={% url 'home' %}>Ashe's Salon de Belleza</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'productos_tarjeta' %}">Productos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'servicios_tarjeta' %}">Servicios</a>
-                        </li>
-                        {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'cliente_cita_agendar' %}">Agendar Cita</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href={% url 'cita_calendario' %}>Citas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href='/accounts/logout/?next=/'>Logout</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Bienvenid@ {{user.first_name}}</a>
-                        </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'signin' %}">Registrarse</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
-                        </li>
-                        {% endif %}
-                        {% if perms.punto_venta.view_boleta %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'boletas' %}">boletas</a>
-                        </li>
-                        {% endif %}
-                        {% if perms.punto_venta.view_empleado %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'empleados' %}">empleados</a>
-                        </li>
-                        {% endif %}
-                        {% if perms.punto_venta.view_cliente %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'clientes' %}">clientes</a>
-                        </li>
-                        {% endif %}
-                        {% if perms.punto_venta.view_cita %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'citas' %}">citas</a>
-                        </li>
-                        {% endif %}
-                        {% if perms.punto_venta.view_servicio %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'servicios' %}">servicios</a>
-                        </li>
-                        {% endif %}
-                        {% if perms.punto_venta.view_producto %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'productos' %}">productos</a>
-                        </li>
-                        {% endif %}
-                        {% if perms.punto_venta.view_proveedor %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'proveedores' %}">proveedores</a>
-                        </li>
-                        {% endif %}
-                        {% if perms.punto_venta.view_factura %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'facturas' %}">facturas</a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">Ashe's Salon de Belleza</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'productos_tarjeta' %}">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'servicios_tarjeta' %}">Servicios</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cliente_cita_agendar' %}">Agendar Cita</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cita_calendario' %}">Citas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='/accounts/logout/?next=/'>Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Bienvenid@ {{user.first_name}}</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signin' %}">Registrarse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
+                    </li>
+                {% endif %}
+                {% if perms.punto_venta.view_boleta or perms.punto_venta.view_empleado or perms.punto_venta.view_cliente or perms.punto_venta.view_cita or perms.punto_venta.view_servicio or perms.punto_venta.view_producto or perms.punto_venta.view_proveedor or perms.punto_venta.view_factura %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Menú
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            {% if perms.punto_venta.view_boleta %}
+                                <a class="dropdown-item" href="{% url 'boletas' %}">Boletas</a>
+                            {% endif %}
+                            {% if perms.punto_venta.view_empleado %}
+                                <a class="dropdown-item" href="{% url 'empleados' %}">Empleados</a>
+                            {% endif %}
+                            {% if perms.punto_venta.view_cliente %}
+                                <a class="dropdown-item" href="{% url 'clientes' %}">Clientes</a>
+                            {% endif %}
+                            {% if perms.punto_venta.view_cita %}
+                                <a class="dropdown-item" href="{% url 'citas' %}">Citas</a>
+                            {% endif %}
+                            {% if perms.punto_venta.view_servicio %}
+                                <a class="dropdown-item" href="{% url 'servicios' %}">Servicios</a>
+                            {% endif %}
+                            {% if perms.punto_venta.view_producto %}
+                                <a class="dropdown-item" href="{% url 'productos' %}">Productos</a>
+                            {% endif %}
+                            {% if perms.punto_venta.view_proveedor %}
+                                <a class="dropdown-item" href="{% url 'proveedores' %}">Proveedores</a>
+                            {% endif %}
+                            {% if perms.punto_venta.view_factura %}
+                                <a class="dropdown-item" href="{% url 'facturas' %}">Facturas</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
     </header>
     {% block content %}
     {% endblock content %}
@@ -134,11 +138,13 @@
         </div>
     </footer>
 
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+</body>
 {% block custom_js %}
 {% endblock custom_js %}
-</body>
 </html>

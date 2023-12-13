@@ -763,7 +763,7 @@ def FacturaCreate(request:HttpRequest):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.add_factura')): return redirect(URL_HOME)
-    template_name = 'factura/form.html'
+    template_name = 'factura/crear.html'
     if(request.method == 'GET'):
         form_main = forms.FacturaForm(request.GET or None)
         formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.none(), prefix='detalle')
@@ -791,7 +791,7 @@ def FacturaUpdate(request:HttpRequest, pk:int):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.change_factura')): return redirect(URL_HOME)
-    template_name = 'factura/form.html'
+    template_name = 'factura/actualizar'
     if(request.method == 'GET'):
         factura = models.Factura.objects.get(id=pk)
         form_main = forms.FacturaForm(instance=factura)
