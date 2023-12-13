@@ -680,14 +680,23 @@ class ProveedorUpdateView(UpdateView):
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if(not user.has_perm('punto_venta.change_proveedor')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+from django.urls import reverse
+
 class ProveedorDeleteView(DeleteView):
     model = models.Proveedor
     template_name = "proveedores/eliminar.html"
-    def dispatch(self, request:HttpRequest, *args, **kwargs):
+
+    def get_success_url(self):
+        return reverse('proveedores')  # Redirige a la lista de proveedores
+
+    def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.delete_proveedor')): return redirect(URL_HOME)
+        if not user.is_authenticated:
+            return redirect(f'{URL_LOGIN}?next={request.path}')
+        if not user.has_perm('punto_venta.delete_proveedor'):
+            return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+
 class ProveedorListView(ListView):
     model = models.Proveedor
     template_name = "proveedores/lista.html"
