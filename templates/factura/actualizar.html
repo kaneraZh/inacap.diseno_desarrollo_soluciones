@@ -1,0 +1,38 @@
+<!-- actualizar_factura.html -->
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Factura{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Actualizar Factura</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="id_numero_factura" class="form-label">Número de Factura:</label>
+                <input type="number" name="numero_factura" id="id_numero_factura" class="form-control" value="{{ factura.numero_factura }}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="id_tipo_de_pago" class="form-label">Tipo de Pago:</label>
+                <select name="tipo_de_pago" id="id_tipo_de_pago" class="form-select" required>
+                    {% for choice in factura.TIPO_DE_PAGO_CHOICES %}
+                        <option value="{{ choice.0 }}" {% if choice.0 == factura.tipo_de_pago %}selected{% endif %}>{{ choice.1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Otros campos del formulario según tu modelo -->
+
+            <button type="submit" class="btn btn-warning">
+                <i class="fas fa-pen-to-square"></i> Actualizar Factura
+            </button>
+
+            <a href="{% url 'lista_facturas' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Cancelar
+            </a>
+        </form>
+    </div>
+{% endblock content %}

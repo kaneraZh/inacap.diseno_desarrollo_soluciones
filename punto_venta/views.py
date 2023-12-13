@@ -607,10 +607,10 @@ def EmpleadoCreate(request:HttpRequest):
         if(form.is_valid()):
             form.save()
             return redirect('empleados')
-    return render(request, "tables/create.html", {'form':form})
+    return render(request, "empleados/crear.html", {'form':form})
 class EmpleadoUpdateView(UpdateView):
     model = models.Empleado
-    template_name = "tables/update.html"
+    template_name = "empleados/actualizar.html"
     fields = [
         'correo_electronico',
         'primer_nombre',
@@ -632,7 +632,7 @@ class EmpleadoUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class EmpleadoDeleteView(DeleteView):
     model = models.Empleado
-    template_name = "tables/delete.html"
+    template_name = "empleados/eliminar.html"
     success_url = '/empleados/'
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -641,7 +641,7 @@ class EmpleadoDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class EmpleadoListView(ListView):
     model = models.Empleado
-    template_name = "tables/view_multy.html"
+    template_name = "empleados/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'empleados'
@@ -660,7 +660,7 @@ class EmpleadoListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class EmpleadoDetailView(DetailView):
     model = models.Empleado
-    template_name = "tables/view_single.html"
+    template_name = "empleados/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'empleado'
@@ -819,7 +819,7 @@ def FacturaUpdate(request:HttpRequest, pk:int):
     return render(request, template_name, context)
 class FacturaDeleteView(DeleteView):
     model = models.Factura
-    template_name = "tables/delete.html"
+    template_name = "factura/eliminar.html"
     success_url = '/facturas/'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -832,7 +832,7 @@ class FacturaDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class FacturaListView(ListView):
     model = models.Factura
-    template_name = "tables/view_multy.html"
+    template_name = "factura/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'Facturas'
@@ -851,7 +851,7 @@ class FacturaListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class FacturaDetailView(DetailView):
     model = models.Factura
-    template_name = "tables/view_single.html"
+    template_name = "factura/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'Factura'
