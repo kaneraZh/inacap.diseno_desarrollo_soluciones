@@ -414,10 +414,16 @@ class ProductoUpdateView(UpdateView):
 class ProductoDeleteView(DeleteView):
     model = models.Producto
     template_name = "productos/eliminar.html"
-    def dispatch(self, request:HttpRequest, *args, **kwargs):
+
+    def get_success_url(self):
+        return reverse('productos')  
+
+    def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.delete_servicio')): return redirect(URL_HOME)
+        if not user.is_authenticated:
+            return redirect(f'{URL_LOGIN}?next={request.path}')
+        if not user.has_perm('punto_venta.delete_servicio'):
+            return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ProductoListView(ListView):
     model = models.Producto
