@@ -1,0 +1,23 @@
+<!-- eliminar.html -->
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Cita{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Confirmar Eliminación</h2>
+
+        <p>¿Estás seguro de que deseas eliminar la cita con fecha {{ cita.fecha }} y hora {{ cita.hora }}?</p>
+
+        <form method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Sí, Eliminar
+            </button>
+        </form>
+
+        <a href="{% url 'citas_lista' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Cancelar
+        </a>
+    </div>
+{% endblock content %}
