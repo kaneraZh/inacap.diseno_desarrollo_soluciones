@@ -6,7 +6,7 @@ class Persona(User):
     #usuario = models.OneToOneField(User, on_delete=models.CASCADE)
     primer_nombre = models.CharField(max_length=20, null=True)
     primer_apellido = models.CharField(max_length=20, null=True)
-    correo_electronico = models.EmailField(max_length=30, null=False)
+    correo_electronico = models.EmailField(max_length=30, null=False, unique=True)
     contrasena = models.CharField(max_length=20, null=True, verbose_name='contraseña')
     fecha_nacimiento = models.DateField()
     direccion = models.CharField(max_length=20, null=True)
