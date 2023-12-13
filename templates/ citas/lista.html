@@ -1,0 +1,41 @@
+<!-- lista.html -->
+{% extends 'base.html' %}
+
+{% block title %}Lista de Citas{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Lista de Citas</h2>
+
+        <a href="{% url 'citas_crear' %}" class="btn btn-primary mb-3">
+            <i class="fas fa-plus"></i> Crear Cita
+        </a>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Servicio</th>
+                    <th>Cliente</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cita in object_list %}
+                    <tr>
+                        <td>{{ cita.fecha }}</td>
+                        <td>{{ cita.hora }}</td>
+                        <td>{{ cita.servicio.nombre }}</td>
+                        <td>{{ cita.cliente.primer_nombre }} {{ cita.cliente.primer_apellido }}</td>
+                        <td>
+                            <a href="{% url 'citas_detalle' pk=cita.id %}" class="btn btn-info btn-sm">Detalles</a>
+                            <a href="{% url 'citas_actualizar' pk=cita.id %}" class="btn btn-warning btn-sm">Actualizar</a>
+                            <a href="{% url 'citas_eliminar' pk=cita.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

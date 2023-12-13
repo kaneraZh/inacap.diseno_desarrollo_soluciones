@@ -4,7 +4,6 @@
 -- Text encoding used: System
 --
 PRAGMA foreign_keys = off;
-BEGIN TRANSACTION;
 
 -- Table: auth_group
 CREATE TABLE IF NOT EXISTS "auth_group" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "name" varchar(150) NOT NULL UNIQUE);

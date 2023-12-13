@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear Cliente{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Crear Cliente</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_primer_nombre" class="form-label">Primer Nombre:</label>
+                <input type="text" name="primer_nombre" id="id_primer_nombre" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_primer_apellido" class="form-label">Primer Apellido:</label>
+                <input type="text" name="primer_apellido" id="id_primer_apellido" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_correo_electronico" class="form-label">Correo Electrónico:</label>
+                <input type="email" name="correo_electronico" id="id_correo_electronico" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_contrasena" class="form-label">Contraseña:</label>
+                <input type="password" name="contrasena" id="id_contrasena" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_fecha_nacimiento" class="form-label">Fecha de Nacimiento:</label>
+                <input type="date" name="fecha_nacimiento" id="id_fecha_nacimiento" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_direccion" class="form-label">Dirección:</label>
+                <input type="text" name="direccion" id="id_direccion" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'clientes' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+{% endblock content %}
