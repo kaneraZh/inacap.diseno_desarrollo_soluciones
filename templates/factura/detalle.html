@@ -1,0 +1,16 @@
+<!-- detalle_factura.html -->
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Factura{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Detalle de Factura</h2>
+
+        <!-- Mostrar información detallada de la factura aquí -->
+
+        <a href="{% url lista %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver a la Lista
+        </a>
+    </div>
+{% endblock content %}

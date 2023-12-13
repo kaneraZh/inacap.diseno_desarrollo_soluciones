@@ -1,0 +1,32 @@
+
+/* En home.css */
+.carousel-container {
+  max-width: 65%;
+  margin: auto;
+  margin-bottom: 20px; /* Agrega espacio inferior al carrusel */
+
+}
+
+.values-container {
+  background-color: #f8f9fa; /* Fondo gris claro */
+  padding: 20px;
+}
+
+.location-container {
+  margin-top: 20px;
+}
+
+/* En tu archivo de estilos principal */
+body {
+  margin-bottom: 60px; /* Ajuste para el espacio del footer */
+}
+
+/* En home.css */
+.container {
+  margin-bottom: 20px; /* Agrega espacio inferior a las secciones */
+}
+
+
+header {
+  margin-bottom: 20px;
+}
