@@ -1,0 +1,49 @@
+<!-- lista_facturas.html -->
+{% extends 'base.html' %}
+
+{% block title %}Lista de Facturas{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Lista de Facturas</h2>
+
+        <!-- Mostrar la lista de facturas aquí -->
+
+        <a href="{% url crear %}" class="btn btn-primary mb-3">
+            <i class="fas fa-plus"></i> Crear Factura
+        </a>
+
+        <table class="table">
+            <!-- Cabecera de la tabla -->
+            <thead>
+                <tr>
+                    <th>Número de Factura</th>
+                    <th>Tipo de Pago</th>
+                    <!-- Otros campos según tu modelo -->
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterar sobre las facturas y mostrar cada fila de la tabla -->
+                {% for factura in object_list %}
+                    <tr>
+                        <td>{{ factura.numero_factura }}</td>
+                        <td>{{ factura.tipo_de_pago }}</td>
+                        <!-- Otros campos según tu modelo -->
+                        <td>
+                            <a href="{% url 'detalle_factura' pk=factura.pk %}" class="btn btn-info btn-sm">
+                                <i class="fas fa-info-circle"></i> Detalle
+                            </a>
+                            <a href="{% url actualizar pk=factura.pk %}" class="btn btn-warning btn-sm">
+                                <i class="fas fa-pen-to-square"></i> Actualizar
+                            </a>
+                            <a href="{% url eliminar pk=factura.pk %}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

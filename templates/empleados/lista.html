@@ -1,0 +1,68 @@
+<!-- lista_empleados.html -->
+{% extends 'base.html' %}
+
+{% block title %}Lista de Empleados{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Lista de Empleados</h2>
+
+        {% if puede_crear %}
+            <form action="{% url crear %}">
+                <button type="submit" class="btn btn-primary mb-3">
+                    <i class="fas fa-plus"></i> Crear Empleado
+                </button>
+            </form>
+        {% endif %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo Electrónico</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Dirección</th>
+                    <th>Documento Identificador</th>
+                    <th>Fecha de Contratación</th>
+                    <th>AFP</th>
+                    {% if puede_actualizar or puede_borrar %}
+                        <th>Acciones</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for empleado in object_list %}
+                    <tr>
+                        <td>{{ empleado.primer_nombre }}</td>
+                        <td>{{ empleado.primer_apellido }}</td>
+                        <td>{{ empleado.correo_electronico }}</td>
+                        <td>{{ empleado.fecha_nacimiento }}</td>
+                        <td>{{ empleado.direccion }}</td>
+                        <td>{{ empleado.documento_identificador }}</td>
+                        <td>{{ empleado.fecha_contratacion }}</td>
+                        <td>{{ empleado.afp }}</td>
+                        {% if puede_actualizar or puede_borrar %}
+                            <td>
+                                {% if puede_actualizar %}
+                                    <form action="{% url actualizar pk=empleado.id %}">
+                                        <button type="submit" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-pen-to-square"></i> Actualizar
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                {% if puede_borrar %}
+                                    <form action="{% url borrar pk=empleado.id %}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Borrar
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
