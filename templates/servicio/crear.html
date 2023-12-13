@@ -25,21 +25,6 @@
         <label for="id_tiempo" class="form-label">Tiempo:</label>
         <input type="text" name="tiempo" id="id_tiempo" class="form-control" required>
     </div>
-    <div class="mb-3">
-        <!--
-        -->
-        <label for="id_empleados" class="form-label">Empleado a Cargo:</label>
-        <select name="empleados" id="id_empleados" class="form-select" required>
-            <!--
-                {% for empleado in empleados %}
-                Nombre: {{ empleado.nombre }}
-                {% endfor %}
-            -->
-            {% for empleado in empleados %}
-            <option value="{{ empleado.id }}">{{ empleado.primer_nombre }}</option>
-            {% endfor %}
-        </select>
-    </div>
 
     <button type="submit" class="btn btn-primary">
         <i class="fas fa-plus"></i> Crear Servicio

@@ -555,6 +555,13 @@ class BoletaDeleteView(DeleteView):
     model = models.Boleta
     template_name = "tables/delete.html"
     success_url = '/boletas/'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'boletas'
+        context["detalle"] = 'boleta_detalle'
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.view_boleta')
+        context["lista"] = "boletas"
+        return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -590,6 +597,8 @@ class BoletaDetailView(DetailView):
         context["borrar"] = "boleta_borrar"
         context["actualizar"] = "boleta_actualizar"
         context["lista"] = "boletas"
+        context["productos"] = models.Boleta_productos.objects.filter(boleta=context['object'])
+        context["servicios"] = models.Boleta_servicios.objects.filter(boleta=context['object'])
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -807,6 +816,7 @@ def FacturaUpdate(request:HttpRequest, pk:int):
             factura = form_main.save(False)
             factura.empleado = request.user.persona.empleado
             factura.save()
+            factura_detalles = models.Factura_detalle.objects.filter(factura=factura)
             for form in formset:
                 if(not 'producto' in form.cleaned_data):
                     continue

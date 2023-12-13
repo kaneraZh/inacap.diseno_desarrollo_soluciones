@@ -27,8 +27,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/profile/', TemplateView.as_view(template_name='cliente/home.html'), name='home2'),
     path('', TemplateView.as_view(template_name='cliente/home.html'), name='home'),
+    path('accounts/profile/', TemplateView.as_view(template_name='cliente/home.html'), name='home2'),
     path('signin/', punto_venta.ClienteSignin, name='signin'),
     path('cita/agendar/', punto_venta.ClienteCitaAgendar, name='cliente_cita_agendar'),
     path('cita/calendario/', punto_venta.CitaListViewCliente.as_view(), name='cita_calendario'),
