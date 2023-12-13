@@ -1,0 +1,23 @@
+<!-- eliminar_empleado.html -->
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Empleado{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Confirmar Eliminación</h2>
+
+        <p>¿Estás seguro de que deseas eliminar al empleado "{{ empleado.primer_nombre }} {{ empleado.primer_apellido }}"?</p>
+
+        <form method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Sí, Eliminar
+            </button>
+        </form>
+
+        <a href="{% url 'empleados' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Cancelar
+        </a>
+    </div>
+{% endblock content %}
