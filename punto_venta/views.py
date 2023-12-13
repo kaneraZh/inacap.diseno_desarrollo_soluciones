@@ -775,7 +775,7 @@ def FacturaCreate(request:HttpRequest):
             factura.empleado = request.user.persona.empleado
             factura.save()
             for form in formset:
-                if(not bool(form.cleaned_data)):
+                if(not 'producto' in form.cleaned_data):
                     continue
                 detalle = form.instance
                 detalle.factura = factura
@@ -791,7 +791,7 @@ def FacturaUpdate(request:HttpRequest, pk:int):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.change_factura')): return redirect(URL_HOME)
-    template_name = 'factura/actualizar'
+    template_name = 'factura/actualizar.html'
     if(request.method == 'GET'):
         factura = models.Factura.objects.get(id=pk)
         form_main = forms.FacturaForm(instance=factura)
@@ -808,6 +808,8 @@ def FacturaUpdate(request:HttpRequest, pk:int):
             factura.empleado = request.user.persona.empleado
             factura.save()
             for form in formset:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.factura = factura
                 detalle.save()
