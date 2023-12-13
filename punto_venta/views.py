@@ -431,10 +431,8 @@ class ProductoUpdateView(UpdateView):
 class ProductoDeleteView(DeleteView):
     model = models.Producto
     template_name = "productos/eliminar.html"
-
     def get_success_url(self):
         return reverse('productos')  
-
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
         if not user.is_authenticated:
@@ -611,10 +609,10 @@ def EmpleadoCreate(request:HttpRequest):
         if(form.is_valid()):
             form.save()
             return redirect('empleados')
-    return render(request, "empleados/crear.html", {'form':form})
+    return render(request, "tables/create.html", {'form':form})
 class EmpleadoUpdateView(UpdateView):
     model = models.Empleado
-    template_name = "empleados/actualizar.html"
+    template_name = "tables/update.html"
     fields = [
         'correo_electronico',
         'primer_nombre',
@@ -636,7 +634,7 @@ class EmpleadoUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class EmpleadoDeleteView(DeleteView):
     model = models.Empleado
-    template_name = "empleados/eliminar.html"
+    template_name = "tables/delete.html"
     success_url = '/empleados/'
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -645,7 +643,7 @@ class EmpleadoDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class EmpleadoListView(ListView):
     model = models.Empleado
-    template_name = "empleados/lista.html"
+    template_name = "tables/view_multy.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'empleados'
@@ -664,7 +662,7 @@ class EmpleadoListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class EmpleadoDetailView(DetailView):
     model = models.Empleado
-    template_name = "empleados/detalle.html"
+    template_name = "tables/view_single.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'empleado'
@@ -685,6 +683,10 @@ class ProveedorCreateView(CreateView):
     model = models.Proveedor
     template_name = "proveedores/crear.html"
     fields = '__all__'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'crear proveedor'
+        return context
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -704,14 +706,15 @@ class ProveedorUpdateView(UpdateView):
         if(not user.has_perm('punto_venta.change_proveedor')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 from django.urls import reverse
-
 class ProveedorDeleteView(DeleteView):
     model = models.Proveedor
     template_name = "proveedores/eliminar.html"
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'borrar proveedor'
+        return context
     def get_success_url(self):
         return reverse('proveedores')  # Redirige a la lista de proveedores
-
     def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
         if not user.is_authenticated:
@@ -719,7 +722,6 @@ class ProveedorDeleteView(DeleteView):
         if not user.has_perm('punto_venta.delete_proveedor'):
             return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
-
 class ProveedorListView(ListView):
     model = models.Proveedor
     template_name = "proveedores/lista.html"
@@ -781,6 +783,7 @@ def FacturaCreate(request:HttpRequest):
                 detalle.save()
             return redirect('facturas')
     context = {
+        'title' : 'Crear Factura',
         'form_main' : form_main,
         'formset' : formset,
     }
@@ -811,13 +814,18 @@ def FacturaUpdate(request:HttpRequest, pk:int):
                 detalle.save()
             return redirect('facturas')
     context = {
+        'title' : 'Actualizar Factura',
         'form_main' : form_main,
         'formset' : formset,
     }
     return render(request, template_name, context)
 class FacturaDeleteView(DeleteView):
     model = models.Factura
-    template_name = "factura/eliminar.html"
+    template_name = "tables/delete.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Borrar Factura'
+        return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -825,10 +833,10 @@ class FacturaDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class FacturaListView(ListView):
     model = models.Factura
-    template_name = "factura/lista.html"
+    template_name = "tables/view_multy.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = 'facturas'
+        context["title"] = 'Facturas'
         context["detalle"] = 'factura_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_factura')
@@ -844,10 +852,10 @@ class FacturaListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class FacturaDetailView(DetailView):
     model = models.Factura
-    template_name = "factura/detalle.html"
+    template_name = "tables/view_single.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = 'factura'
+        context["title"] = 'Factura'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_factura')
         context["borrar"] = "factura_borrar"
