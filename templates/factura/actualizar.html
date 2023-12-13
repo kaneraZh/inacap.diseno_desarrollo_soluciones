@@ -1,38 +1,116 @@
-<!-- actualizar_factura.html -->
 {% extends 'base.html' %}
-
-{% block title %}Actualizar Factura{% endblock title %}
-
+{% block title %}{{title}}{% endblock title %}
 {% block content %}
-    <div class="container mt-4">
-        <h2 class="mb-4">Actualizar Factura</h2>
-
-        <form method="post">
-            {% csrf_token %}
-
-            <div class="mb-3">
-                <label for="id_numero_factura" class="form-label">Número de Factura:</label>
-                <input type="number" name="numero_factura" id="id_numero_factura" class="form-control" value="{{ factura.numero_factura }}" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="id_tipo_de_pago" class="form-label">Tipo de Pago:</label>
-                <select name="tipo_de_pago" id="id_tipo_de_pago" class="form-select" required>
-                    {% for choice in factura.TIPO_DE_PAGO_CHOICES %}
-                        <option value="{{ choice.0 }}" {% if choice.0 == factura.tipo_de_pago %}selected{% endif %}>{{ choice.1 }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <!-- Otros campos del formulario según tu modelo -->
-
-            <button type="submit" class="btn btn-warning">
-                <i class="fas fa-pen-to-square"></i> Actualizar Factura
-            </button>
-
-            <a href="{% url 'lista_facturas' %}" class="btn btn-secondary">
-                <i class="fas fa-arrow-left"></i> Cancelar
-            </a>
-        </form>
+<form class="form-horizontal" method="POST" action="">
+{% csrf_token %}
+<div class="row spacer">
+    <div class="col-3">
+        <label>{{form_main.proveedor}}</label>
     </div>
+    <div class="col-3">
+        <label>{{form_main.tipo_de_pago}}</label>
+    </div>
+</div>
+{{ formset.management_form }}
+{% for form in formset %}
+<div class="row form-{{formset.prefix}} spacer">
+    <div class="col-3">
+        <label>Producto:{{form.producto}}</label>
+    </div>
+    <div class="col-3">
+        <label>Cantidad:{{form.cantidad}}</label>
+    </div>
+    <div class="col-3">
+        <label>Monto Total:{{form.monto_total}} </label>
+    </div>
+    <div class="col-3">
+        <button class="btn btn-success formset-row-add">+</button>
+    </div>
+</div>
+{% endfor %}
+<div class="row spacer">
+    <div class="col-4 offset-2">
+        <button type="submit" class="btn btn-block btn-primary">Actualizar</button>
+    </div>
+</div>
+</form>
 {% endblock content %}
+
+{% block custom_js %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script type="text/javascript">
+function updateElementIndex(element, form_prefix, id) {
+    var id_regex = new RegExp('(' + form_prefix + '-\\d+)');
+    var replacement = form_prefix + '-' + id;
+    if ($(element).attr("for")) $(element).attr("for", $(element).attr("for").replace(id_regex, replacement));
+    if (element.id) element.id = element.id.replace(id_regex, replacement);
+    if (element.name) element.name = element.name.replace(id_regex, replacement);
+}
+function formsetAdd(selector, form_prefix) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + form_prefix + '-TOTAL_FORMS').val();
+    newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
+        var name = $(this).attr('name')
+        if(name) {
+            name = name.replace('-' + (total-1) + '-', '-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        }
+    });
+    newElement.find('label').each(function() {
+        var forValue = $(this).attr('for');
+        if (forValue) {
+          forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+          $(this).attr({'for': forValue});
+        }
+    });
+    total++;
+    $('#id_' + form_prefix + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    var conditionRow = $('.form-'+form_prefix+':not(:last)');
+    conditionRow.find('.btn.formset-row-add')
+        .removeClass('btn-success').addClass('btn-danger')
+        .removeClass('formset-row-add').addClass('formset-row-del')
+        .html('-');
+    return false;
+}
+function formsetDel(btn, form_prefix) {
+    var total = parseInt($('#id_' + form_prefix + '-TOTAL_FORMS').val());
+    if (total > 1){
+        btn.closest('.form-'+form_prefix+'').remove();
+        var forms = $('.form-'+form_prefix+'');
+        $('#id_' + form_prefix + '-TOTAL_FORMS').val(forms.length);
+        for (var i=0, formCount=forms.length; i<formCount; i++) {
+            $(forms.get(i)).find(':input').each(function() {
+                updateElementIndex(this, form_prefix, i);
+            });
+        }
+    }
+    return false;
+}
+function formsetClass(element) {
+    var class_list = element.currentTarget.parentElement.parentElement.classList;
+    const prefix = /^form-/g;
+    for (var i=0; i<class_list.length; i++) {
+        var cls = class_list[i];
+        if(cls.match(prefix)){
+            return cls.replace(prefix, "");
+        }
+    }
+    return "form";
+}
+$(document).on('click', '.formset-row-add', function(element){
+    var form_class = formsetClass(element);
+    element.preventDefault();
+    formsetAdd('.form-'+form_class+':last', form_class);
+    return false;
+});
+$(document).on('click', '.formset-row-del', function(element){
+    var form_class = formsetClass(element);
+    element.preventDefault();
+    formsetDel($(this), form_class);
+    return false;
+});
+
+</script>
+{% endblock custom_js %}
