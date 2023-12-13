@@ -4,7 +4,6 @@ from punto_venta import forms, models
 from .models import Cita, Empleado, Producto
 from datetime import date
 from .models import Producto, Servicio
-from .forms import ProductoForm
 
 #from django.views.generic.detail import DetailView
 
@@ -314,7 +313,12 @@ class CitaDetailView(DetailView):
 class ServicioCreateView(CreateView):
     model = models.Servicio
     template_name = "servicio/crear.html"
-    fields = '__all__'
+    fields = [
+        'nombre',
+        'descripcion',
+        'precio',
+        'tiempo',
+    ]
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'crear servicio'
@@ -328,7 +332,12 @@ class ServicioCreateView(CreateView):
 class ServicioUpdateView(UpdateView):
     model = models.Servicio
     template_name = "servicio/actualizar.html"
-    fields = '__all__'
+    fields = [
+        'nombre',
+        'descripcion',
+        'precio',
+        'tiempo',
+    ]
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'actualizar servicio'
@@ -341,6 +350,8 @@ class ServicioUpdateView(UpdateView):
 class ServicioDeleteView(DeleteView):
     model = models.Servicio
     template_name = "servicio/eliminar.html"
+    def get_success_url(self):
+        return reverse('servicios')
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -393,6 +404,11 @@ class ProductoCreateView(CreateView):
     model = Producto
     template_name = "productos/crear.html"
     fields = '__all__'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'crear producto'
+        context["proveedores"] = models.Proveedor.objects.all()
+        return context
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -405,6 +421,7 @@ class ProductoUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'actualizar producto'
+        context["proveedores"] = models.Proveedor.objects.all()
         return context
     def dispatch(self, request, *args, **kwargs):
         user = request.user
@@ -414,10 +431,16 @@ class ProductoUpdateView(UpdateView):
 class ProductoDeleteView(DeleteView):
     model = models.Producto
     template_name = "productos/eliminar.html"
-    def dispatch(self, request:HttpRequest, *args, **kwargs):
+
+    def get_success_url(self):
+        return reverse('productos')  
+
+    def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.delete_servicio')): return redirect(URL_HOME)
+        if not user.is_authenticated:
+            return redirect(f'{URL_LOGIN}?next={request.path}')
+        if not user.has_perm('punto_venta.delete_servicio'):
+            return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ProductoListView(ListView):
     model = models.Producto
@@ -680,14 +703,23 @@ class ProveedorUpdateView(UpdateView):
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if(not user.has_perm('punto_venta.change_proveedor')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+from django.urls import reverse
+
 class ProveedorDeleteView(DeleteView):
     model = models.Proveedor
     template_name = "proveedores/eliminar.html"
-    def dispatch(self, request:HttpRequest, *args, **kwargs):
+
+    def get_success_url(self):
+        return reverse('proveedores')  # Redirige a la lista de proveedores
+
+    def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.delete_proveedor')): return redirect(URL_HOME)
+        if not user.is_authenticated:
+            return redirect(f'{URL_LOGIN}?next={request.path}')
+        if not user.has_perm('punto_venta.delete_proveedor'):
+            return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+
 class ProveedorListView(ListView):
     model = models.Proveedor
     template_name = "proveedores/lista.html"
