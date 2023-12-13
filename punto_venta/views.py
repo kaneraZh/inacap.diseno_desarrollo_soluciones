@@ -4,7 +4,6 @@ from punto_venta import forms, models
 from .models import Cita, Empleado, Producto
 from datetime import date
 from .models import Producto, Servicio
-from .forms import ProductoForm
 
 #from django.views.generic.detail import DetailView
 
@@ -314,7 +313,12 @@ class CitaDetailView(DetailView):
 class ServicioCreateView(CreateView):
     model = models.Servicio
     template_name = "servicio/crear.html"
-    fields = '__all__'
+    fields = [
+        'nombre',
+        'descripcion',
+        'precio',
+        'tiempo',
+    ]
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'crear servicio'
@@ -328,7 +332,12 @@ class ServicioCreateView(CreateView):
 class ServicioUpdateView(UpdateView):
     model = models.Servicio
     template_name = "servicio/actualizar.html"
-    fields = '__all__'
+    fields = [
+        'nombre',
+        'descripcion',
+        'precio',
+        'tiempo',
+    ]
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'actualizar servicio'
@@ -393,6 +402,11 @@ class ProductoCreateView(CreateView):
     model = Producto
     template_name = "productos/crear.html"
     fields = '__all__'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'crear producto'
+        context["proveedores"] = models.Proveedor.objects.all()
+        return context
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -405,6 +419,7 @@ class ProductoUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'actualizar producto'
+        context["proveedores"] = models.Proveedor.objects.all()
         return context
     def dispatch(self, request, *args, **kwargs):
         user = request.user

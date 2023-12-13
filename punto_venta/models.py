@@ -47,7 +47,7 @@ class Cliente(Persona):
         verbose_name = 'Cliente'
     def get_absolute_url(self):
         return reverse("cliente_detalle", kwargs={"pk": self.id})
-    
+
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=40)
     direccion = models.CharField(max_length=40)
@@ -82,7 +82,6 @@ class Servicio(models.Model):
     def get_absolute_url(self):
         return reverse("servicio_detalle", kwargs={"pk": self.id})
 
-    
 class Cita(models.Model):
     fecha = models.DateField()
     hora = models.TimeField(auto_now=False, auto_now_add=False)
