@@ -499,10 +499,14 @@ def BoletaCreate(request:HttpRequest):
             boleta.empleado = request.user.persona.empleado
             boleta.save()
             for form in formset_producto:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
             for form in formset_servicio:
+                if(not 'servicio' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
@@ -537,10 +541,14 @@ def BoletaActualizar(request, pk:int):
             boleta.empleado = request.user.persona.empleado
             boleta.save()
             for form in formset_producto:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
             for form in formset_servicio:
+                if(not 'servicio' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
