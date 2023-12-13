@@ -105,16 +105,16 @@
         return false;
     }
     function formsetClass(element){
-        var class_list = element.currentTarget.parentElement.parentElement.classList
+        var class_list = element.currentTarget.parentElement.parentElement.classList;
         for (var i=0; i<class_list.length; i++) {
-            const prefix = /^form-/g
-            var cls = class_list[i]
+            const prefix = /^form-/g;
+            var cls = class_list[i];
     
             if(cls.match(prefix)){
                 return cls.replace(prefix, "");
             }
         }
-        return "form"
+        return "form";
     }
     $(document).on('click', '.formset-row-add', function(element){
         var form_class = formsetClass(element);
