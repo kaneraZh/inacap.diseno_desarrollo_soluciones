@@ -7,10 +7,26 @@
     <div class="container mt-4">
         <h2 class="mb-4">Detalle de Factura</h2>
 
-        <!-- Mostrar información detallada de la factura aquí -->
+        <p>Número de Factura: {{ object.numero_factura }}</p>
+        <p>Proveedor: {{ object.proveedor }}</p>
+        <p>Tipo de Pago: {{ object.tipo_de_pago }}</p>
+        <!-- Agrega más campos según la estructura de tu modelo Factura -->
 
-        <a href="{% url lista %}" class="btn btn-secondary">
+        <!-- Puedes mostrar los detalles de los productos asociados a la factura si es necesario -->
+        <h3>Detalles de Productos:</h3>
+        <ul>
+            {% for detalle in facturas %}
+                <li>
+                    Producto: {{ detalle.producto }},
+                    Cantidad: {{ detalle.cantidad }},
+                    Monto Total: {{ detalle.monto_total }}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'facturas' %}" class="btn btn-secondary">
             <i class="fas fa-arrow-left"></i> Volver a la Lista
         </a>
     </div>
 {% endblock content %}
+
