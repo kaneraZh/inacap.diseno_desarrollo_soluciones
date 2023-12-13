@@ -48,7 +48,6 @@ class ProductoForm(forms.ModelForm):
         model = Producto
         fields = ['nombre', 'descripcion', 'categoria', 'precio_compra', 'precio_venta', 'stock', 'proveedor', 'imagen']
 
-
 from django.contrib.auth.models import Group, Permission
 class EmpleadoCrearForm(forms.ModelForm):
     es_jefe = forms.BooleanField(label='Es Jefe?', required=False)
@@ -121,6 +120,14 @@ class FacturaForm(forms.ModelForm):
         model = Factura
         fields = ("proveedor","tipo_de_pago")
 class FacturaDetalleForm(forms.ModelForm):
+    producto = forms.models.ModelChoiceIterator(field=forms.ModelChoiceField(
+        queryset=Producto.objects.all(),
+        empty_label='---------',
+        required=False,
+        label="Producto",
+    ))
+    cantidad = forms.IntegerField(min_value=0, required=False)
+    monto_total = forms.IntegerField(min_value=0, required=False)
     class Meta:
         model = Factura_detalle
         fields = ('producto', 'cantidad', 'monto_total')

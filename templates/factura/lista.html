@@ -31,13 +31,13 @@
                         <td>{{ factura.tipo_de_pago }}</td>
                         <!-- Otros campos según tu modelo -->
                         <td>
-                            <a href="{% url 'detalle_factura' pk=factura.pk %}" class="btn btn-info btn-sm">
+                            <a href="{% url detalle pk=factura.pk %}" class="btn btn-info btn-sm">
                                 <i class="fas fa-info-circle"></i> Detalle
                             </a>
                             <a href="{% url actualizar pk=factura.pk %}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-pen-to-square"></i> Actualizar
                             </a>
-                            <a href="{% url eliminar pk=factura.pk %}" class="btn btn-danger btn-sm">
+                            <a href="{% url borrar pk=factura.pk %}" class="btn btn-danger btn-sm">
                                 <i class="fas fa-trash"></i> Eliminar
                             </a>
                         </td>
