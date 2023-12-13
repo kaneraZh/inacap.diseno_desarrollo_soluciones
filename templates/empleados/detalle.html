@@ -1,0 +1,40 @@
+<!-- detalle_empleado.html -->
+{% extends 'base.html' %}
+
+{% block title %}Detalles del Empleado{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Detalles del Empleado</h2>
+
+        <dl class="row">
+            <dt class="col-sm-3">Nombre:</dt>
+            <dd class="col-sm-9">{{ empleado.primer_nombre }}</dd>
+
+            <dt class="col-sm-3">Apellido:</dt>
+            <dd class="col-sm-9">{{ empleado.primer_apellido }}</dd>
+
+            <dt class="col-sm-3">Correo Electrónico:</dt>
+            <dd class="col-sm-9">{{ empleado.correo_electronico }}</dd>
+
+            <dt class="col-sm-3">Fecha de Nacimiento:</dt>
+            <dd class="col-sm-9">{{ empleado.fecha_nacimiento }}</dd>
+
+            <dt class="col-sm-3">Dirección:</dt>
+            <dd class="col-sm-9">{{ empleado.direccion }}</dd>
+
+            <dt class="col-sm-3">Documento Identificador:</dt>
+            <dd class="col-sm-9">{{ empleado.documento_identificador }}</dd>
+
+            <dt class="col-sm-3">Fecha de Contratación:</dt>
+            <dd class="col-sm-9">{{ empleado.fecha_contratacion }}</dd>
+
+            <dt class="col-sm-3">AFP:</dt>
+            <dd class="col-sm-9">{{ empleado.afp }}</dd>
+        </dl>
+
+        <a href="{% url 'empleados' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver a la Lista
+        </a>
+    </div>
+{% endblock content %}

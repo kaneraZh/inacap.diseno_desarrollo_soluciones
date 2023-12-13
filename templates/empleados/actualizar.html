@@ -1,0 +1,56 @@
+<!-- actualizar_empleado.html -->
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Empleado{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Actualizar Empleado</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="id_primer_nombre" class="form-label">Primer Nombre:</label>
+                <input type="text" name="primer_nombre" id="id_primer_nombre" class="form-control" value="{{ empleado.primer_nombre }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_primer_apellido" class="form-label">Primer Apellido:</label>
+                <input type="text" name="primer_apellido" id="id_primer_apellido" class="form-control" value="{{ empleado.primer_apellido }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_correo_electronico" class="form-label">Correo Electrónico:</label>
+                <input type="email" name="correo_electronico" id="id_correo_electronico" class="form-control" value="{{ empleado.correo_electronico }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_contrasena" class="form-label">Contraseña:</label>
+                <input type="password" name="contrasena" id="id_contrasena" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="id_fecha_nacimiento" class="form-label">Fecha de Nacimiento:</label>
+                <input type="date" name="fecha_nacimiento" id="id_fecha_nacimiento" class="form-control" value="{{ empleado.fecha_nacimiento }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_direccion" class="form-label">Dirección:</label>
+                <input type="text" name="direccion" id="id_direccion" class="form-control" value="{{ empleado.direccion }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_documento_identificador" class="form-label">Documento Identificador:</label>
+                <input type="text" name="documento_identificador" id="id_documento_identificador" class="form-control" value="{{ empleado.documento_identificador }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_fecha_contratacion" class="form-label">Fecha de Contratación:</label>
+                <input type="date" name="fecha_contratacion" id="id_fecha_contratacion" class="form-control" value="{{ empleado.fecha_contratacion }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_afp" class="form-label">AFP:</label>
+                <input type="text" name="afp" id="id_afp" class="form-control" value="{{ empleado.afp }}" required>
+            </div>
+            <button type="submit" class="btn btn-warning">
+                <i class="fas fa-pen-to-square"></i> Actualizar Empleado
+            </button>
+            <a href="{% url 'empleados' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Cancelar
+            </a>
+        </form>
+    </div>
+{% endblock content %}

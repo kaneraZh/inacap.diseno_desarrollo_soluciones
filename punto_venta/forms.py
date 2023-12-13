@@ -48,7 +48,6 @@ class ProductoForm(forms.ModelForm):
         model = Producto
         fields = ['nombre', 'descripcion', 'categoria', 'precio_compra', 'precio_venta', 'stock', 'proveedor', 'imagen']
 
-
 from django.contrib.auth.models import Group, Permission
 class EmpleadoCrearForm(forms.ModelForm):
     es_jefe = forms.BooleanField(label='Es Jefe?', required=False)
@@ -98,13 +97,15 @@ class BoletaForm(forms.ModelForm):
         model = Boleta
         fields = ("tipo_de_pago","cliente")
 class BoletaProductoForm(forms.ModelForm):
+    id = forms.HiddenInput()
     class Meta:
         model = Boleta_producto
-        fields = ("producto","cantidad")
+        fields = ("id", "producto","cantidad")
 class BoletaServicioForm(forms.ModelForm):
+    id = forms.HiddenInput()
     class Meta:
         model = Boleta_servicio
-        fields = ("servicio","cantidad")
+        fields = ("id", "servicio","cantidad")
 BoletaProductoFormset = forms.modelformset_factory(
     form=BoletaProductoForm,
     model=Boleta_producto,
@@ -113,7 +114,7 @@ BoletaProductoFormset = forms.modelformset_factory(
 BoletaServicioFormset = forms.modelformset_factory(
     form=BoletaServicioForm,
     model=Boleta_servicio,
-    extra=5,
+    extra=1,
 )
 
 class FacturaForm(forms.ModelForm):
@@ -121,9 +122,10 @@ class FacturaForm(forms.ModelForm):
         model = Factura
         fields = ("proveedor","tipo_de_pago")
 class FacturaDetalleForm(forms.ModelForm):
+    id = forms.HiddenInput()
     class Meta:
         model = Factura_detalle
-        fields = ('producto', 'cantidad', 'monto_total')
+        fields = ('id', 'producto', 'cantidad', 'monto_total')
 FacturaDetalleFormset = forms.modelformset_factory(
     form=FacturaDetalleForm,
     model=Factura_detalle,

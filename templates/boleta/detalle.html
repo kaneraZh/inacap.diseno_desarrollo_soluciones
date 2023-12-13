@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Detalle de Boleta{% endblock title %}
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Detalle de Boleta</h2>
+        <p>Número de Boleta: {{ object.numero_boleta }}</p>
+        <p>Tipo de Pago: {{ object.tipo_de_pago }}</p>
+        <p>Cliente: {{ object.cliente }}</p>
+        <h3>Detalles de Productos:</h3>
+        <ul>
+            {% for detalle_producto in productos %}
+                <li>{{ detalle_producto.producto }} - Cantidad: {{ detalle_producto.cantidad }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Detalles de Servicios:</h3>
+        <ul>
+            {% for detalle_servicio in servicios %}
+                <li>{{ detalle_servicio.servicio }} - Cantidad: {{ detalle_servicio.cantidad }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'boletas' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver a la Lista
+        </a>
+    </div>
+{% endblock content %}

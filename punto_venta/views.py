@@ -4,7 +4,6 @@ from punto_venta import forms, models
 from .models import Cita, Empleado, Producto
 from datetime import date
 from .models import Producto, Servicio
-from .forms import ProductoForm
 
 #from django.views.generic.detail import DetailView
 
@@ -128,7 +127,7 @@ class ProductoDetailView(DetailView):
     template_name = "cliente/producto.html"
 class CitaDetailViewCliente(DetailView):
     model = models.Cita
-    template_name = "tables/view_single.html"
+    template_name = "citas/detalle.html"
     # filtra los datos devueltos 
     # en este caso, para que solo quien hizo la cita
     # pueda verla (y no cualquier otro cliente)
@@ -162,11 +161,11 @@ def ClienteCreate(request:HttpRequest):
         form = forms.ClienteCrearForm(request.POST)
         if(form.is_valid()):
             form.save()
-            return redirect('home')
-    return render(request, "tables/create.html", {'form':form})
+            return redirect('clientes')
+    return render(request, "cliente/crear.html", {'form':form})
 class ClienteUpdateView(UpdateView):
     model = models.Cliente
-    template_name = "tables/update.html"
+    template_name = "cliente/actualizar.html"
     fields = [
         'primer_nombre',
         'primer_apellido',
@@ -185,7 +184,7 @@ class ClienteUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class ClienteDeleteView(DeleteView):
     model = models.Cliente
-    template_name = "tables/delete.html"
+    template_name = "cliente/eliminar.html"
     success_url = "/clientes/"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -194,7 +193,7 @@ class ClienteDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class ClienteListView(ListView):
     model = models.Cliente
-    template_name = "admin/clientes.html"
+    template_name = "cliente/lista.html"
     paginate_by = 10
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -216,7 +215,7 @@ class ClienteListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class ClienteDetailView(DetailView):
     model = models.Cliente
-    template_name = "admin/cliente_detalle.html"
+    template_name = "cliente/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'detalle cliente'
@@ -235,7 +234,7 @@ class ClienteDetailView(DetailView):
 # cita
 class CitaCreateView(CreateView):
     model = models.Cita
-    template_name = "tables/create.html"
+    template_name = "citas/crear.html"
     fields = "__all__"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -255,7 +254,7 @@ class CitaCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 class CitaUpdateView(UpdateView):
     model = models.Cita
-    template_name = ".html"
+    template_name = "citas/actualizar.html"
     fields = '__all__'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -268,7 +267,7 @@ class CitaUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class CitaDeleteView(DeleteView):
     model = models.Cita
-    template_name = "tables/delete.html"
+    template_name = "citas/eliminar.html"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -276,7 +275,7 @@ class CitaDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class CitaListView(ListView):
     model = models.Cita
-    template_name = "tables/view_multy.html"
+    template_name = "citas/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'citas'
@@ -287,6 +286,7 @@ class CitaListView(ListView):
         context["borrar"] = "cita_borrar"
         context["actualizar"] = "cita_actualizar"
         context["crear"] = "cita_crear"
+        return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -294,7 +294,7 @@ class CitaListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class CitaDetailView(DetailView):
     model = models.Cita
-    template_name = "tables/view_single.html"
+    template_name = "citas/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'detalle cita'
@@ -314,7 +314,12 @@ class CitaDetailView(DetailView):
 class ServicioCreateView(CreateView):
     model = models.Servicio
     template_name = "servicio/crear.html"
-    fields = '__all__'
+    fields = [
+        'nombre',
+        'descripcion',
+        'precio',
+        'tiempo',
+    ]
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'crear servicio'
@@ -328,7 +333,12 @@ class ServicioCreateView(CreateView):
 class ServicioUpdateView(UpdateView):
     model = models.Servicio
     template_name = "servicio/actualizar.html"
-    fields = '__all__'
+    fields = [
+        'nombre',
+        'descripcion',
+        'precio',
+        'tiempo',
+    ]
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'actualizar servicio'
@@ -341,6 +351,8 @@ class ServicioUpdateView(UpdateView):
 class ServicioDeleteView(DeleteView):
     model = models.Servicio
     template_name = "servicio/eliminar.html"
+    def get_success_url(self):
+        return reverse('servicios')
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -361,14 +373,11 @@ class ServicioListView(ListView):
         context["crear"] = "servicio_crear"
     # Obtener la lista de empleados y agregarla al contexto
         context["empleados"] = models.Empleado.objects.all()
-
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated):
-            return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.view_servicio')):
-            return redirect(URL_HOME)
+        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
+        if(not user.has_perm('punto_venta.view_servicio')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ServicioDetailView(DetailView):
     model = models.Servicio
@@ -391,8 +400,13 @@ class ServicioDetailView(DetailView):
 # producto
 class ProductoCreateView(CreateView):
     model = Producto
-    template_name = "tables/create.html"
+    template_name = "productos/crear.html"
     fields = '__all__'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'crear producto'
+        context["proveedores"] = models.Proveedor.objects.all()
+        return context
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -400,11 +414,12 @@ class ProductoCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 class ProductoUpdateView(UpdateView):
     model = models.Producto
-    template_name = "tables/update.html"
+    template_name = "productos/actualizar.html"
     fields = '__all__'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'actualizar producto'
+        context["proveedores"] = models.Proveedor.objects.all()
         return context
     def dispatch(self, request, *args, **kwargs):
         user = request.user
@@ -413,15 +428,19 @@ class ProductoUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class ProductoDeleteView(DeleteView):
     model = models.Producto
-    template_name = "tables/delete.html"
-    def dispatch(self, request:HttpRequest, *args, **kwargs):
+    template_name = "productos/eliminar.html"
+    def get_success_url(self):
+        return reverse('productos')  
+    def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.delete_servicio')): return redirect(URL_HOME)
+        if not user.is_authenticated:
+            return redirect(f'{URL_LOGIN}?next={request.path}')
+        if not user.has_perm('punto_venta.delete_servicio'):
+            return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ProductoListView(ListView):
     model = models.Producto
-    template_name = "tables/view_multy.html"
+    template_name = "productos/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'productos'
@@ -461,16 +480,15 @@ def BoletaCreate(request:HttpRequest):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.add_boleta')): return redirect(URL_HOME)
-    template_name = 'boleta/form.html'
+    template_name = 'boleta/crear.html'
     if(request.method == 'GET'):
         form_main = forms.BoletaForm(request.GET or None)
-        formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.none())
-        from django.db.models import QuerySet
-        formset_servicio = forms.BoletaServicioFormset(queryset=models.Boleta_servicio.objects.none())
+        formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.none(), prefix='producto')
+        formset_servicio = forms.BoletaServicioFormset(queryset=models.Boleta_servicio.objects.none(), prefix='servicio')
     elif(request.method == 'POST'):
         form_main = forms.BoletaForm(request.POST)
-        formset_producto = forms.BoletaProductoFormset(request.POST)
-        formset_servicio = forms.BoletaServicioFormset(request.POST)
+        formset_producto = forms.BoletaProductoFormset(request.POST, prefix='producto')
+        formset_servicio = forms.BoletaServicioFormset(request.POST, prefix='servicio')
         if(
             form_main.is_valid() and 
             formset_producto.is_valid() and
@@ -481,10 +499,14 @@ def BoletaCreate(request:HttpRequest):
             boleta.empleado = request.user.persona.empleado
             boleta.save()
             for form in formset_producto:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
             for form in formset_servicio:
+                if(not 'servicio' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
@@ -499,16 +521,16 @@ def BoletaActualizar(request, pk:int):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.change_boleta')): return redirect(URL_HOME)
-    template_name = 'boleta/form.html'
+    template_name = 'boleta/actualizar.html'
     if(request.method == 'GET'):
         boleta = models.Boleta.objects.get(id=pk)
         form_main = forms.BoletaForm(instance=boleta)
-        formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.filter(boleta=boleta))
-        formset_servicio = forms.BoletaServicioFormset(queryset=models.Boleta_servicio.objects.filter(boleta=boleta))
+        formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.filter(boleta=boleta), prefix='producto')
+        formset_servicio = forms.BoletaServicioFormset(queryset=models.Boleta_servicio.objects.filter(boleta=boleta), prefix='servicio')
     elif(request.method == 'POST'):
         form_main = forms.BoletaForm(request.POST)
-        formset_producto = forms.BoletaProductoFormset(request.POST)
-        formset_servicio = forms.BoletaServicioFormset(request.POST)
+        formset_producto = forms.BoletaProductoFormset(request.POST, prefix='producto')
+        formset_servicio = forms.BoletaServicioFormset(request.POST, prefix='servicio')
         if(
             form_main.is_valid() and 
             formset_producto.is_valid() and
@@ -519,14 +541,18 @@ def BoletaActualizar(request, pk:int):
             boleta.empleado = request.user.persona.empleado
             boleta.save()
             for form in formset_producto:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
             for form in formset_servicio:
+                if(not 'servicio' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
-            return redirect('facturas')
+            return redirect('boletas')
     context = {
         'form_main' : form_main,
         'formset_producto' : formset_producto,
@@ -535,7 +561,15 @@ def BoletaActualizar(request, pk:int):
     return render(request, template_name, context)
 class BoletaDeleteView(DeleteView):
     model = models.Boleta
-    template_name = "table/delete.html"
+    template_name = "tables/delete.html"
+    success_url = '/boletas/'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'boletas'
+        context["detalle"] = 'boleta_detalle'
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.view_boleta')
+        context["lista"] = "boletas"
+        return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -543,7 +577,7 @@ class BoletaDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class BoletaListView(ListView):
     model = models.Boleta
-    template_name = "tables/view_multy.html"
+    template_name = "boleta/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'boletas'
@@ -562,7 +596,7 @@ class BoletaListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class BoletaDetailView(DetailView):
     model = models.Boleta
-    template_name = "tables/view_single.html"
+    template_name = "boleta/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'boleta'
@@ -571,6 +605,8 @@ class BoletaDetailView(DetailView):
         context["borrar"] = "boleta_borrar"
         context["actualizar"] = "boleta_actualizar"
         context["lista"] = "boletas"
+        context["productos"] = models.Boleta_producto.objects.filter(boleta=context['object'])
+        context["servicios"] = models.Boleta_servicio.objects.filter(boleta=context['object'])
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -589,10 +625,10 @@ def EmpleadoCreate(request:HttpRequest):
         if(form.is_valid()):
             form.save()
             return redirect('empleados')
-    return render(request, "tables/create.html", {'form':form})
+    return render(request, "empleados/crear.html", {'form':form})
 class EmpleadoUpdateView(UpdateView):
     model = models.Empleado
-    template_name = "tables/update.html"
+    template_name = "empleados/actualizar.html"
     fields = [
         'correo_electronico',
         'primer_nombre',
@@ -614,7 +650,7 @@ class EmpleadoUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class EmpleadoDeleteView(DeleteView):
     model = models.Empleado
-    template_name = "tables/delete.html"
+    template_name = "empleados/eliminar.html"
     success_url = '/empleados/'
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -623,7 +659,7 @@ class EmpleadoDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class EmpleadoListView(ListView):
     model = models.Empleado
-    template_name = "tables/view_multy.html"
+    template_name = "empleados/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'empleados'
@@ -642,7 +678,7 @@ class EmpleadoListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class EmpleadoDetailView(DetailView):
     model = models.Empleado
-    template_name = "tables/view_single.html"
+    template_name = "empleados/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'empleado'
@@ -663,6 +699,10 @@ class ProveedorCreateView(CreateView):
     model = models.Proveedor
     template_name = "proveedores/crear.html"
     fields = '__all__'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'crear proveedor'
+        return context
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -681,13 +721,22 @@ class ProveedorUpdateView(UpdateView):
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if(not user.has_perm('punto_venta.change_proveedor')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
+from django.urls import reverse
 class ProveedorDeleteView(DeleteView):
     model = models.Proveedor
     template_name = "proveedores/eliminar.html"
-    def dispatch(self, request:HttpRequest, *args, **kwargs):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'borrar proveedor'
+        return context
+    def get_success_url(self):
+        return reverse('proveedores')  # Redirige a la lista de proveedores
+    def dispatch(self, request: HttpRequest, *args, **kwargs):
         user = request.user
-        if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
-        if(not user.has_perm('punto_venta.delete_proveedor')): return redirect(URL_HOME)
+        if not user.is_authenticated:
+            return redirect(f'{URL_LOGIN}?next={request.path}')
+        if not user.has_perm('punto_venta.delete_proveedor'):
+            return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
 class ProveedorListView(ListView):
     model = models.Proveedor
@@ -731,27 +780,26 @@ def FacturaCreate(request:HttpRequest):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.add_factura')): return redirect(URL_HOME)
-    template_name = 'factura/form.html'
+    template_name = 'factura/crear.html'
     if(request.method == 'GET'):
         form_main = forms.FacturaForm(request.GET or None)
-        formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.none())
+        formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.none(), prefix='detalle')
     elif(request.method == 'POST'):
         form_main = forms.FacturaForm(request.POST)
-        formset = forms.FacturaDetalleFormset(request.POST)
-        if(
-            form_main.is_valid() and 
-            formset.is_valid() and 
-            hasattr(request.user, 'persona')
-        ):
+        formset = forms.FacturaDetalleFormset(request.POST, prefix='detalle')
+        if(form_main.is_valid() and formset.is_valid() and hasattr(request.user, 'persona')):
             factura = form_main.save(False)
             factura.empleado = request.user.persona.empleado
             factura.save()
             for form in formset:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.factura = factura
                 detalle.save()
             return redirect('facturas')
     context = {
+        'title' : 'Crear Factura',
         'form_main' : form_main,
         'formset' : formset,
     }
@@ -760,14 +808,14 @@ def FacturaUpdate(request:HttpRequest, pk:int):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.change_factura')): return redirect(URL_HOME)
-    template_name = 'factura/form.html'
+    template_name = 'factura/actualizar.html'
     if(request.method == 'GET'):
         factura = models.Factura.objects.get(id=pk)
         form_main = forms.FacturaForm(instance=factura)
-        formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.filter(factura=factura))
+        formset = forms.FacturaDetalleFormset(queryset=models.Factura_detalle.objects.filter(factura=factura), prefix='detalle')
     elif(request.method == 'POST'):
         form_main = forms.FacturaForm(request.POST)
-        formset = forms.FacturaDetalleFormset(request.POST)
+        formset = forms.FacturaDetalleFormset(request.POST, prefix='detalle')
         if(
             form_main.is_valid() and 
             formset.is_valid() and 
@@ -777,18 +825,27 @@ def FacturaUpdate(request:HttpRequest, pk:int):
             factura.empleado = request.user.persona.empleado
             factura.save()
             for form in formset:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.factura = factura
                 detalle.save()
             return redirect('facturas')
     context = {
+        'title' : 'Actualizar Factura',
         'form_main' : form_main,
         'formset' : formset,
     }
     return render(request, template_name, context)
 class FacturaDeleteView(DeleteView):
     model = models.Factura
-    template_name = "table/delete.html"
+    template_name = "factura/eliminar.html"
+    success_url = '/facturas/'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Borrar Factura'
+        context["lista"] = 'facturas'
+        return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -796,10 +853,10 @@ class FacturaDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class FacturaListView(ListView):
     model = models.Factura
-    template_name = "tables/view_multy.html"
+    template_name = "factura/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = 'facturas'
+        context["title"] = 'Facturas'
         context["detalle"] = 'factura_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_factura')
@@ -815,19 +872,19 @@ class FacturaListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class FacturaDetailView(DetailView):
     model = models.Factura
-    template_name = "tables/view_single.html"
+    template_name = "factura/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = 'factura'
+        context["title"] = 'Factura'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_factura')
         context["borrar"] = "factura_borrar"
         context["actualizar"] = "factura_actualizar"
         context["lista"] = "facturas"
+        context["facturas"] = forms.Factura_detalle.objects.filter(factura=context["object"])
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
         if(not user.has_perm('punto_venta.view_factura')): return redirect(URL_HOME)
         return super().dispatch(request, *args, **kwargs)
-# View para el crud de servicio

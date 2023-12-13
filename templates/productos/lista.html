@@ -1,0 +1,68 @@
+<!-- lista.html -->
+{% extends 'base.html' %}
+
+{% block title %}Lista de Productos{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Lista de Productos</h2>
+
+        {% if puede_crear %}
+            <form action="{% url crear %}">
+                <button type="submit" class="btn btn-primary mb-3">
+                    <i class="fas fa-plus"></i> Crear Producto
+                </button>
+            </form>
+        {% endif %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Precio Compra</th>
+                    <th>Precio Venta</th>
+                    <th>Stock</th>
+                    <th>Proveedor</th>
+                    <th>Imagen</th>
+                    {% if puede_actualizar or puede_borrar %}
+                        <th>Acciones</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in object_list %}
+                    <tr>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.descripcion }}</td>
+                        <td>{{ producto.categoria }}</td>
+                        <td>{{ producto.precio_compra }}</td>
+                        <td>{{ producto.precio_venta }}</td>
+                        <td>{{ producto.stock }}</td>
+                        <td>{{ producto.proveedor.nombre }}</td>
+                        <td><img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-thumbnail" style="max-width: 50px;"></td>
+                        {% if puede_actualizar or puede_borrar %}
+                            <td>
+                                {% if puede_actualizar %}
+                                    <form action="{% url actualizar pk=producto.id %}">
+                                        <button type="submit" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-pen-to-square"></i> Actualizar
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                {% if puede_borrar %}
+                                    <form action="{% url borrar pk=producto.id %}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i> Borrar
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
