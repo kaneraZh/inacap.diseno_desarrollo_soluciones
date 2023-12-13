@@ -120,9 +120,10 @@ class FacturaForm(forms.ModelForm):
         model = Factura
         fields = ("proveedor","tipo_de_pago")
 class FacturaDetalleForm(forms.ModelForm):
+    id = forms.HiddenInput()
     class Meta:
         model = Factura_detalle
-        fields = ('producto', 'cantidad', 'monto_total')
+        fields = ('id', 'producto', 'cantidad', 'monto_total')
 FacturaDetalleFormset = forms.modelformset_factory(
     form=FacturaDetalleForm,
     model=Factura_detalle,
