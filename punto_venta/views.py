@@ -677,6 +677,10 @@ class ProveedorCreateView(CreateView):
     model = models.Proveedor
     template_name = "proveedores/crear.html"
     fields = '__all__'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'crear proveedor'
+        return context
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -698,6 +702,10 @@ class ProveedorUpdateView(UpdateView):
 class ProveedorDeleteView(DeleteView):
     model = models.Proveedor
     template_name = "proveedores/eliminar.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'borrar proveedor'
+        return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -764,6 +772,7 @@ def FacturaCreate(request:HttpRequest):
                 detalle.save()
             return redirect('facturas')
     context = {
+        'title' : 'Crear Factura',
         'form_main' : form_main,
         'formset' : formset,
     }
@@ -794,6 +803,7 @@ def FacturaUpdate(request:HttpRequest, pk:int):
                 detalle.save()
             return redirect('facturas')
     context = {
+        'title' : 'Actualizar Factura',
         'form_main' : form_main,
         'formset' : formset,
     }
@@ -801,6 +811,10 @@ def FacturaUpdate(request:HttpRequest, pk:int):
 class FacturaDeleteView(DeleteView):
     model = models.Factura
     template_name = "tables/delete.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'Borrar Factura'
+        return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -811,7 +825,7 @@ class FacturaListView(ListView):
     template_name = "tables/view_multy.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = 'facturas'
+        context["title"] = 'Facturas'
         context["detalle"] = 'factura_detalle'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_factura')
@@ -830,7 +844,7 @@ class FacturaDetailView(DetailView):
     template_name = "tables/view_single.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["title"] = 'factura'
+        context["title"] = 'Factura'
         context["puede_borrar"] = self.request.user.has_perm('punto_venta.delete_factura')
         context["puede_actualizar"] = self.request.user.has_perm('punto_venta.change_factura')
         context["borrar"] = "factura_borrar"
