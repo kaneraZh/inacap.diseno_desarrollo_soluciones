@@ -194,7 +194,7 @@ class ClienteDeleteView(DeleteView):
 class ClienteListView(ListView):
     model = models.Cliente
     template_name = "cliente/lista.html"
-    paginate_by = 10
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'clientes'
