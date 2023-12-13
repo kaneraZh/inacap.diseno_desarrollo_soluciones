@@ -97,13 +97,15 @@ class BoletaForm(forms.ModelForm):
         model = Boleta
         fields = ("tipo_de_pago","cliente")
 class BoletaProductoForm(forms.ModelForm):
+    id = forms.HiddenInput()
     class Meta:
         model = Boleta_producto
-        fields = ("producto","cantidad")
+        fields = ("id", "producto","cantidad")
 class BoletaServicioForm(forms.ModelForm):
+    id = forms.HiddenInput()
     class Meta:
         model = Boleta_servicio
-        fields = ("servicio","cantidad")
+        fields = ("id", "servicio","cantidad")
 BoletaProductoFormset = forms.modelformset_factory(
     form=BoletaProductoForm,
     model=Boleta_producto,

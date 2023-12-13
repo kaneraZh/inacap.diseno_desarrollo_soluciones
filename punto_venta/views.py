@@ -480,7 +480,7 @@ def BoletaCreate(request:HttpRequest):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.add_boleta')): return redirect(URL_HOME)
-    template_name = 'boleta/form.html'
+    template_name = 'boleta/crear.html'
     if(request.method == 'GET'):
         form_main = forms.BoletaForm(request.GET or None)
         formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.none(), prefix='producto')
@@ -521,7 +521,7 @@ def BoletaActualizar(request, pk:int):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.change_boleta')): return redirect(URL_HOME)
-    template_name = 'boleta/form.html'
+    template_name = 'boleta/actualizar.html'
     if(request.method == 'GET'):
         boleta = models.Boleta.objects.get(id=pk)
         form_main = forms.BoletaForm(instance=boleta)
@@ -552,7 +552,7 @@ def BoletaActualizar(request, pk:int):
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
-            return redirect('facturas')
+            return redirect('boletas')
     context = {
         'form_main' : form_main,
         'formset_producto' : formset_producto,
@@ -605,8 +605,8 @@ class BoletaDetailView(DetailView):
         context["borrar"] = "boleta_borrar"
         context["actualizar"] = "boleta_actualizar"
         context["lista"] = "boletas"
-        context["productos"] = models.Boleta_productos.objects.filter(boleta=context['object'])
-        context["servicios"] = models.Boleta_servicios.objects.filter(boleta=context['object'])
+        context["productos"] = models.Boleta_producto.objects.filter(boleta=context['object'])
+        context["servicios"] = models.Boleta_servicio.objects.filter(boleta=context['object'])
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
