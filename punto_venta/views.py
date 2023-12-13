@@ -816,7 +816,6 @@ def FacturaUpdate(request:HttpRequest, pk:int):
             factura = form_main.save(False)
             factura.empleado = request.user.persona.empleado
             factura.save()
-            factura_detalles = models.Factura_detalle.objects.filter(factura=factura)
             for form in formset:
                 if(not 'producto' in form.cleaned_data):
                     continue
