@@ -341,6 +341,8 @@ class ServicioUpdateView(UpdateView):
 class ServicioDeleteView(DeleteView):
     model = models.Servicio
     template_name = "servicio/eliminar.html"
+    def get_success_url(self):
+        return reverse('servicios')
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
