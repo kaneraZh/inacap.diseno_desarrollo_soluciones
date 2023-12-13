@@ -286,6 +286,7 @@ class CitaListView(ListView):
         context["borrar"] = "cita_borrar"
         context["actualizar"] = "cita_actualizar"
         context["crear"] = "cita_crear"
+        return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -824,6 +825,7 @@ class FacturaDeleteView(DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'Borrar Factura'
+        context["lista"] = 'facturas'
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
