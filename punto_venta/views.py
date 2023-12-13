@@ -864,6 +864,7 @@ class FacturaDetailView(DetailView):
         context["borrar"] = "factura_borrar"
         context["actualizar"] = "factura_actualizar"
         context["lista"] = "facturas"
+        context["facturas"] = forms.Factura_detalle.objects.filter(factura=context["object"])
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
