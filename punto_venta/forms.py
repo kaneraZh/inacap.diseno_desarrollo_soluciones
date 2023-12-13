@@ -48,7 +48,6 @@ class ProductoForm(forms.ModelForm):
         model = Producto
         fields = ['nombre', 'descripcion', 'categoria', 'precio_compra', 'precio_venta', 'stock', 'proveedor', 'imagen']
 
-
 from django.contrib.auth.models import Group, Permission
 class EmpleadoCrearForm(forms.ModelForm):
     es_jefe = forms.BooleanField(label='Es Jefe?', required=False)
