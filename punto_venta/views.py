@@ -127,7 +127,7 @@ class ProductoDetailView(DetailView):
     template_name = "cliente/producto.html"
 class CitaDetailViewCliente(DetailView):
     model = models.Cita
-    template_name = "tables/view_single.html"
+    template_name = "citas/detalle.html"
     # filtra los datos devueltos 
     # en este caso, para que solo quien hizo la cita
     # pueda verla (y no cualquier otro cliente)
@@ -161,11 +161,11 @@ def ClienteCreate(request:HttpRequest):
         form = forms.ClienteCrearForm(request.POST)
         if(form.is_valid()):
             form.save()
-            return redirect('home')
-    return render(request, "tables/create.html", {'form':form})
+            return redirect('clientes')
+    return render(request, "cliente/crear.html", {'form':form})
 class ClienteUpdateView(UpdateView):
     model = models.Cliente
-    template_name = "tables/update.html"
+    template_name = "cliente/actualizar.html"
     fields = [
         'primer_nombre',
         'primer_apellido',
@@ -184,7 +184,7 @@ class ClienteUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class ClienteDeleteView(DeleteView):
     model = models.Cliente
-    template_name = "tables/delete.html"
+    template_name = "cliente/eliminar.html"
     success_url = "/clientes/"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
@@ -193,8 +193,8 @@ class ClienteDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class ClienteListView(ListView):
     model = models.Cliente
-    template_name = "admin/clientes.html"
-    paginate_by = 10
+    template_name = "cliente/lista.html"
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'clientes'
@@ -215,7 +215,7 @@ class ClienteListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class ClienteDetailView(DetailView):
     model = models.Cliente
-    template_name = "admin/cliente_detalle.html"
+    template_name = "cliente/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'detalle cliente'
@@ -234,7 +234,7 @@ class ClienteDetailView(DetailView):
 # cita
 class CitaCreateView(CreateView):
     model = models.Cita
-    template_name = "tables/create.html"
+    template_name = "citas/crear.html"
     fields = "__all__"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -254,7 +254,7 @@ class CitaCreateView(CreateView):
         return super().dispatch(request, *args, **kwargs)
 class CitaUpdateView(UpdateView):
     model = models.Cita
-    template_name = ".html"
+    template_name = "citas/actualizar.html"
     fields = '__all__'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -267,7 +267,7 @@ class CitaUpdateView(UpdateView):
         return super().dispatch(request, *args, **kwargs)
 class CitaDeleteView(DeleteView):
     model = models.Cita
-    template_name = "tables/delete.html"
+    template_name = "citas/eliminar.html"
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -275,7 +275,7 @@ class CitaDeleteView(DeleteView):
         return super().dispatch(request, *args, **kwargs)
 class CitaListView(ListView):
     model = models.Cita
-    template_name = "tables/view_multy.html"
+    template_name = "citas/lista.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'citas'
@@ -294,7 +294,7 @@ class CitaListView(ListView):
         return super().dispatch(request, *args, **kwargs)
 class CitaDetailView(DetailView):
     model = models.Cita
-    template_name = "tables/view_single.html"
+    template_name = "citas/detalle.html"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["title"] = 'detalle cita'
@@ -480,7 +480,7 @@ def BoletaCreate(request:HttpRequest):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.add_boleta')): return redirect(URL_HOME)
-    template_name = 'boleta/form.html'
+    template_name = 'boleta/crear.html'
     if(request.method == 'GET'):
         form_main = forms.BoletaForm(request.GET or None)
         formset_producto = forms.BoletaProductoFormset(queryset=models.Boleta_producto.objects.none(), prefix='producto')
@@ -499,10 +499,14 @@ def BoletaCreate(request:HttpRequest):
             boleta.empleado = request.user.persona.empleado
             boleta.save()
             for form in formset_producto:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
             for form in formset_servicio:
+                if(not 'servicio' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
@@ -517,7 +521,7 @@ def BoletaActualizar(request, pk:int):
     user = request.user
     if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
     if(not user.has_perm('punto_venta.change_boleta')): return redirect(URL_HOME)
-    template_name = 'boleta/form.html'
+    template_name = 'boleta/actualizar.html'
     if(request.method == 'GET'):
         boleta = models.Boleta.objects.get(id=pk)
         form_main = forms.BoletaForm(instance=boleta)
@@ -537,14 +541,18 @@ def BoletaActualizar(request, pk:int):
             boleta.empleado = request.user.persona.empleado
             boleta.save()
             for form in formset_producto:
+                if(not 'producto' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
             for form in formset_servicio:
+                if(not 'servicio' in form.cleaned_data):
+                    continue
                 detalle = form.instance
                 detalle.boleta = boleta
                 detalle.save()
-            return redirect('facturas')
+            return redirect('boletas')
     context = {
         'form_main' : form_main,
         'formset_producto' : formset_producto,
@@ -555,6 +563,13 @@ class BoletaDeleteView(DeleteView):
     model = models.Boleta
     template_name = "tables/delete.html"
     success_url = '/boletas/'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = 'boletas'
+        context["detalle"] = 'boleta_detalle'
+        context["puede_crear"] = self.request.user.has_perm('punto_venta.view_boleta')
+        context["lista"] = "boletas"
+        return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user
         if(not user.is_authenticated): return redirect(f'{URL_LOGIN}?next={request.path}')
@@ -590,6 +605,8 @@ class BoletaDetailView(DetailView):
         context["borrar"] = "boleta_borrar"
         context["actualizar"] = "boleta_actualizar"
         context["lista"] = "boletas"
+        context["productos"] = models.Boleta_producto.objects.filter(boleta=context['object'])
+        context["servicios"] = models.Boleta_servicio.objects.filter(boleta=context['object'])
         return context
     def dispatch(self, request:HttpRequest, *args, **kwargs):
         user = request.user

@@ -36,7 +36,9 @@
             <div class="mb-3">
                 <label for="id_proveedor" class="form-label">Proveedor:</label>
                 <select name="proveedor" id="id_proveedor" class="form-control" required>
-                    <!-- Agrega opciones de proveedores aquí -->
+                    {% for proveedor in proveedores %}
+                    <option value={{ proveedor.id }}>{{proveedor}}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="mb-3">
